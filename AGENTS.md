@@ -40,3 +40,4 @@
 ## Agent Notes
 - Keep `AGENTS.md` current when workflows, scripts, or package lists change (especially bootstrap/stow logic or helper script locations).
 - Document new helper scripts under `shell/.local/bin/` and ensure bootstrap/stow steps reflect them.***
+- Codex CLI binary install is optional via bootstrap prompt calling `scripts/install-codex-binary.sh` (downloads latest GitHub release to `~/.local/bin/codex`).***

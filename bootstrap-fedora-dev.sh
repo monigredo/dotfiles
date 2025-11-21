@@ -201,11 +201,24 @@ if [ -n "${ROFI_BT_DIR:-}" ] && [ -f "$ROFI_BT_DIR/rofi-bluetooth" ]; then
   chmod +x "$ROFI_BT_TARGET"
 fi
 
-echo "[+] Cleaning conflicting files and restowing dotfiles (final step)..."
-"$DOTFILES_DIR/stow-clean-restow.sh" shell sway waybar alacritty git env
 
+echo "[+] Optional: Codex CLI binary install..."
+if [ -t 0 ]; then
+  read -r -p "    Install Codex CLI (binary, latest GitHub release)? [y/N]: " install_codex
+  case "$install_codex" in
+    [yY]|[yY][eE][sS])
+      "$DOTFILES_DIR/scripts/install-codex-binary.sh"
+      ;;
+    *)
+      echo "    Skipping Codex CLI install."
+      ;;
+  esac
+else
+  echo "    Non-interactive shell detected; skipping Codex CLI prompt."
+fi
 
 echo "[+] Remember to:"
+echo "  - stow you dotfiles"
 echo "  - Install JetBrains Toolbox manually (browser/wget) and set up IntelliJ."
 echo "  - Install SDKMAN:  curl -s \"https://get.sdkman.io\" | bash"
 echo "  - Run:   files-to-prompt --markdown ~/.bashrc ~/.config/sway/config  | wl-copy"
