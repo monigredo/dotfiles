@@ -1,0 +1,25 @@
+[window]
+decorations = "none"
+dynamic_padding = true
+padding = { x = 6, y = 6 }
+opacity = 0.97
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[font]
+# Fedora package: jetbrains-mono-fonts
+normal = { family = "JetBrains Mono", style = "Regular" }
+bold   = { family = "JetBrains Mono", style = "Bold" }
+italic = { family = "JetBrains Mono", style = "Italic" }
+bold_italic = { family = "JetBrains Mono", style = "Bold Italic" }
+size = 11.0
+
+[colors.primary]
+background = "0x1e1e2e"
+foreground = "0xcdd6f4"
+
+[colors.cursor]
+text   = "0x1e1e2e"
+cursor = "0xf5e0dc"

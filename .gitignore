@@ -1,0 +1,14 @@
+# No real env / secret files
+*.env
+*.env.local
+secrets/*
+.secret
+*.kube/config
+
+# Histories
+bash/.bash_history
+zsh/.zsh_history
+
+# Machine-specific
+**/.cache/
+**/*.lock

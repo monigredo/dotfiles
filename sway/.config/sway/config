@@ -1,0 +1,138 @@
+# --- Outputs / background ---
+output * bg #000000 solid_color
+
+# --- Input devices ---
+input "type:keyboard" {
+    xkb_layout us
+    xkb_options ctrl:nocaps
+}
+
+input "type:touchpad" {
+    tap enabled
+    natural_scroll enabled
+}
+
+# --- Mod key & common apps ---
+# Treat Alt as "Cmd" in your head
+set $mod Mod1
+
+set $term alacritty
+set $menu rofi -show drun
+
+# --- App launch / basics ---
+# Terminal
+bindsym $mod+Return exec $term
+
+# Spotlight-style launcher
+bindsym $mod+space exec $menu
+
+# Close window (Cmd+W/Cmd+Q mental model)
+bindsym $mod+w kill
+
+# --- Focus movement (arrow-based) ---
+bindsym $mod+Left  focus left
+bindsym $mod+Down  focus down
+bindsym $mod+Up    focus up
+bindsym $mod+Right focus right
+
+# --- Move windows (Shift = move instead of focus) ---
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Down  move down
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Right move right
+
+# --- Workspaces: numbers + prev/next ---
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+# Jump to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+# Send window to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+
+# Previous/next workspace
+bindsym $mod+Ctrl+Left  workspace prev
+bindsym $mod+Ctrl+Right workspace next
+
+# 3-finger swipe on touchpad to switch workspaces (Mac-style)
+# swipe left  = go to next workspace
+# swipe right = go to previous workspace
+bindgesture swipe:3:left  workspace next
+bindgesture swipe:3:right workspace prev
+
+# --- Brightness: Alt + F1/F2 (left edge) ---
+bindsym Mod1+F1 exec brightnessctl set 5%-
+bindsym Mod1+F2 exec brightnessctl set +5%
+
+# --- Volume: Alt + F11/F12 (right edge) ---
+bindsym Mod1+F11 exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym Mod1+F12 exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym Mod1+Shift+F12 exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# --- Media: Alt + F8/F9/F10 (cluster near right side) ---
+bindsym Mod1+F8  exec playerctl play-pause
+bindsym Mod1+F9  exec playerctl previous
+bindsym Mod1+F10 exec playerctl next
+
+# bluetooth
+set $bluetooth_menu ~/.local/bin/rofi-bluetooth
+bindsym $mod+Shift+b exec $bluetooth_menu
+
+
+# Network tools
+# Alt+Shift+N → quick TUI Wi-Fi/Network manager
+bindsym $mod+Shift+n exec ~/.local/bin/wifi-menu
+
+# Alt+Ctrl+N → full GUI connection editor
+bindsym $mod+Ctrl+n exec nm-connection-editor
+
+
+# --- Manual lock: Ctrl + Alt + Q ---
+# (Mod1 = Alt in our config)
+bindsym Ctrl+Mod1+q exec swaylock -f -c 000000
+
+# --- Reload / exit Sway ---
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec "swaymsg exit"
+
+# waybar - kill old, start one instance on startup & reload
+exec_always sh -c 'pkill waybar 2>/dev/null; waybar'
+
+
+# --- Auto-lock + lock before sleep (lid close / suspend) ---
+# Use exec_always + pkill so reloads update swayidle cleanly
+# --- Lock immediately when lid closes ---
+# bindswitch --locked --reload lid:on exec swaylock -f -c 000000
+bindswitch --locked --reload lid:on exec ~/.local/bin/sway-handle-lid.sh
+
+set $laptop eDP-1
+exec_always export LAPTOP_OUTPUT=$laptop
+
+# Idle lock: 15 minutes + lock before sleep
+exec_always ~/.local/bin/run-swayidle 300
+
+

@@ -1,0 +1,17 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[push]
+	default = simple
+[rerere]
+	enabled = true
+[core]
+	editor = code --wait
+	excludesfile = /home/user/.gitignore_global

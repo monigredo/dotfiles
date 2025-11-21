@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage:
+#   run-swayidle [timeout_seconds]
+# Default timeout: 900 seconds (15 minutes)
+TIMEOUT="${1:-900}"
+
+# Kill any old instance so we don't stack them
+pkill -x swayidle 2>/dev/null || true
+
+exec swayidle -w \
+  timeout "$TIMEOUT" 'swaylock -f -c 000000' \
+  before-sleep 'swaylock -f -c 000000'

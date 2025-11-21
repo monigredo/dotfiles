@@ -1,0 +1,52 @@
+* {
+  font-family: JetBrainsMono, monospace;
+  font-size: 12px;
+}
+
+window#waybar {
+  background: #111111;
+  color: #ffffff;
+}
+
+#cpu,
+#temperature,
+#battery,
+#clock,
+#workspaces button {
+  padding: 0 8px;
+}
+
+#battery.warning {
+  color: #ffb86c;
+}
+
+#battery.critical {
+  color: #ff5555;
+}
+
+#pulseaudio {
+  padding: 0 8px;
+}
+
+#pulseaudio.muted {
+  color: #ff5555;
+}
+
+#bluetooth {
+  padding: 0 8px;
+}
+
+#bluetooth.connected {
+  /* when at least one device is connected */
+  color: #a3be8c;
+}
+
+#bluetooth.disconnected {
+  color: #d8dee9;
+}
+
+#bluetooth.off {
+  color: #bf616a;
+}
+
+
