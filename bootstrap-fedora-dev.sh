@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 echo "[+] Updating system..."
 sudo dnf update -y
 
 echo "[+] Installing core CLI tools..."
 sudo dnf install -y \
+  curl \
   git \
   zsh \
+  stow \
   fzf \
   ripgrep \
   fd-find \
@@ -16,6 +20,7 @@ sudo dnf install -y \
   htop \
   wl-clipboard \
   jq \
+  unzip \
   dnf-plugins-core \
   podman \
   podman-docker \
@@ -139,6 +144,50 @@ else
   echo "      git config --global user.name \"Your Name\""
   echo "      git config --global user.email \"you@example.com\""
 fi
+
+echo "[+] Linking helper scripts into ~/.local/bin via stow..."
+mkdir -p "$HOME/.local/bin"
+
+for script in "$DOTFILES_DIR"/shell/.local/bin/*; do
+  [ -f "$script" ] || continue
+  target="$HOME/.local/bin/$(basename "$script")"
+  if [ -e "$target" ] && [ ! -L "$target" ]; then
+    echo "    Replacing existing $target with symlink from dotfiles."
+    rm -f "$target"
+  fi
+done
+
+if command -v stow >/dev/null 2>&1; then
+  if ! (cd "$DOTFILES_DIR" && stow --target="$HOME" --restow shell); then
+    echo "    WARNING: stow failed; check for conflicts in $HOME/.local/bin."
+  fi
+else
+  echo "    WARNING: stow not found; skipping shell helper linking."
+fi
+
+echo "[+] Ensuring rofi-bluetooth helper..."
+ROFI_BT_DIR="$HOME/code/rofi-bluetooth"
+ROFI_BT_TARGET="$HOME/.local/bin/rofi-bluetooth"
+mkdir -p "$HOME/code"
+
+if [ -d "$ROFI_BT_DIR/.git" ]; then
+  if ! git -C "$ROFI_BT_DIR" pull --ff-only; then
+    echo "    WARNING: failed to update $ROFI_BT_DIR; continuing with existing clone."
+  fi
+else
+  if ! git clone https://github.com/nickclyde/rofi-bluetooth.git "$ROFI_BT_DIR"; then
+    echo "    WARNING: could not clone rofi-bluetooth; bluetooth menu will be missing."
+    ROFI_BT_DIR=""
+  fi
+fi
+
+if [ -n "${ROFI_BT_DIR:-}" ] && [ -f "$ROFI_BT_DIR/rofi-bluetooth" ]; then
+  ln -sf "$ROFI_BT_DIR/rofi-bluetooth" "$ROFI_BT_TARGET"
+  chmod +x "$ROFI_BT_TARGET"
+fi
+
+echo "[+] Cleaning conflicting files and restowing dotfiles (final step)..."
+"$DOTFILES_DIR/stow-clean-restow.sh" shell sway waybar alacritty git env
 
 
 echo "[+] Remember to:"

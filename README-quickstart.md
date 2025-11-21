@@ -46,7 +46,7 @@ cd ~/dotfiles
 
 ## 3. Run bootstrap script
 
-This installs packages, fonts, git defaults, and **prompts for git user.name/email**:
+This installs packages, fonts, git defaults, and **prompts for git user.name/email**. It also installs \`rofi-bluetooth\` from GitHub and links it into \`~/.local/bin\` for you:
 
 ```bash
 cd ~/dotfiles
@@ -55,21 +55,7 @@ cd ~/dotfiles
 
 ---
 
-## 4. Install \`rofi-bluetooth\` (once per user)
-
-```bash
-mkdir -p ~/code
-cd ~/code
-
-git clone https://github.com/nickclyde/rofi-bluetooth.git
-mkdir -p ~/.local/bin
-cp ~/code/rofi-bluetooth/rofi-bluetooth ~/.local/bin/
-chmod +x ~/.local/bin/rofi-bluetooth
-```
-
----
-
-## 5. Stow dotfiles
+## 4. Stow dotfiles
 
 ```bash
 cd ~/dotfiles
@@ -85,7 +71,7 @@ If \`stow\` reports conflicts, resolve them (move/delete old files) and re-run.
 
 ---
 
-## 6. Log out and back into Sway
+## 5. Log out and back into Sway
 
 - Log out of the session.
 - Log back in and start Sway (your usual way).
@@ -99,7 +85,7 @@ This picks up:
 
 ---
 
-## 7. Quick sanity checks (optional)
+## 6. Quick sanity checks (optional)
 
 In a new terminal (Alacritty inside Sway):
 
