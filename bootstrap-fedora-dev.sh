@@ -145,6 +145,21 @@ else
   echo "      git config --global user.email \"you@example.com\""
 fi
 
+echo "[+] Optional: Node.js and npm setup..."
+if [ -t 0 ]; then
+  read -r -p "    Install Node.js + npm (for JS tooling / Codex CLI)? [y/N]: " install_node
+  case "$install_node" in
+    [yY]|[yY][eE][sS])
+      "$DOTFILES_DIR/scripts/install-node.sh"
+      ;;
+    *)
+      echo "    Skipping Node.js/npm install."
+      ;;
+  esac
+else
+  echo "    Non-interactive shell detected; skipping Node.js/npm prompt."
+fi
+
 echo "[+] Linking helper scripts into ~/.local/bin via stow..."
 mkdir -p "$HOME/.local/bin"
 

@@ -9,6 +9,13 @@ fi
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
+
+npm_global_bin="$HOME/.local/npm-global/bin"
+case ":$PATH:" in
+  *":$npm_global_bin:"*) ;;
+  *) PATH="$npm_global_bin:$PATH" ;;
+esac
+
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
