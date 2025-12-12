@@ -9,6 +9,25 @@ input "type:keyboard" {
 
 input "type:touchpad" {
     tap enabled
+    click_method clickfinger
+    tap_button_map lrm
+
+    scroll_method two_finger
+    natural_scroll enabled
+    scroll_factor 0.3
+
+    drag enabled
+    drag_lock disabled
+    dwt enabled
+
+    accel_profile adaptive
+    pointer_accel 0.08
+}
+
+input "type:mouse" {
+    accel_profile adaptive
+    pointer_accel 0.02
+    scroll_factor 0.35
     natural_scroll enabled
 }
 
@@ -21,13 +40,13 @@ set $menu rofi -show drun
 
 # --- App launch / basics ---
 # Terminal
-bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $term
 
 # Spotlight-style launcher
 bindsym $mod+space exec $menu
 
-# Close window (Cmd+W/Cmd+Q mental model)
-bindsym $mod+w kill
+# Close window (Alt+Q)
+bindsym $mod+q kill
 
 # --- Focus movement (arrow-based) ---
 bindsym $mod+Left  focus left
@@ -75,8 +94,8 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 
 # Previous/next workspace
-bindsym $mod+Ctrl+Left  workspace prev
-bindsym $mod+Ctrl+Right workspace next
+bindsym Ctrl+Left  workspace prev
+bindsym Ctrl+Right workspace next
 
 # 3-finger swipe on touchpad to switch workspaces (Mac-style)
 # swipe left  = go to next workspace
@@ -132,7 +151,5 @@ bindswitch --locked --reload lid:on exec ~/.local/bin/sway-handle-lid.sh
 set $laptop eDP-1
 exec_always export LAPTOP_OUTPUT=$laptop
 
-# Idle lock: 15 minutes + lock before sleep
+# Idle lock: 5 minutes (then displays off after 30s) + lock before sleep
 exec_always ~/.local/bin/run-swayidle 300
-
-

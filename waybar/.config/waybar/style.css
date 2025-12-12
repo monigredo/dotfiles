@@ -49,4 +49,34 @@ window#waybar {
   color: #bf616a;
 }
 
+#custom-mullvad {
+  padding: 0 8px;
+}
 
+#custom-mullvad.connected {
+  color: #a3be8c;
+}
+
+#custom-mullvad.disconnected {
+  color: #bf616a;
+}
+
+#custom-mullvad.connecting {
+  color: #ffb86c;
+}
+
+#custom-protonvpn {
+  padding: 0 8px;
+}
+
+#custom-protonvpn.connected {
+  color: #a3be8c;
+}
+
+#custom-protonvpn.disconnected {
+  color: #bf616a;
+}
+
+#custom-protonvpn.connecting {
+  color: #ffb86c;
+}

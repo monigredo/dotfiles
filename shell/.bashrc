@@ -51,3 +51,5 @@ ftpmd() {
   files-to-prompt --markdown "$@" | wl-copy
   echo "Copied files-to-prompt output for: $*" >&2
 }
+
+eval "$(direnv hook bash)"

@@ -28,7 +28,8 @@ sudo dnf install -y \
   java-21-openjdk \
   java-21-openjdk-devel \
   flatpak \
-  pipx
+  pipx \
+  direnv
 
 echo "[+] Installing dev fonts (JetBrains Mono + FiraCode Nerd Font)..."
 

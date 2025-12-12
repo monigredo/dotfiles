@@ -192,17 +192,25 @@ set -euo pipefail
 
 # Usage:
 #   run-swayidle [timeout_seconds]
-# Default timeout: 900 seconds (15 minutes)
+# Default lock timeout: 900 seconds (15 minutes)
 TIMEOUT="${1:-900}"
+DPMS_DELAY=30
+DPMS_TIMEOUT=$((TIMEOUT + DPMS_DELAY))
 
 # Kill any old instance so we don't stack them
 pkill -x swayidle 2>/dev/null || true
 
-exec swayidle -w   timeout "$TIMEOUT" 'swaylock -f -c 000000'   before-sleep 'swaylock -f -c 000000'
+exec swayidle -w \
+  timeout "$TIMEOUT" 'swaylock -f -c 000000' \
+  timeout "$DPMS_TIMEOUT" 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -f -c 000000'
 EOF
 
 chmod +x shell/.local/bin/run-swayidle
 ```
+
+The script locks after the chosen timeout and then turns displays off 30 seconds later until you resume activity.
 
 Then stow `shell` (later step) so `~/.local/bin/run-swayidle` is a symlink.
 
@@ -235,10 +243,12 @@ What each package is expected to do:
     - Alt as main modifier.
     - Keybindings (see cheat sheet below).
     - Lid binding → `sway-handle-lid.sh`.
-    - Idle lock → `exec_always ~/.local/bin/run-swayidle 900`.
+    - Idle lock → `exec_always ~/.local/bin/run-swayidle 300` (locks after 5 minutes; turns displays off 30s after locking).
 - `waybar/`
   - `~/.config/waybar/config` and `style.css`:
-    - Right-side modules: CPU, memory, network, **bluetooth**, audio, temp, battery, clock.
+    - Right-side modules: CPU, memory, network, Mullvad + Proton VPN indicators, **bluetooth**, audio, temp, battery, clock.
+    - `on-click` for Mullvad → `~/.local/bin/mullvad-waybar` (toggle).
+    - `on-click` for Proton VPN → `~/.local/bin/protonvpn-waybar` (toggle).
     - `on-click` for bluetooth → `~/.local/bin/rofi-bluetooth`.
     - `on-click` for network → `~/.local/bin/wifi-menu`.
 - `alacritty/`
@@ -261,8 +271,8 @@ If `stow` complains about conflicts, move the existing file into the appropriate
 In `~/.config/sway/config` (managed by `stow`):
 
 ```sway
-# Idle lock: 15 minutes + lock before sleep
-exec_always ~/.local/bin/run-swayidle 900
+# Idle lock: 5 minutes + screen off 30s after lock + lock before sleep
+exec_always ~/.local/bin/run-swayidle 300
 ```
 
 To test quickly, you can temporarily use `10` instead of `900`, reload Sway, and see if it locks after ~10s of inactivity.
@@ -306,6 +316,8 @@ Add `"bluetooth"` into `"modules-right"`:
   "cpu",
   "memory",
   "network",
+  "custom/mullvad",
+  "custom/protonvpn",
   "bluetooth",
   "pulseaudio",
   "temperature",
@@ -354,9 +366,9 @@ In `~/.config/sway/config` you should have (or add):
 ### Core
 
 - **Mod key**: `Alt` (`Mod1`).
-- `Alt+Enter` – Alacritty (terminal).
+- `Alt+Shift+Enter` – Alacritty (terminal).
 - `Alt+Space` – rofi app launcher.
-- `Alt+W` – close window.
+- `Alt+Q` – close window.
 
 ### Focus / move windows
 
@@ -367,7 +379,7 @@ In `~/.config/sway/config` you should have (or add):
 
 - `Alt+1..9` – switch to workspace.
 - `Alt+Shift+1..9` – move focused container to workspace.
-- `Alt+Ctrl+Left/Right` – prev/next workspace.
+- `Ctrl+Left/Right` – prev/next workspace.
 - 3-finger swipe left/right – workspace navigation (via your gesture setup).
 
 ### Media / brightness
@@ -397,7 +409,7 @@ bindsym $mod+Ctrl+n exec nm-connection-editor
 bindsym Ctrl+Alt+q exec swaylock -f -c 000000
 ```
 
-- Auto-lock after `run-swayidle` timeout (e.g. 900s).
+- Auto-lock after `run-swayidle` timeout (e.g. 300s) and turn screens off 30s later.
 - Lid close → `sway-handle-lid.sh`.
 
 ---
@@ -513,7 +525,7 @@ After that, the new user has:
   You should see a `swayidle` process. If not, confirm this line exists in `sway/config` and the script is executable:
 
   ```sway
-  exec_always ~/.local/bin/run-swayidle 900
+  exec_always ~/.local/bin/run-swayidle 300
   ```
 
 - **Bluetooth menu doesn’t open from widget/hotkey**  

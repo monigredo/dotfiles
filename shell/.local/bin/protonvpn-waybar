@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+json_escape() {
+  local value=${1:-}
+  value=${value//\\/\\\\}
+  value=${value//\"/\\\"}
+  value=${value//$'\n'/\\n}
+  printf '%s' "$value"
+}
+
+find_cli() {
+  local candidate
+  for candidate in protonvpn protonvpn-cli protonvpn-cli-ng; do
+    if command -v "$candidate" >/dev/null 2>&1; then
+      printf '%s' "$candidate"
+      return 0
+    fi
+  done
+  return 1
+}
+
+detect_state() {
+  local line=$1
+  shopt -s nocasematch
+  if [[ $line == *connected* ]]; then
+    printf 'connected'
+  elif [[ $line == *connecting* ]]; then
+    printf 'connecting'
+  else
+    printf 'disconnected'
+  fi
+  shopt -u nocasematch
+}
+
+print_status() {
+  local cli output status_line state icon server_line text tooltip
+
+  if ! cli=$(find_cli); then
+    printf '{"text":" protonvpn missing","tooltip":"Proton VPN CLI not found","class":["protonvpn","error"]}\n'
+    return
+  fi
+
+  output=$($cli s 2>&1 || true)
+  if [[ -z $output ]]; then
+    output='Status: unknown'
+  fi
+
+  status_line=$(printf '%s\n' "$output" | grep -i '^Status' | head -n 1)
+  if [[ -z $status_line ]]; then
+    status_line=$(printf '%s\n' "$output" | head -n 1)
+  fi
+
+  state=$(detect_state "$status_line")
+
+  case $state in
+    connected) icon="" ;;
+    connecting) icon="" ;;
+    *) icon="" ;;
+  esac
+
+  server_line=$(printf '%s\n' "$output" | grep -i '^Server' | head -n 1)
+  if [[ -n $server_line ]]; then
+    server_line=${server_line#*: }
+  fi
+
+  case $state in
+    connected)
+      if [[ -n $server_line ]]; then
+        text="$icon $server_line"
+      else
+        text="$icon Connected"
+      fi
+      ;;
+    connecting)
+      text="$icon Connecting"
+      ;;
+    *)
+      text="$icon Disconnected"
+      ;;
+  esac
+
+  tooltip=$output
+
+  printf '{"text":"%s","tooltip":"%s","class":["protonvpn","%s"]}\n' \
+    "$(json_escape "$text")" \
+    "$(json_escape "$tooltip")" \
+    "$state"
+}
+
+toggle_connection() {
+  local cli output status_line state
+
+  if ! cli=$(find_cli); then
+    exit 0
+  fi
+
+  output=$($cli s 2>&1 || true)
+  status_line=$(printf '%s\n' "$output" | grep -i '^Status' | head -n 1)
+  if [[ -z $status_line ]]; then
+    status_line=$(printf '%s\n' "$output" | head -n 1)
+  fi
+
+  state=$(detect_state "$status_line")
+
+  if [[ $state == connected ]]; then
+    $cli d >/dev/null 2>&1 || $cli d
+  else
+    $cli c -f >/dev/null 2>&1 || $cli c -f
+  fi
+}
+
+case ${1:-status} in
+  toggle)
+    toggle_connection
+    ;;
+  *)
+    print_status
+    ;;
+esac

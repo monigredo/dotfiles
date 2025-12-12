@@ -4,7 +4,7 @@
   "height": 28,
   "modules-left": ["sway/workspaces"],
   "modules-center": [],
-  "modules-right": ["cpu", "memory", "network", "bluetooth", "pulseaudio", "temperature", "battery", "clock"],
+  "modules-right": ["cpu", "memory", "network", "custom/mullvad", "custom/protonvpn", "bluetooth", "pulseaudio", "temperature", "battery", "clock"],
 
   "memory": {
     "interval": 3,
@@ -19,6 +19,24 @@
     "tooltip-format": "{ifname} {ipaddr}  {bandwidthDownBits}  {bandwidthUpBits}",
     "interval": 3,
     "on-click": "nm-connection-editor"
+  },
+
+  "custom/mullvad": {
+    "return-type": "json",
+    "exec": "~/.local/bin/mullvad-waybar",
+    "interval": 5,
+    "signal": 8,
+    "format": "  {text} ",
+    "on-click": "~/.local/bin/mullvad-waybar toggle && pkill -RTMIN+8 waybar"
+  },
+
+  "custom/protonvpn": {
+    "return-type": "json",
+    "exec": "~/.local/bin/protonvpn-waybar",
+    "interval": 5,
+    "signal": 9,
+    "format": "  {text} ",
+    "on-click": "~/.local/bin/protonvpn-waybar toggle && pkill -RTMIN+9 waybar"
   },
 
   "bluetooth": {

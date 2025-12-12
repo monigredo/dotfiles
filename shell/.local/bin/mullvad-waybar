@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+json_escape() {
+  local value=${1:-}
+  value=${value//\\/\\\\}
+  value=${value//\"/\\\"}
+  value=${value//$'\n'/\\n}
+  printf '%s' "$value"
+}
+
+detect_state() {
+  local line=$1
+  shopt -s nocasematch
+  if [[ $line == *disconnected* ]]; then
+    printf 'disconnected'
+  elif [[ $line == *connecting* ]] || [[ $line == *reconnecting* ]]; then
+    printf 'connecting'
+  elif [[ $line == *connected* ]]; then
+    printf 'connected'
+  else
+    printf 'disconnected'
+  fi
+  shopt -u nocasematch
+}
+
+print_status() {
+  local output status_line state icon text tooltip
+
+  if ! command -v mullvad >/dev/null 2>&1; then
+    printf '{"text":" mullvad missing","tooltip":"mullvad CLI not found","class":["mullvad","error"]}\n'
+    return
+  fi
+
+  output=$(mullvad status 2>&1 || true)
+  if [[ -z $output ]]; then
+    output='Status: unknown'
+  fi
+
+  status_line=$(printf '%s\n' "$output" | head -n 1)
+  state=$(detect_state "$status_line")
+
+  case $state in
+    connected) icon="" ;;
+    connecting) icon="" ;;
+    *) icon="" ;;
+  esac
+
+  text=${status_line#Status: }
+  tooltip=$output
+
+  printf '{"text":"%s","tooltip":"%s","class":["mullvad","%s"]}\n' \
+    "$(json_escape "$icon $text")" \
+    "$(json_escape "$tooltip")" \
+    "$state"
+}
+
+toggle_connection() {
+  local output state
+
+  if ! command -v mullvad >/dev/null 2>&1; then
+    exit 0
+  fi
+
+  output=$(mullvad status 2>&1 || true)
+  state=$(detect_state "$(printf '%s\n' "$output" | head -n 1)")
+
+  if [[ $state == connected ]]; then
+    mullvad disconnect >/dev/null 2>&1 || mullvad disconnect
+  else
+    mullvad connect >/dev/null 2>&1 || mullvad connect
+  fi
+}
+
+case ${1:-status} in
+  toggle)
+    toggle_connection
+    ;;
+  *)
+    print_status
+    ;;
+esac
