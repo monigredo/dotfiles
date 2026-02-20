@@ -15,6 +15,7 @@
 [core]
 	editor = code --wait
 	excludesfile = /home/user/.gitignore_global
+	autocrlf = input
 [user]
 	email = 8849111+monigredo@users.noreply.github.com
 	name = User

@@ -3,7 +3,7 @@ output * bg #000000 solid_color
 
 # --- Input devices ---
 input "type:keyboard" {
-    xkb_layout us
+    xkb_layout us,ua
     xkb_options ctrl:nocaps
 }
 
@@ -36,10 +36,12 @@ input "type:mouse" {
 set $mod Mod1
 
 set $term alacritty
+set $term_tmux alacritty -e tmux new-session -A -s main
 set $menu rofi -show drun
 
 # --- App launch / basics ---
 # Terminal
+bindsym $mod+Return exec $term_tmux
 bindsym $mod+Shift+Return exec $term
 
 # Spotlight-style launcher
@@ -47,6 +49,9 @@ bindsym $mod+space exec $menu
 
 # Close window (Alt+Q)
 bindsym $mod+q kill
+
+# Keyboard layout switch (US <-> Ukrainian)
+bindsym Ctrl+space input type:keyboard xkb_switch_layout next
 
 # --- Focus movement (arrow-based) ---
 bindsym $mod+Left  focus left
@@ -82,16 +87,16 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 
-# Send window to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
+# Send window to workspace (Ctrl + Alt + Shift + number)
+bindsym Ctrl+$mod+Shift+1 move container to workspace $ws1
+bindsym Ctrl+$mod+Shift+2 move container to workspace $ws2
+bindsym Ctrl+$mod+Shift+3 move container to workspace $ws3
+bindsym Ctrl+$mod+Shift+4 move container to workspace $ws4
+bindsym Ctrl+$mod+Shift+5 move container to workspace $ws5
+bindsym Ctrl+$mod+Shift+6 move container to workspace $ws6
+bindsym Ctrl+$mod+Shift+7 move container to workspace $ws7
+bindsym Ctrl+$mod+Shift+8 move container to workspace $ws8
+bindsym Ctrl+$mod+Shift+9 move container to workspace $ws9
 
 # Previous/next workspace
 bindsym Ctrl+Left  workspace prev
@@ -117,6 +122,9 @@ bindsym Mod1+F8  exec playerctl play-pause
 bindsym Mod1+F9  exec playerctl previous
 bindsym Mod1+F10 exec playerctl next
 
+# --- Screenshot: Alt + Shift + 4 (region to clipboard) ---
+bindsym $mod+Shift+4 exec sh -c 'grim -g "$(slurp)" - | wl-copy'
+
 # bluetooth
 set $bluetooth_menu ~/.local/bin/rofi-bluetooth
 bindsym $mod+Shift+b exec $bluetooth_menu
@@ -141,6 +149,9 @@ bindsym $mod+Shift+e exec "swaymsg exit"
 # waybar - kill old, start one instance on startup & reload
 exec_always sh -c 'pkill waybar 2>/dev/null; waybar'
 
+# mullvad - autoconnect on login (safe on reload)
+exec_always ~/.local/bin/mullvad-autoconnect
+
 
 # --- Auto-lock + lock before sleep (lid close / suspend) ---
 # Use exec_always + pkill so reloads update swayidle cleanly
@@ -151,5 +162,5 @@ bindswitch --locked --reload lid:on exec ~/.local/bin/sway-handle-lid.sh
 set $laptop eDP-1
 exec_always export LAPTOP_OUTPUT=$laptop
 
-# Idle lock: 5 minutes (then displays off after 30s) + lock before sleep
-exec_always ~/.local/bin/run-swayidle 300
+# Idle lock: 5 minutes + lock before sleep
+exec_always ~/.local/bin/run-swayidle 3000

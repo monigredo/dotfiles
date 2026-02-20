@@ -4,7 +4,7 @@
   "height": 28,
   "modules-left": ["sway/workspaces"],
   "modules-center": [],
-  "modules-right": ["cpu", "memory", "network", "custom/mullvad", "custom/protonvpn", "bluetooth", "pulseaudio", "temperature", "battery", "clock"],
+  "modules-right": ["cpu", "memory", "network", "custom/kblayout", "custom/mullvad", "custom/protonvpn", "bluetooth", "pulseaudio", "temperature", "battery", "clock"],
 
   "memory": {
     "interval": 3,
@@ -19,6 +19,13 @@
     "tooltip-format": "{ifname} {ipaddr}  {bandwidthDownBits}  {bandwidthUpBits}",
     "interval": 3,
     "on-click": "nm-connection-editor"
+  },
+
+  "custom/kblayout": {
+    "exec": "/home/user/dotfiles/shell/.local/bin/sway-kblayout-waybar",
+    "interval": 1,
+    "format": " {}",
+    "tooltip": false
   },
 
   "custom/mullvad": {

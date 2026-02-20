@@ -227,6 +227,7 @@ stow shell
 stow sway
 stow waybar
 stow alacritty
+stow tmux
 stow git
 stow env
 ```
@@ -238,12 +239,14 @@ What each package is expected to do:
     - ensure `~/.local/bin` and `~/bin` are in PATH for shells.
     - aliases (`ls → eza` if installed, `cat → bat`, `grep → rg`, etc.).
   - `~/.local/bin/run-swayidle` (from above).
+  - `~/.local/bin/mullvad-autoconnect` (connects on login if disconnected).
 - `sway/`
   - `~/.config/sway/config`:
     - Alt as main modifier.
     - Keybindings (see cheat sheet below).
     - Lid binding → `sway-handle-lid.sh`.
     - Idle lock → `exec_always ~/.local/bin/run-swayidle 300` (locks after 5 minutes; turns displays off 30s after locking).
+    - Mullvad autoconnect → `exec_always ~/.local/bin/mullvad-autoconnect`.
 - `waybar/`
   - `~/.config/waybar/config` and `style.css`:
     - Right-side modules: CPU, memory, network, Mullvad + Proton VPN indicators, **bluetooth**, audio, temp, battery, clock.
@@ -254,6 +257,13 @@ What each package is expected to do:
 - `alacritty/`
   - `~/.config/alacritty/alacritty.toml`:
     - JetBrains Mono; dark theme; padding.
+    - `TERM=xterm-256color` for SSH compatibility.
+    - OSC52 copy enabled with `OnlyCopy`.
+- `tmux/`
+  - `~/.config/tmux/tmux.conf`:
+    - `default-terminal` uses `tmux-256color` when available, else `screen-256color`.
+    - Truecolor and clipboard terminal features for Alacritty.
+    - Vi copy-mode + sane history/window defaults.
 - `git/`
   - Extra git config if you add it (e.g. aliases).
 - `env/`
@@ -291,7 +301,16 @@ Behavior:
 - **Laptop only**: lid close → `swaylock` then `systemctl suspend`.
 - **Laptop + external monitor**: lid close → no suspend, no lock (you lock manually).
 
-### 7.3 Waybar: Bluetooth widget
+### 7.3 Mullvad autoconnect
+
+In `~/.config/sway/config`:
+
+```sway
+# Mullvad autoconnect after login
+exec_always ~/.local/bin/mullvad-autoconnect
+```
+
+### 7.4 Waybar: Bluetooth widget
 
 In `~/.config/waybar/config`:
 
@@ -344,7 +363,7 @@ In `style.css`:
 }
 ```
 
-### 7.4 Waybar: Network widget → `wifi-menu`
+### 7.5 Waybar: Network widget → `wifi-menu`
 
 In `~/.config/waybar/config` network module:
 
@@ -366,6 +385,7 @@ In `~/.config/sway/config` you should have (or add):
 ### Core
 
 - **Mod key**: `Alt` (`Mod1`).
+- `Alt+Enter` – Alacritty into persistent tmux session (`main`).
 - `Alt+Shift+Enter` – Alacritty (terminal).
 - `Alt+Space` – rofi app launcher.
 - `Alt+Q` – close window.
@@ -439,7 +459,20 @@ Then paste directly into ChatGPT when debugging.
 
 ---
 
-## 10. Typical “new user / new client persona” flow
+## 10. Terminal: Alacritty + tmux
+
+- Sway launch:
+  - `Alt+Enter` starts `alacritty -e tmux new-session -A -s main` (reattach/create `main`).
+- Manual launch:
+  - `tmux new -A -s main`
+- Clipboard model:
+  - Alacritty enables OSC52 with `OnlyCopy` (copy out allowed, clipboard reads blocked).
+  - tmux `set-clipboard` is auto-selected (`external` on tmux >= 2.6, `on` on older tmux).
+  - This supports local Wayland clipboard copy and remote SSH copy via OSC52-capable terminals.
+
+---
+
+## 11. Typical “new user / new client persona” flow
 
 For a fresh user (personal or client-specific):
 
@@ -495,7 +528,7 @@ For a fresh user (personal or client-specific):
 
    ```bash
    cd ~/dotfiles
-   stow shell sway waybar alacritty git env
+   stow shell sway waybar alacritty tmux git env
    ```
 
 9. **Log out and back into Sway** to ensure environment + configs are applied.
@@ -510,7 +543,7 @@ After that, the new user has:
 
 ---
 
-## 11. Troubleshooting
+## 12. Troubleshooting
 
 - **Stow conflicts**  
   Move or delete conflicting files under `$HOME`, then re-run `stow`. Conflicts mean there was an existing non-symlink file where Stow wants to place a symlink.

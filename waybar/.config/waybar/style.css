@@ -9,6 +9,7 @@ window#waybar {
 }
 
 #cpu,
+#custom-kblayout,
 #temperature,
 #battery,
 #clock,

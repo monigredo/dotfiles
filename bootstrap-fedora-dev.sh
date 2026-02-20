@@ -16,6 +16,7 @@ sudo dnf install -y \
   ripgrep \
   fd-find \
   bat \
+  alacritty \
   tmux \
   htop \
   wl-clipboard \

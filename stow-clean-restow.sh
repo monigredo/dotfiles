@@ -10,7 +10,7 @@ TARGET="${TARGET:-$HOME}"
 if [ "$#" -gt 0 ]; then
   PACKAGES=("$@")
 else
-  PACKAGES=(shell sway waybar alacritty git env)
+  PACKAGES=(shell sway waybar alacritty tmux git env)
 fi
 
 echo "[stow-clean] Target: $TARGET"

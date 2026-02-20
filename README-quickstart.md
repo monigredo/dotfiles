@@ -63,6 +63,7 @@ stow shell
 stow sway
 stow waybar
 stow alacritty
+stow tmux
 stow git
 stow env
 ```

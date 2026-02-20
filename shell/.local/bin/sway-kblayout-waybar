@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v swaymsg >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
+  printf '??\n'
+  exit 0
+fi
+
+layout=$(
+  {
+    swaymsg -r -t get_inputs 2>/dev/null \
+      | jq -r '.[] | select(.type == "keyboard" and .xkb_active_layout_name != null) | .xkb_active_layout_name' \
+      | head -n1
+  } || true
+)
+
+case "${layout,,}" in
+  *ukrainian*)
+    printf 'UA\n'
+    ;;
+  *english*|*us*)
+    printf 'US\n'
+    ;;
+  "")
+    printf '??\n'
+    ;;
+  *)
+    printf '%s\n' "$layout"
+    ;;
+esac
