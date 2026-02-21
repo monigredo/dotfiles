@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+countries=(al ar au at be br bg ca cl co hr cy cz dk ee fi fr de gr hk hu id ie il it jp my mx nl nz ng no pe ph pl pt ro rs sg sk si za es se ch th tr gb ua us)
+
+random_country=${countries[$((RANDOM % ${#countries[@]}))]}
+
+echo "Switching to random country: $random_country"
+mullvad relay set location "$random_country"
+mullvad connect
+
+sleep 1
+
+status=$(mullvad status)
+visible_location=$(echo "$status" | grep "Visible location:" | sed 's/.*Visible location: *//')
+
+echo "Connected to: $visible_location"
