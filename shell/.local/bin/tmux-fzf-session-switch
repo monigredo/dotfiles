@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v fzf >/dev/null 2>&1 || ! command -v fzf-tmux >/dev/null 2>&1; then
+  tmux display-message "fzf not installed (need fzf + fzf-tmux)"
+  exit 0
+fi
+
+choice="$(tmux list-sessions -F '#{session_name}' | fzf-tmux -p 80%,60%)" || exit 0
+[ -n "${choice:-}" ] || exit 0
+
+tmux switch-client -t "$choice" 2>/dev/null || tmux attach-session -t "$choice"

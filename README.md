@@ -264,6 +264,7 @@ What each package is expected to do:
     - `default-terminal` uses `tmux-256color` when available, else `screen-256color`.
     - Truecolor and clipboard terminal features for Alacritty.
     - Vi copy-mode + sane history/window defaults.
+    - fzf-powered switchers for sessions/windows/panes/buffers.
 - `git/`
   - Extra git config if you add it (e.g. aliases).
 - `env/`
@@ -470,6 +471,23 @@ Then paste directly into ChatGPT when debugging.
   - tmux `set-clipboard` is auto-selected (`external` on tmux >= 2.6, `on` on older tmux).
   - This supports local Wayland clipboard copy and remote SSH copy via OSC52-capable terminals.
 
+### 10.1 fzf-powered tmux navigation
+
+Dependencies:
+- Required: `fzf` (includes `fzf-tmux` on Fedora package builds).
+- Optional but useful for project picking: `fd`/`fd-find`, `ripgrep`.
+
+Bindings (tmux prefix + key):
+- `s` — Session switcher (`fzf-tmux` popup).
+- `w` — Window switcher in current session (`fzf-tmux` popup).
+- `p` — Pane switcher in current window (`fzf-tmux` popup).
+- `b` — Buffer selector + paste (`fzf-tmux` popup).
+- `f` — `tmux-sessionizer` project picker (`~/.local/bin/tmux-sessionizer`).
+
+Notes:
+- If `fzf` / `fzf-tmux` is missing, tmux shows a message instead of failing.
+- `tmux-sessionizer` scans project roots (`~/code`, `~/workdir`, `~/Documents`) for git repos, then creates/switches to a session based on selected directory name.
+
 ---
 
 ## 11. Typical “new user / new client persona” flow
@@ -523,6 +541,7 @@ For a fresh user (personal or client-specific):
    - `~/.local/bin/wifi-menu`
    - `~/.local/bin/sway-handle-lid.sh`
    - `~/.local/bin/run-swayidle` (via `stow shell`)
+   - `~/.local/bin/tmux-sessionizer` (via `stow shell`, optional)
 
 8. **Stow configs**:
 
@@ -579,6 +598,12 @@ After that, the new user has:
   ```
 
   And that the Waybar network `on-click` and Sway bindings point to `~/.local/bin/wifi-menu`.
+
+- **tmux binding shows “fzf not installed”**  
+  Install `fzf` and ensure `fzf-tmux` is on `PATH`.
+
+- **tmux popup picker doesn’t render correctly**  
+  Your tmux version may not support popup mode well; switch `fzf-tmux -p 80%,60%` to split mode (for example `fzf-tmux -d 40%`) in `~/.config/tmux/tmux.conf`.
 
 ---
 

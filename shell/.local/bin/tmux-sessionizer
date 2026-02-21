@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v fzf >/dev/null 2>&1; then
+  echo "fzf is required (install fzf first)." >&2
+  exit 1
+fi
+
+roots=("$@")
+if [ "${#roots[@]}" -eq 0 ]; then
+  roots=("$HOME/code" "$HOME/workdir" "$HOME/Documents")
+fi
+
+existing_roots=()
+for root in "${roots[@]}"; do
+  [ -d "$root" ] && existing_roots+=("$root")
+done
+
+if [ "${#existing_roots[@]}" -eq 0 ]; then
+  echo "No project roots found. Pass directories as args." >&2
+  exit 1
+fi
+
+if command -v fd >/dev/null 2>&1; then
+  fd_bin="fd"
+elif command -v fd-find >/dev/null 2>&1; then
+  fd_bin="fd-find"
+else
+  fd_bin=""
+fi
+
+if [ -n "$fd_bin" ]; then
+  projects="$("$fd_bin" -a -H -t d '^\.git$' "${existing_roots[@]}" 2>/dev/null | sed 's#/.git$##' | sort -u)"
+else
+  projects="$(find "${existing_roots[@]}" -mindepth 2 -maxdepth 5 -type d -name .git -print 2>/dev/null | sed 's#/.git$##' | sort -u)"
+fi
+
+if [ -z "${projects:-}" ]; then
+  projects="$(find "${existing_roots[@]}" -mindepth 1 -maxdepth 2 -type d -print 2>/dev/null | sort -u)"
+fi
+
+selected="$(printf '%s\n' "$projects" | fzf --height 40% --layout=reverse --border --prompt='Project > ')" || exit 0
+[ -z "$selected" ] && exit 0
+
+session_name="$(basename "$selected" | tr ' .:' '_' | tr -cd '[:alnum:]_-')"
+[ -z "$session_name" ] && session_name="session"
+
+if ! tmux has-session -t="$session_name" 2>/dev/null; then
+  tmux new-session -d -s "$session_name" -c "$selected"
+fi
+
+if [ -n "${TMUX:-}" ]; then
+  tmux switch-client -t "$session_name"
+else
+  tmux attach-session -t "$session_name"
+fi
