@@ -64,7 +64,6 @@ stow sway
 stow waybar
 stow alacritty
 stow tmux
-stow git
 stow env
 ```
 
@@ -81,7 +80,7 @@ This picks up:
 - Sway config + keybinds
 - Waybar config
 - Alacritty config
-- Shell/git config
+- Shell config
 - Helper scripts in \`~/.local/bin\`
 
 ---

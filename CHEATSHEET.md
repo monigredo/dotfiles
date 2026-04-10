@@ -1,3 +1,2 @@
 # stow
-stow alacritty git shell sway waybar
-
+stow alacritty shell sway waybar

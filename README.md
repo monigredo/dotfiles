@@ -230,7 +230,6 @@ stow sway
 stow waybar
 stow alacritty
 stow tmux
-stow git
 stow env
 ```
 
@@ -267,8 +266,6 @@ What each package is expected to do:
     - Truecolor and clipboard terminal features for Alacritty.
     - Vi copy-mode + sane history/window defaults.
     - fzf-powered switchers for sessions/windows/panes/buffers.
-- `git/`
-  - Extra git config if you add it (e.g. aliases).
 - `env/`
   - Optional: `~/.config/environment.d/10-local-bin.conf` if you decide to keep it.  
     GUI config mostly uses explicit `~/.local/bin/...`, so this is optional.
@@ -549,7 +546,7 @@ For a fresh user (personal or client-specific):
 
    ```bash
    cd ~/dotfiles
-   stow shell sway waybar alacritty tmux git env
+   stow shell sway waybar alacritty tmux env
    ```
 
 9. **Log out and back into Sway** to ensure environment + configs are applied.
