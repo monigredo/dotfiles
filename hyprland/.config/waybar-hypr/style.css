@@ -1,20 +1,92 @@
 * {
   font-family: JetBrainsMono, monospace;
   font-size: 12px;
+  min-height: 0;
 }
 
 window#waybar {
-  background: #111111;
-  color: #ffffff;
+  background: transparent;
+  color: #d8dee9;
 }
 
-#cpu,
+window#waybar > box {
+  margin: 12px 14px 0 14px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, rgba(31, 36, 46, 0.94), rgba(18, 22, 30, 0.9));
+  border: 1px solid rgba(136, 192, 208, 0.18);
+  border-radius: 16px;
+}
+
+#workspaces {
+  padding: 0;
+}
+
+#workspaces button {
+  min-width: 28px;
+  padding: 0 14px;
+  margin: 0 6px 0 0;
+  border-radius: 12px;
+  color: #9aa5b5;
+  background: rgba(59, 66, 82, 0.4);
+  border: 1px solid rgba(136, 192, 208, 0.08);
+  transition: none;
+}
+
+#workspaces button:hover {
+  background: rgba(94, 129, 172, 0.45);
+  color: #eceff4;
+}
+
+#workspaces button.active {
+  background: linear-gradient(180deg, #81a1c1, #5e81ac);
+  color: #eceff4;
+  border-color: rgba(216, 222, 233, 0.22);
+}
+
+#workspaces button.urgent {
+  background: #bf616a;
+  color: #eceff4;
+}
+
+#memory,
+#network,
 #custom-kblayout,
+#custom-mullvad,
+#custom-protonvpn,
+#bluetooth,
+#pulseaudio,
 #temperature,
 #battery,
 #clock,
-#workspaces button {
-  padding: 0 8px;
+#custom-cpugraph {
+  margin-left: 8px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: rgba(46, 52, 64, 0.78);
+  border: 1px solid rgba(136, 192, 208, 0.08);
+}
+
+#memory,
+#custom-cpugraph {
+  background: rgba(67, 76, 94, 0.72);
+}
+
+#network,
+#custom-kblayout,
+#bluetooth {
+  background: rgba(52, 66, 86, 0.8);
+}
+
+#custom-mullvad,
+#custom-protonvpn,
+#pulseaudio {
+  background: rgba(56, 61, 77, 0.88);
+}
+
+#temperature,
+#battery,
+#clock {
+  background: rgba(64, 72, 92, 0.88);
 }
 
 #battery.warning {
@@ -25,16 +97,8 @@ window#waybar {
   color: #ff5555;
 }
 
-#pulseaudio {
-  padding: 0 8px;
-}
-
 #pulseaudio.muted {
   color: #ff5555;
-}
-
-#bluetooth {
-  padding: 0 8px;
 }
 
 #bluetooth.connected {
@@ -49,10 +113,6 @@ window#waybar {
   color: #bf616a;
 }
 
-#custom-mullvad {
-  padding: 0 8px;
-}
-
 #custom-mullvad.connected {
   color: #a3be8c;
 }
@@ -63,10 +123,6 @@ window#waybar {
 
 #custom-mullvad.connecting {
   color: #ffb86c;
-}
-
-#custom-protonvpn {
-  padding: 0 8px;
 }
 
 #custom-protonvpn.connected {
@@ -81,11 +137,13 @@ window#waybar {
   color: #ffb86c;
 }
 
-#custom-cpugraph {
-  padding: 0 8px;
+#clock {
+  padding: 0 14px;
+  color: #eceff4;
+  background: linear-gradient(180deg, rgba(94, 129, 172, 0.92), rgba(76, 86, 106, 0.96));
 }
 
 #custom-cpugraph graph {
-  background: #a3be8c;
-  color: #a3be8c;
+  background: #88c0d0;
+  color: #88c0d0;
 }
