@@ -73,12 +73,14 @@ What it does:
 - **System packages** via `dnf`:
   - Core CLI tools:  
     `git`, `zsh`, `fzf`, `ripgrep`, `fd-find`, `bat`, `tmux`, `htop`, `wl-clipboard`, `jq`, `unzip`, etc.
+  - Sway desktop runtime:
+    `sway`, `swayidle`, `swaylock`, `waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `nm-connection-editor`
   - Containers:  
     `podman`, `podman-docker`, `podman-compose`
   - Java:  
     `java-21-openjdk`, `java-21-openjdk-devel`
   - Misc:  
-    `flatpak`, `pipx`, `jetbrains-mono-fonts`, `NetworkManager-tui`, and others as added.
+    `flatpak`, `pipx`, `jetbrains-mono-fonts`, `NetworkManager-tui`, `gh`, and others as added.
 - **pipx & CLI helper**:
   - `pipx ensurepath`
   - `pipx install files-to-prompt`
@@ -245,7 +247,7 @@ What each package is expected to do:
     - Alt as main modifier.
     - Keybindings (see cheat sheet below).
     - Lid binding → `sway-handle-lid.sh`.
-    - Idle lock → `exec_always ~/.local/bin/run-swayidle 300` (locks after 5 minutes; turns displays off 30s after locking).
+    - Idle lock → `exec_always ~/.local/bin/run-swayidle 3000` (locks after 50 minutes; turns displays off 30s after locking).
     - Mullvad autoconnect → `exec_always ~/.local/bin/mullvad-autoconnect`.
 - `waybar/`
   - `~/.config/waybar/config` and `style.css`:
@@ -282,8 +284,8 @@ If `stow` complains about conflicts, move the existing file into the appropriate
 In `~/.config/sway/config` (managed by `stow`):
 
 ```sway
-# Idle lock: 5 minutes + screen off 30s after lock + lock before sleep
-exec_always ~/.local/bin/run-swayidle 300
+# Idle lock: 50 minutes + screen off 30s after lock + lock before sleep
+exec_always ~/.local/bin/run-swayidle 3000
 ```
 
 To test quickly, you can temporarily use `10` instead of `900`, reload Sway, and see if it locks after ~10s of inactivity.
@@ -577,7 +579,7 @@ After that, the new user has:
   You should see a `swayidle` process. If not, confirm this line exists in `sway/config` and the script is executable:
 
   ```sway
-  exec_always ~/.local/bin/run-swayidle 300
+  exec_always ~/.local/bin/run-swayidle 3000
   ```
 
 - **Bluetooth menu doesn’t open from widget/hotkey**  

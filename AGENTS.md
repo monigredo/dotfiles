@@ -11,6 +11,7 @@
   ```bash
   ./bootstrap-fedora-dev.sh
   ```
+  Includes the current Sway desktop runtime used by the repo (`sway`, `swayidle`, `swaylock`, `waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `nm-connection-editor`, `NetworkManager-tui`, `gh`).
 - Restow cleanly (removes conflicting files first, then stows common packages):  
   ```bash
   ./stow-clean-restow.sh                # defaults to shell sway waybar alacritty tmux git env

@@ -22,7 +22,7 @@
   },
 
   "custom/kblayout": {
-    "exec": "/home/user/dotfiles/shell/.local/bin/sway-kblayout-waybar",
+    "exec": "~/.local/bin/sway-kblayout-waybar",
     "interval": 1,
     "format": " {}",
     "tooltip": false

@@ -10,6 +10,7 @@ echo "[+] Installing core CLI tools..."
 sudo dnf install -y \
   curl \
   git \
+  gh \
   zsh \
   stow \
   fzf \
@@ -23,6 +24,19 @@ sudo dnf install -y \
   jq \
   unzip \
   dnf-plugins-core \
+  jetbrains-mono-fonts \
+  sway \
+  swayidle \
+  swaylock \
+  waybar \
+  rofi-wayland \
+  grim \
+  slurp \
+  brightnessctl \
+  playerctl \
+  pavucontrol \
+  wireplumber \
+  nm-connection-editor \
   podman \
   podman-docker \
   podman-compose \
@@ -202,6 +216,31 @@ if [ -n "${ROFI_BT_DIR:-}" ] && [ -f "$ROFI_BT_DIR/rofi-bluetooth" ]; then
   ln -sf "$ROFI_BT_DIR/rofi-bluetooth" "$ROFI_BT_TARGET"
   chmod +x "$ROFI_BT_TARGET"
 fi
+
+echo "[+] Checking required desktop commands..."
+required_cmds=(
+  sway
+  swayidle
+  swaylock
+  waybar
+  rofi
+  alacritty
+  grim
+  slurp
+  wl-copy
+  brightnessctl
+  playerctl
+  wpctl
+  pavucontrol
+  nmtui
+  nm-connection-editor
+)
+
+for cmd in "${required_cmds[@]}"; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "    WARNING: missing command: $cmd" >&2
+  fi
+done
 
 
 echo "[+] Optional: Codex CLI binary install..."
