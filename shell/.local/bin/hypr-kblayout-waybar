@@ -9,7 +9,10 @@ fi
 layout=$(
   {
     hyprctl -j devices 2>/dev/null \
-      | jq -r '.keyboards[]? | select(.active_keymap != null) | .active_keymap' \
+      | jq -r '(
+          [.keyboards[]? | select(.main == true and .active_keymap != null) | .active_keymap] +
+          [.keyboards[]? | select(.active_keymap != null) | .active_keymap]
+        ) | .[0] // empty' \
       | head -n1
   } || true
 )
