@@ -1,10 +1,10 @@
-# Fedora + Sway Dev Dotfiles
+# Fedora + Sway/Hyprland Dev Dotfiles
 
-Opinionated dotfiles for a **dev-focused Fedora + Sway** setup on a Framework 13 AMD (or similar laptop).
+Opinionated dotfiles for a **dev-focused Fedora + Sway/Hyprland** setup on a Framework 13 AMD (or similar laptop).
 
 Goals:
 
-- Keyboard-driven Wayland workflow (Sway + Waybar).
+- Keyboard-driven Wayland workflow (Sway + Hyprland + Waybar).
 - Reproducible setup via **GNU Stow**.
 - Good defaults for **development**: git, Java, containers, Alacritty, rofi.
 - Small helper scripts in `~/.local/bin` for:
@@ -13,7 +13,7 @@ Goals:
   - Wi-Fi TUI,
   - Bluetooth control via rofi.
 
-> Target OS: **Fedora Workstation (Wayland)** with **Sway** and **NetworkManager**.
+> Target OS: **Fedora Workstation (Wayland)** with **Sway**, **Hyprland**, and **NetworkManager**.
 
 ---
 
@@ -75,6 +75,10 @@ What it does:
     `git`, `zsh`, `fzf`, `ripgrep`, `fd-find`, `bat`, `tmux`, `htop`, `wl-clipboard`, `jq`, `unzip`, etc.
   - Sway desktop runtime:
     `sway`, `swayidle`, `swaylock`, `waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `nm-connection-editor`
+  - Hyprland desktop runtime:
+    `hyprland`, `hypridle`, `hyprlock`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-hyprland`, `xdg-desktop-portal-gtk`, `qt6-qtwayland`
+    - If `hyprland` is not available in the enabled standard Fedora repos, bootstrap prompts before enabling the `solopasha/hyprland` COPR.
+    - You can skip Hyprland install and keep a Sway-only baseline.
   - Containers:  
     `podman`, `podman-docker`, `podman-compose`
   - Java:  
@@ -231,6 +235,7 @@ stow waybar
 stow alacritty
 stow tmux
 stow env
+stow hyprland
 ```
 
 What each package is expected to do:
@@ -269,6 +274,11 @@ What each package is expected to do:
 - `env/`
   - Optional: `~/.config/environment.d/10-local-bin.conf` if you decide to keep it.  
     GUI config mostly uses explicit `~/.local/bin/...`, so this is optional.
+- `hyprland/`
+  - `~/.config/hypr/hyprland.conf`, `hypridle.conf`, `hyprlock.conf`
+  - `~/.config/mako/config`
+  - `~/.config/waybar-hypr/config` and `style.css`
+  - Hyprland-specific session glue while preserving the existing Sway package.
 
 If `stow` complains about conflicts, move the existing file into the appropriate place under `~/dotfiles/...` and re-run `stow`.
 
@@ -429,7 +439,7 @@ bindsym $mod+Ctrl+n exec nm-connection-editor
 bindsym Ctrl+Alt+q exec swaylock -f -c 000000
 ```
 
-- Auto-lock after `run-swayidle` timeout (e.g. 300s) and turn screens off 30s later.
+- Auto-lock after `run-swayidle` timeout (currently 3000s) and turn screens off 30s later.
 - Lid close → `sway-handle-lid.sh`.
 
 ---
@@ -549,7 +559,9 @@ For a fresh user (personal or client-specific):
    stow shell sway waybar alacritty tmux env
    ```
 
-9. **Log out and back into Sway** to ensure environment + configs are applied.
+9. **Log out and choose a session in GDM** to ensure environment + configs are applied.
+   - Choose `Sway` to keep the current workflow.
+   - Choose `Hyprland` to test the additive migration path on the same user.
 
 After that, the new user has:
 

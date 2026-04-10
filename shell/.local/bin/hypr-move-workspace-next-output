@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v hyprctl >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
+  exit 0
+fi
+
+current_output="$(
+  hyprctl -j monitors \
+    | jq -r '.[] | select(.focused == true) | .name'
+)"
+
+mapfile -t active_outputs < <(
+  hyprctl -j monitors \
+    | jq -r '.[] | select(.disabled != true) | .name'
+)
+
+if [ "${#active_outputs[@]}" -lt 2 ]; then
+  exit 0
+fi
+
+target_output=""
+
+for i in "${!active_outputs[@]}"; do
+  if [ "${active_outputs[$i]}" = "$current_output" ]; then
+    next_index=$(( (i + 1) % ${#active_outputs[@]} ))
+    target_output="${active_outputs[$next_index]}"
+    break
+  fi
+done
+
+if [ -z "$target_output" ]; then
+  exit 1
+fi
+
+hyprctl dispatch movecurrentworkspacetomonitor "$target_output" >/dev/null
+hyprctl dispatch focusmonitor "$target_output" >/dev/null

@@ -2,49 +2,108 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+LEGACY_GITCONFIG_PATH="$HOME/.gitconfig"
+
+if [ -L "$LEGACY_GITCONFIG_PATH" ] && [ "$(readlink -f "$LEGACY_GITCONFIG_PATH")" = "$DOTFILES_DIR/git/.gitconfig" ]; then
+  echo "[+] Removing legacy stowed ~/.gitconfig symlink..."
+  rm -f "$LEGACY_GITCONFIG_PATH"
+fi
 
 echo "[+] Updating system..."
 sudo dnf update -y
 
-echo "[+] Installing core CLI tools..."
-sudo dnf install -y \
-  curl \
-  git \
-  gh \
-  zsh \
-  stow \
-  fzf \
-  ripgrep \
-  fd-find \
-  bat \
-  alacritty \
-  tmux \
-  htop \
-  wl-clipboard \
-  jq \
-  unzip \
-  dnf-plugins-core \
-  jetbrains-mono-fonts \
-  sway \
-  swayidle \
-  swaylock \
-  waybar \
-  rofi-wayland \
-  grim \
-  slurp \
-  brightnessctl \
-  playerctl \
-  pavucontrol \
-  wireplumber \
-  nm-connection-editor \
-  podman \
-  podman-docker \
-  podman-compose \
-  java-21-openjdk \
-  java-21-openjdk-devel \
-  flatpak \
-  pipx \
+BASE_PACKAGES=(
+  curl
+  git
+  gh
+  zsh
+  stow
+  fzf
+  ripgrep
+  fd-find
+  bat
+  alacritty
+  tmux
+  htop
+  wl-clipboard
+  jq
+  unzip
+  dnf-plugins-core
+  jetbrains-mono-fonts
+  sway
+  swayidle
+  swaylock
+  waybar
+  rofi-wayland
+  grim
+  slurp
+  brightnessctl
+  playerctl
+  pavucontrol
+  wireplumber
+  nm-connection-editor
+  podman
+  podman-docker
+  podman-compose
+  java-21-openjdk
+  java-21-openjdk-devel
+  flatpak
+  pipx
   direnv
+)
+
+HYPRLAND_PACKAGES=(
+  hyprland
+  hypridle
+  hyprlock
+  qt6-qtwayland
+  mako
+  lxqt-policykit
+  xdg-desktop-portal
+  xdg-desktop-portal-hyprland
+  xdg-desktop-portal-gtk
+)
+
+echo "[+] Installing base CLI and Sway desktop packages..."
+sudo dnf install -y \
+  "${BASE_PACKAGES[@]}"
+
+hyprland_install_mode="official"
+
+if ! dnf -q list --available hyprland </dev/null >/dev/null 2>&1; then
+  hyprland_install_mode="missing"
+fi
+
+echo "[+] Checking Hyprland package availability..."
+
+if [ "$hyprland_install_mode" = "missing" ] && [ -t 0 ] && [ -r /dev/tty ]; then
+  echo "[!] Hyprland packages are not available in the current enabled standard repositories."
+  echo "    Fedora 43 currently needs an extra source such as the solopasha/hyprland COPR."
+  echo "    This is optional. You can skip Hyprland install and keep the Sway baseline only."
+  echo "    Enable COPR solopasha/hyprland and install Hyprland packages? [y/N]" > /dev/tty
+  read -r enable_hypr_copr < /dev/tty
+  case "$enable_hypr_copr" in
+    [yY]|[yY][eE][sS])
+      echo "[+] Enabling COPR repository for Hyprland..."
+      sudo dnf copr enable -y solopasha/hyprland
+      hyprland_install_mode="copr"
+      ;;
+    *)
+      hyprland_install_mode="skip"
+      ;;
+  esac
+elif [ "$hyprland_install_mode" = "missing" ]; then
+  echo "[!] Hyprland packages are not available in the current enabled standard repositories."
+  echo "    Interactive terminal not available; skipping Hyprland package install."
+  hyprland_install_mode="skip"
+fi
+
+if [ "$hyprland_install_mode" != "skip" ]; then
+  echo "[+] Installing Hyprland session packages..."
+  sudo dnf install -y "${HYPRLAND_PACKAGES[@]}"
+else
+  echo "[+] Skipping Hyprland package install."
+fi
 
 echo "[+] Installing dev fonts (JetBrains Mono + FiraCode Nerd Font)..."
 
@@ -241,6 +300,32 @@ for cmd in "${required_cmds[@]}"; do
     echo "    WARNING: missing command: $cmd" >&2
   fi
 done
+
+if [ "$hyprland_install_mode" != "skip" ]; then
+  hyprland_required_cmds=(
+    Hyprland
+    hyprctl
+    hypridle
+    hyprlock
+    mako
+  )
+
+  for cmd in "${hyprland_required_cmds[@]}"; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+      echo "    WARNING: missing command: $cmd" >&2
+    fi
+  done
+
+  required_files=(
+    /usr/libexec/lxqt-policykit-agent
+  )
+
+  for path in "${required_files[@]}"; do
+    if [ ! -x "$path" ]; then
+      echo "    WARNING: missing executable: $path" >&2
+    fi
+  done
+fi
 
 
 echo "[+] Optional: Codex CLI binary install..."

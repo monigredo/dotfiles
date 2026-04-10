@@ -1,4 +1,4 @@
-# Fedora + Sway dotfiles – Quickstart for a NEW user
+# Fedora + Sway/Hyprland dotfiles – Quickstart for a NEW user
 
 This is the **short, command-only** checklist to bring a fresh user into your standard dev environment.
 
@@ -65,19 +65,23 @@ stow waybar
 stow alacritty
 stow tmux
 stow env
+stow hyprland
 ```
 
 If \`stow\` reports conflicts, resolve them (move/delete old files) and re-run.
 
 ---
 
-## 5. Log out and back into Sway
+## 5. Log out and choose a session in GDM
 
 - Log out of the session.
-- Log back in and start Sway (your usual way).
+- At the Fedora login screen, choose either:
+  - `Sway`
+  - `Hyprland`
 
 This picks up:
 - Sway config + keybinds
+- Hyprland config
 - Waybar config
 - Alacritty config
 - Shell config
@@ -100,4 +104,4 @@ wifi-menu
 rofi-bluetooth
 ```
 
-If those work and Sway keybindings feel right, the new user is fully bootstrapped.
+If those work and the chosen session behaves correctly, the new user is fully bootstrapped.

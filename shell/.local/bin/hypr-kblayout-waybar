@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v hyprctl >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
+  printf '??\n'
+  exit 0
+fi
+
+layout=$(
+  {
+    hyprctl -j devices 2>/dev/null \
+      | jq -r '.keyboards[]? | select(.active_keymap != null) | .active_keymap' \
+      | head -n1
+  } || true
+)
+
+case "${layout,,}" in
+  *ukrainian*)
+    printf 'UA\n'
+    ;;
+  *english*|*us*)
+    printf 'US\n'
+    ;;
+  "")
+    printf '??\n'
+    ;;
+  *)
+    printf '%s\n' "$layout"
+    ;;
+esac
