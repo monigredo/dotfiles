@@ -9,6 +9,27 @@ json_escape() {
   printf '%s' "$value"
 }
 
+short_location() {
+  local value=${1:-}
+  local token
+  local -a parts
+
+  value=$(printf '%s' "$value" | sed -E 's/^[[:space:]]*Relay:[[:space:]]*//')
+  token=${value%% *}
+
+  if [[ -z $token ]]; then
+    printf 'ON'
+    return
+  fi
+
+  IFS='-' read -r -a parts <<<"$token"
+  if (( ${#parts[@]} >= 2 )); then
+    printf '%s-%s' "${parts[0]^^}" "${parts[1]^^}"
+  else
+    printf '%s' "${token^^}"
+  fi
+}
+
 detect_state() {
   local line=$1
   shopt -s nocasematch
@@ -25,7 +46,7 @@ detect_state() {
 }
 
 print_status() {
-  local output status_line state icon text tooltip
+  local output status_line relay_line state icon text tooltip
 
   if ! command -v mullvad >/dev/null 2>&1; then
     printf '{"text":" mullvad missing","tooltip":"mullvad CLI not found","class":["mullvad","error"]}\n'
@@ -38,6 +59,7 @@ print_status() {
   fi
 
   status_line=$(printf '%s\n' "$output" | head -n 1)
+  relay_line=$(printf '%s\n' "$output" | grep -i '^[[:space:]]*Relay:' | head -n 1 || true)
   state=$(detect_state "$status_line")
 
   case $state in
@@ -46,11 +68,26 @@ print_status() {
     *) icon="" ;;
   esac
 
-  text=${status_line#Status: }
+  case $state in
+    connected)
+      if [[ -n $relay_line ]]; then
+        text="$icon $(short_location "$relay_line")"
+      else
+        text="$icon"
+      fi
+      ;;
+    connecting)
+      text="$icon"
+      ;;
+    *)
+      text="$icon"
+      ;;
+  esac
+
   tooltip=$output
 
   printf '{"text":"%s","tooltip":"%s","class":["mullvad","%s"]}\n' \
-    "$(json_escape "$icon $text")" \
+    "$(json_escape "$text")" \
     "$(json_escape "$tooltip")" \
     "$state"
 }

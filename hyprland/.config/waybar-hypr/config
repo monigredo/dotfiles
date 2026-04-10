@@ -4,7 +4,7 @@
   "height": 34,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": [],
-  "modules-right": ["custom/cpugraph", "memory", "network", "custom/kblayout", "custom/mullvad", "custom/protonvpn", "bluetooth", "pulseaudio", "temperature", "battery", "clock"],
+  "modules-right": ["custom/mullvad", "custom/protonvpn", "custom/cpugraph", "memory", "temperature", "battery", "bluetooth", "custom/kblayout", "network", "pulseaudio", "clock"],
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
@@ -12,7 +12,7 @@
   },
   "memory": {
     "interval": 3,
-    "format": "󰍛 {used:0.1f}G",
+    "format": "󰍛 {used:0.0f}G",
     "tooltip": true
   },
   "network": {
@@ -46,9 +46,11 @@
     "on-click": "~/.local/bin/protonvpn-waybar toggle && pkill -RTMIN+9 waybar"
   },
   "bluetooth": {
-    "format": "󰂯 {status}",
+    "format": "󰂯",
     "controller": "hci0",
     "format-disabled": "",
+    "format-off": "󰂯",
+    "format-on": "󰂯",
     "format-connected": "󰂱 {num_connections} connected",
     "tooltip-format": "{controller_alias}\t{controller_address}",
     "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
@@ -64,7 +66,7 @@
   "temperature": {
     "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",
     "critical-threshold": 80,
-    "format": "󰔏 {temperatureC}°C"
+    "format": "󰔏 {temperatureC}°"
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",
@@ -84,7 +86,7 @@
       "warning": 25,
       "critical": 10
     },
-    "icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾"]
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾"]
   },
   "clock": {
     "format": "󰥔 {:%a %d %b  %H:%M}",
