@@ -11,7 +11,7 @@ OTHER_COUNT=$(swaymsg -t get_outputs -r \
 if [ "$OTHER_COUNT" -eq 0 ]; then
   # No external monitors: lock + suspend
   if command -v swaylock >/dev/null 2>&1; then
-    swaylock -f -c 000000 &
+    swaylock -f -c 000000 -k &
     sleep 0.2
   fi
 

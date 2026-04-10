@@ -81,3 +81,12 @@ window#waybar {
 #custom-protonvpn.connecting {
   color: #ffb86c;
 }
+
+#custom-cpugraph {
+  padding: 0 8px;
+}
+
+#custom-cpugraph graph {
+  background: #a3be8c;
+  color: #a3be8c;
+}

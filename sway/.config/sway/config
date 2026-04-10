@@ -52,6 +52,7 @@ bindsym $mod+q kill
 
 # Keyboard layout switch (US <-> Ukrainian)
 bindsym Ctrl+space input type:keyboard xkb_switch_layout next
+bindsym --locked Ctrl+space input type:keyboard xkb_switch_layout next
 
 # --- Focus movement (arrow-based) ---
 bindsym $mod+Left  focus left
@@ -102,6 +103,9 @@ bindsym Ctrl+$mod+Shift+9 move container to workspace $ws9
 bindsym Ctrl+Left  workspace prev
 bindsym Ctrl+Right workspace next
 
+# Move current workspace to the other monitor
+bindsym $mod+n exec ~/.local/bin/sway-move-workspace-next-output
+
 # 3-finger swipe on touchpad to switch workspaces (Mac-style)
 # swipe left  = go to next workspace
 # swipe right = go to previous workspace
@@ -140,7 +144,7 @@ bindsym $mod+Ctrl+n exec nm-connection-editor
 
 # --- Manual lock: Ctrl + Alt + Q ---
 # (Mod1 = Alt in our config)
-bindsym Ctrl+Mod1+q exec swaylock -f -c 000000
+    bindsym Ctrl+Mod1+q exec swaylock -f -c 000000 -k
 
 # --- Reload / exit Sway ---
 bindsym $mod+Shift+c reload

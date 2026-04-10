@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+current_output="$(
+  swaymsg -t get_workspaces -r \
+    | jq -r '.[] | select(.focused == true) | .output'
+)"
+
+mapfile -t active_outputs < <(
+  swaymsg -t get_outputs -r \
+    | jq -r '.[] | select(.active == true) | .name'
+)
+
+if [ "${#active_outputs[@]}" -lt 2 ]; then
+  exit 0
+fi
+
+target_output=""
+
+for i in "${!active_outputs[@]}"; do
+  if [ "${active_outputs[$i]}" = "$current_output" ]; then
+    next_index=$(( (i + 1) % ${#active_outputs[@]} ))
+    target_output="${active_outputs[$next_index]}"
+    break
+  fi
+done
+
+if [ -z "$target_output" ]; then
+  exit 1
+fi
+
+swaymsg "move workspace to output $target_output, focus output $target_output"

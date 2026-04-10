@@ -4,7 +4,7 @@
   "height": 28,
   "modules-left": ["sway/workspaces"],
   "modules-center": [],
-  "modules-right": ["cpu", "memory", "network", "custom/kblayout", "custom/mullvad", "custom/protonvpn", "bluetooth", "pulseaudio", "temperature", "battery", "clock"],
+  "modules-right": ["custom/cpugraph", "memory", "network", "custom/kblayout", "custom/mullvad", "custom/protonvpn", "bluetooth", "pulseaudio", "temperature", "battery", "clock"],
 
   "memory": {
     "interval": 3,
@@ -57,10 +57,11 @@
     "on-click": "~/.local/bin/rofi-bluetooth"
   },
 
-
-  "cpu": {
-    "format": " {usage:>2}%",
-    "tooltip": true
+  "custom/cpugraph": {
+    "interval": 1,
+    "exec": "$HOME/.local/bin/waybar-cpu-graph",
+    "format": "{}",
+    "tooltip": false
   },
 
   "temperature": {

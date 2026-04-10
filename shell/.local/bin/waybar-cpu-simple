@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+exec "${BASH_SOURCE%/*}/waybar-cpu-graph"

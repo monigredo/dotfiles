@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+HISTORY_FILE="${XDG_RUNTIME_DIR:-/tmp}/waybar-cpu-graph.history"
+MAX_HISTORY=24
+SPARK_CHARS=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
+
+get_usage() {
+    LANG=C top -bn1 | awk -F'[, ]+' '/^%?Cpu\(s\)/ {print 100 - $8; exit}'
+}
+
+trim_history() {
+    if [[ ! -f "$HISTORY_FILE" ]]; then
+        return
+    fi
+
+    mapfile -t values < "$HISTORY_FILE"
+    if (( ${#values[@]} > MAX_HISTORY )); then
+        values=("${values[@]: -$MAX_HISTORY}")
+    fi
+    printf '%s\n' "${values[@]}" > "$HISTORY_FILE"
+}
+
+append_history() {
+    local current=$1
+    mkdir -p "$(dirname "$HISTORY_FILE")"
+    printf '%s\n' "$current" >> "$HISTORY_FILE"
+    trim_history
+}
+
+render_graph() {
+    local graph=""
+    local val
+    while IFS= read -r val; do
+        [[ -z "$val" ]] && continue
+        local level
+        level=$(awk -v value="$val" 'BEGIN {
+            idx = int((value / 100) * 7 + 0.5)
+            if (idx < 0) idx = 0
+            if (idx > 7) idx = 7
+            print idx
+        }')
+        graph+="${SPARK_CHARS[level]}"
+    done < "$HISTORY_FILE"
+
+    printf '%s' "$graph"
+}
+
+main() {
+    local usage
+    usage=$(get_usage)
+    usage=${usage:-0}
+
+    local usage_display
+    usage_display=$(awk -v value="$usage" 'BEGIN { printf "%.1f", value }')
+
+    append_history "$usage_display"
+
+    local graph
+    graph=$(render_graph)
+
+    printf "CPU %s%% %s\n" "$usage_display" "$graph"
+}
+
+main
