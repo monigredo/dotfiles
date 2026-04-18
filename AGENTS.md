@@ -11,7 +11,7 @@
   ```bash
   ./bootstrap-fedora-dev.sh
   ```
-  Includes the current Sway desktop runtime plus an optional Hyprland runtime used by the repo (`sway`, `swayidle`, `swaylock`, `hyprland`, `hypridle`, `hyprlock`, `waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `qt6-qtwayland`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-hyprland`, `xdg-desktop-portal-gtk`, `nm-connection-editor`, `NetworkManager-tui`, `gh`).
+  Includes core CLI tooling, shared Wayland desktop support (`waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-gtk`, `nm-connection-editor`), the current Sway runtime (`sway`, `swayidle`, `swaylock`), plus an optional Hyprland runtime used by the repo (`hyprland`, `hypridle`, `hyprlock`, `qt6-qtwayland`, `xdg-desktop-portal-hyprland`).
   Fedora 43 Hyprland support is currently experimental and may rely on the `solopasha/hyprland` COPR; optional packages such as `hyprland-qtutils` are not treated as bootstrap requirements because they can lag behind Fedora Qt updates.
 - Restow cleanly (removes conflicting files first, then stows common packages):  
   ```bash

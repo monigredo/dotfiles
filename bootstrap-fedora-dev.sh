@@ -12,7 +12,7 @@ fi
 echo "[+] Updating system..."
 sudo dnf update -y
 
-BASE_PACKAGES=(
+CORE_PACKAGES=(
   curl
   git
   gh
@@ -30,18 +30,6 @@ BASE_PACKAGES=(
   unzip
   dnf-plugins-core
   jetbrains-mono-fonts
-  sway
-  swayidle
-  swaylock
-  waybar
-  rofi-wayland
-  grim
-  slurp
-  brightnessctl
-  playerctl
-  pavucontrol
-  wireplumber
-  nm-connection-editor
   podman
   podman-docker
   podman-compose
@@ -52,21 +40,41 @@ BASE_PACKAGES=(
   direnv
 )
 
+SHARED_WAYLAND_PACKAGES=(
+  waybar
+  rofi-wayland
+  grim
+  slurp
+  brightnessctl
+  playerctl
+  pavucontrol
+  wireplumber
+  nm-connection-editor
+  mako
+  lxqt-policykit
+  xdg-desktop-portal
+  xdg-desktop-portal-gtk
+)
+
+SWAY_PACKAGES=(
+  sway
+  swayidle
+  swaylock
+)
+
 HYPRLAND_PACKAGES=(
   hyprland
   hypridle
   hyprlock
   qt6-qtwayland
-  mako
-  lxqt-policykit
-  xdg-desktop-portal
   xdg-desktop-portal-hyprland
-  xdg-desktop-portal-gtk
 )
 
-echo "[+] Installing base CLI and Sway desktop packages..."
+echo "[+] Installing core CLI, shared Wayland desktop, and Sway packages..."
 sudo dnf install -y \
-  "${BASE_PACKAGES[@]}"
+  "${CORE_PACKAGES[@]}" \
+  "${SHARED_WAYLAND_PACKAGES[@]}" \
+  "${SWAY_PACKAGES[@]}"
 
 hyprland_install_mode="official"
 

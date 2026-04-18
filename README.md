@@ -73,10 +73,12 @@ What it does:
 - **System packages** via `dnf`:
   - Core CLI tools:  
     `git`, `zsh`, `fzf`, `ripgrep`, `fd-find`, `bat`, `tmux`, `htop`, `wl-clipboard`, `jq`, `unzip`, etc.
+  - Shared Wayland desktop support:
+    `waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `nm-connection-editor`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-gtk`
   - Sway desktop runtime:
-    `sway`, `swayidle`, `swaylock`, `waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `nm-connection-editor`
+    `sway`, `swayidle`, `swaylock`
   - Hyprland desktop runtime:
-    `hyprland`, `hypridle`, `hyprlock`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-hyprland`, `xdg-desktop-portal-gtk`, `qt6-qtwayland`
+    `hyprland`, `hypridle`, `hyprlock`, `xdg-desktop-portal-hyprland`, `qt6-qtwayland`
     - On Fedora 43, this path is currently experimental and may require the `solopasha/hyprland` COPR when `hyprland` is not available in the enabled standard Fedora repos.
     - COPR package sets can lag behind Fedora updates; optional components such as `hyprland-qtutils` may be unavailable or temporarily incompatible.
     - You can skip Hyprland install and keep a Sway-only baseline.
