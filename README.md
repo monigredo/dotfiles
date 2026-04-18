@@ -77,7 +77,8 @@ What it does:
     `sway`, `swayidle`, `swaylock`, `waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `nm-connection-editor`
   - Hyprland desktop runtime:
     `hyprland`, `hypridle`, `hyprlock`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-hyprland`, `xdg-desktop-portal-gtk`, `qt6-qtwayland`
-    - If `hyprland` is not available in the enabled standard Fedora repos, bootstrap prompts before enabling the `solopasha/hyprland` COPR.
+    - On Fedora 43, this path is currently experimental and may require the `solopasha/hyprland` COPR when `hyprland` is not available in the enabled standard Fedora repos.
+    - COPR package sets can lag behind Fedora updates; optional components such as `hyprland-qtutils` may be unavailable or temporarily incompatible.
     - You can skip Hyprland install and keep a Sway-only baseline.
   - Containers:  
     `podman`, `podman-docker`, `podman-compose`

@@ -79,6 +79,7 @@ echo "[+] Checking Hyprland package availability..."
 if [ "$hyprland_install_mode" = "missing" ] && [ -t 0 ] && [ -r /dev/tty ]; then
   echo "[!] Hyprland packages are not available in the current enabled standard repositories."
   echo "    Fedora 43 currently needs an extra source such as the solopasha/hyprland COPR."
+  echo "    COPR package sets can lag behind Fedora updates, so optional components like hyprland-qtutils may be unavailable."
   echo "    This is optional. You can skip Hyprland install and keep the Sway baseline only."
   echo "    Enable COPR solopasha/hyprland and install Hyprland packages? [y/N]" > /dev/tty
   read -r enable_hypr_copr < /dev/tty
@@ -101,6 +102,10 @@ fi
 if [ "$hyprland_install_mode" != "skip" ]; then
   echo "[+] Installing Hyprland session packages..."
   sudo dnf install -y "${HYPRLAND_PACKAGES[@]}"
+  if [ "$hyprland_install_mode" = "copr" ]; then
+    echo "    NOTE: Fedora 43 Hyprland support is currently COPR-based and may lag behind Fedora Qt updates."
+    echo "    NOTE: Optional Hyprland packages such as hyprland-qtutils are not installed by bootstrap."
+  fi
 else
   echo "[+] Skipping Hyprland package install."
 fi
