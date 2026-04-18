@@ -1,0 +1,124 @@
+// Minimal additive Niri config for this repo.
+// Keep this focused on Stage 1 session completeness rather than perfect parity.
+
+input {
+    keyboard {
+        xkb {
+            layout "us,ua"
+            options "ctrl:nocaps"
+        }
+
+        numlock
+    }
+
+    touchpad {
+        tap
+        drag
+        dwt
+        natural-scroll
+        scroll-method "two-finger"
+        accel-profile "adaptive"
+        accel-speed 0.08
+    }
+
+    mouse {
+        natural-scroll
+        accel-profile "adaptive"
+        accel-speed 0.02
+    }
+}
+
+layout {
+    gaps 8
+    center-focused-column "never"
+
+    default-column-width {
+        proportion 0.5
+    }
+
+    focus-ring {
+        width 2
+        active-color "#88c0d0"
+        inactive-color "#4c566a"
+    }
+
+    border {
+        off
+    }
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+spawn-at-startup "mako"
+spawn-at-startup "/usr/libexec/lxqt-policykit-agent"
+spawn-sh-at-startup "pkill waybar 2>/dev/null; exec waybar -c \"$HOME/.config/waybar-niri/config\" -s \"$HOME/.config/waybar-niri/style.css\""
+spawn-sh-at-startup "~/.local/bin/mullvad-autoconnect"
+spawn-sh-at-startup "~/.local/bin/run-niri-swayidle 3000"
+
+switch-events {
+    lid-close { spawn "bash" "-lc" "~/.local/bin/niri-handle-lid.sh"; }
+}
+
+binds {
+    Alt+Return { spawn "alacritty" "-e" "tmux" "new-session" "-A" "-s" "main"; }
+    Alt+Shift+Return { spawn "alacritty"; }
+    Alt+Space { spawn "rofi" "-show" "drun"; }
+    Alt+Q repeat=false { close-window; }
+
+    Ctrl+Space { switch-layout "next"; }
+
+    Alt+Left { focus-column-left; }
+    Alt+Down { focus-window-down; }
+    Alt+Up { focus-window-up; }
+    Alt+Right { focus-column-right; }
+
+    Alt+Shift+Left { focus-monitor-left; }
+    Alt+Shift+Right { focus-monitor-right; }
+    Alt+Ctrl+Shift+Left { move-workspace-to-monitor-left; }
+    Alt+Ctrl+Shift+Right { move-workspace-to-monitor-right; }
+
+    Alt+1 { focus-workspace 1; }
+    Alt+2 { focus-workspace 2; }
+    Alt+3 { focus-workspace 3; }
+    Alt+4 { focus-workspace 4; }
+    Alt+5 { focus-workspace 5; }
+    Alt+6 { focus-workspace 6; }
+    Alt+7 { focus-workspace 7; }
+    Alt+8 { focus-workspace 8; }
+    Alt+9 { focus-workspace 9; }
+
+    Alt+Ctrl+1 { move-column-to-workspace 1; }
+    Alt+Ctrl+2 { move-column-to-workspace 2; }
+    Alt+Ctrl+3 { move-column-to-workspace 3; }
+    Alt+Ctrl+4 { move-column-to-workspace 4; }
+    Alt+Ctrl+5 { move-column-to-workspace 5; }
+    Alt+Ctrl+6 { move-column-to-workspace 6; }
+    Alt+Ctrl+7 { move-column-to-workspace 7; }
+    Alt+Ctrl+8 { move-column-to-workspace 8; }
+    Alt+Ctrl+9 { move-column-to-workspace 9; }
+
+    Ctrl+Left { focus-workspace-down; }
+    Ctrl+Right { focus-workspace-up; }
+
+    Alt+F1 allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+    Alt+F2 allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
+
+    Alt+F11 allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"; }
+    Alt+F12 allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"; }
+    Alt+Shift+F12 allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+
+    Alt+F8 allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    Alt+F9 allow-when-locked=true { spawn-sh "playerctl previous"; }
+    Alt+F10 allow-when-locked=true { spawn-sh "playerctl next"; }
+
+    Alt+Shift+4 { spawn-sh "grim -g \"$(slurp)\" - | wl-copy"; }
+    Alt+Shift+B { spawn-sh "~/.local/bin/rofi-bluetooth"; }
+    Alt+Shift+N { spawn-sh "~/.local/bin/wifi-menu"; }
+    Alt+Ctrl+N { spawn "nm-connection-editor"; }
+    Ctrl+Alt+Q { spawn "swaylock" "-f" "-c" "000000" "-k"; }
+
+    Alt+Shift+C { reload-config; }
+    Alt+Shift+E { quit; }
+}

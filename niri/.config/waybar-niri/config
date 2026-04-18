@@ -1,0 +1,96 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+  "modules-left": ["niri/workspaces"],
+  "modules-center": ["niri/window"],
+  "modules-right": ["custom/mullvad", "custom/protonvpn", "custom/cpugraph", "memory", "temperature", "battery", "bluetooth", "niri/language", "network", "pulseaudio", "clock"],
+  "niri/workspaces": {
+    "all-outputs": true,
+    "format": "{value}"
+  },
+  "niri/window": {
+    "format": "{app_id}: {title}",
+    "icon": false,
+    "separate-outputs": true
+  },
+  "memory": {
+    "interval": 3,
+    "format": "󰍛 {used:0.0f}G",
+    "tooltip": true
+  },
+  "network": {
+    "format-wifi": "󰖩",
+    "format-ethernet": "󰈀 {ifname}",
+    "format-disconnected": "󰖪 offline",
+    "tooltip-format": "{ifname} {ipaddr}  {bandwidthDownBits}  {bandwidthUpBits}",
+    "interval": 3,
+    "on-click": "nm-connection-editor"
+  },
+  "niri/language": {
+    "format": "󰌌 {short}"
+  },
+  "custom/mullvad": {
+    "return-type": "json",
+    "exec": "~/.local/bin/mullvad-waybar",
+    "interval": 5,
+    "signal": 8,
+    "format": "  {text} ",
+    "on-click": "~/.local/bin/mullvad-waybar toggle && pkill -RTMIN+8 waybar"
+  },
+  "custom/protonvpn": {
+    "return-type": "json",
+    "exec": "~/.local/bin/protonvpn-waybar",
+    "interval": 5,
+    "signal": 9,
+    "format": "  {text} ",
+    "on-click": "~/.local/bin/protonvpn-waybar toggle && pkill -RTMIN+9 waybar"
+  },
+  "bluetooth": {
+    "format": "󰂯",
+    "controller": "hci0",
+    "format-disabled": "",
+    "format-off": "󰂯",
+    "format-on": "󰂯",
+    "format-connected": "󰂱 {num_connections} connected",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "~/.local/bin/rofi-bluetooth"
+  },
+  "custom/cpugraph": {
+    "interval": 1,
+    "exec": "$HOME/.local/bin/waybar-cpu-graph",
+    "format": "{}",
+    "tooltip": false
+  },
+  "temperature": {
+    "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",
+    "critical-threshold": 80,
+    "format": "󰔏 {temperatureC}°"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 mute",
+    "tooltip": true,
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "format-icons": {
+      "default": ["󰕿", "󰖀", "󰕾"]
+    }
+  },
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-alt": "{time}",
+    "states": {
+      "warning": 25,
+      "critical": 10
+    },
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾"]
+  },
+  "clock": {
+    "format": "󰥔 {:%a %d %b  %H:%M}",
+    "tooltip-format": "{:%A, %d %B %Y}"
+  }
+}

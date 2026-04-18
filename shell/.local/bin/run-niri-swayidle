@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage:
+#   run-niri-swayidle [timeout_seconds]
+# Default lock timeout: 900 seconds (15 minutes)
+TIMEOUT="${1:-900}"
+DPMS_DELAY=30
+DPMS_TIMEOUT=$((TIMEOUT + DPMS_DELAY))
+
+# Kill any old instance so we don't stack them
+pkill -x swayidle 2>/dev/null || true
+
+exec swayidle -w \
+  timeout "$TIMEOUT" 'swaylock -f -c 000000 -k' \
+  timeout "$DPMS_TIMEOUT" 'niri msg action power-off-monitors' \
+  before-sleep 'swaylock -f -c 000000 -k'

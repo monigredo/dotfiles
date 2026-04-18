@@ -1,4 +1,4 @@
-# Fedora + Sway/Hyprland dotfiles – Quickstart for a NEW user
+# Fedora + Sway/Hyprland/Niri dotfiles – Quickstart for a NEW user
 
 This is the **short, command-only** checklist to bring a fresh user into your standard dev environment.
 
@@ -53,6 +53,11 @@ cd ~/dotfiles
 ./bootstrap-fedora-dev.sh
 ```
 
+During bootstrap:
+
+- Hyprland may prompt for an extra COPR-backed install path on Fedora 43 if it is not available in the enabled standard repos.
+- Niri will prompt as an optional install when it is available in the enabled standard Fedora repos.
+
 ---
 
 ## 4. Stow dotfiles
@@ -66,6 +71,7 @@ stow alacritty
 stow tmux
 stow env
 stow hyprland
+stow niri
 ```
 
 If \`stow\` reports conflicts, resolve them (move/delete old files) and re-run.
@@ -78,10 +84,12 @@ If \`stow\` reports conflicts, resolve them (move/delete old files) and re-run.
 - At the Fedora login screen, choose either:
   - `Sway`
   - `Hyprland`
+  - `Niri`
 
 This picks up:
 - Sway config + keybinds
 - Hyprland config
+- Niri config
 - Waybar config
 - Alacritty config
 - Shell config
@@ -91,10 +99,10 @@ This picks up:
 
 ## 6. Quick sanity checks (optional)
 
-In a new terminal (Alacritty inside Sway):
+In a new terminal after logging into the session you want to test:
 
 ```bash
-# Check swayidle is running (idle lock)
+# Check idle lock helper
 ps aux | grep '[s]wayidle'
 
 # Check wifi menu
@@ -103,5 +111,21 @@ wifi-menu
 # Check bluetooth menu
 rofi-bluetooth
 ```
+
+For `Niri`, also check:
+
+```bash
+# Confirm the Niri session process exists
+ps aux | grep '[n]iri'
+
+# Confirm the Niri-specific Waybar config was stowed
+ls -l ~/.config/waybar-niri/config ~/.config/waybar-niri/style.css
+```
+
+Expected manual checks by session:
+
+- `Sway`: Waybar appears, terminal/launcher open, idle lock works.
+- `Hyprland`: Hyprland starts, Hyprland Waybar appears, lock and lid handling still work.
+- `Niri`: Niri starts from GDM, Niri Waybar appears, terminal/launcher open, at least one X11 app launches, and idle lock works.
 
 If those work and the chosen session behaves correctly, the new user is fully bootstrapped.

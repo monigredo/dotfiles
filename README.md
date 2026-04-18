@@ -1,10 +1,10 @@
-# Fedora + Sway/Hyprland Dev Dotfiles
+# Fedora + Sway/Hyprland/Niri Dev Dotfiles
 
-Opinionated dotfiles for a **dev-focused Fedora + Sway/Hyprland** setup on a Framework 13 AMD (or similar laptop).
+Opinionated dotfiles for a **dev-focused Fedora + Sway/Hyprland/Niri** setup on a Framework 13 AMD (or similar laptop).
 
 Goals:
 
-- Keyboard-driven Wayland workflow (Sway + Hyprland + Waybar).
+- Keyboard-driven Wayland workflow (Sway + Hyprland + Niri + Waybar).
 - Reproducible setup via **GNU Stow**.
 - Good defaults for **development**: git, Java, containers, Alacritty, rofi.
 - Small helper scripts in `~/.local/bin` for:
@@ -13,7 +13,7 @@ Goals:
   - Wi-Fi TUI,
   - Bluetooth control via rofi.
 
-> Target OS: **Fedora Workstation (Wayland)** with **Sway**, **Hyprland**, and **NetworkManager**.
+> Target OS: **Fedora Workstation (Wayland)** with **Sway**, **Hyprland**, **Niri**, and **NetworkManager**.
 
 ---
 
@@ -82,6 +82,10 @@ What it does:
     - On Fedora 43, this path is currently experimental and may require the `solopasha/hyprland` COPR when `hyprland` is not available in the enabled standard Fedora repos.
     - COPR package sets can lag behind Fedora updates; optional components such as `hyprland-qtutils` may be unavailable or temporarily incompatible.
     - You can skip Hyprland install and keep a Sway-only baseline.
+  - Niri desktop runtime:
+    `niri`, `xwayland-satellite`, `xdg-desktop-portal-gnome`
+    - On Fedora 43, this path is available from the official Fedora repos.
+    - Bootstrap currently offers it as an optional additive session install.
   - Containers:  
     `podman`, `podman-docker`, `podman-compose`
   - Java:  
@@ -239,6 +243,13 @@ stow alacritty
 stow tmux
 stow env
 stow hyprland
+stow niri
+```
+
+If you prefer the repo helper script instead of manual stow, note that `stow-clean-restow.sh` still defaults to the long-standing package set and does **not** include `niri` by default yet. For Stage 1 testing, either run manual `stow niri` or call:
+
+```bash
+./stow-clean-restow.sh shell sway waybar alacritty tmux env hyprland niri
 ```
 
 What each package is expected to do:
@@ -248,6 +259,7 @@ What each package is expected to do:
     - ensure `~/.local/bin` and `~/bin` are in PATH for shells.
     - aliases (`ls → eza` if installed, `cat → bat`, `grep → rg`, etc.).
   - `~/.local/bin/run-swayidle` (from above).
+  - `~/.local/bin/run-niri-swayidle` and `~/.local/bin/niri-handle-lid.sh`
   - `~/.local/bin/mullvad-autoconnect` (connects on login if disconnected).
 - `sway/`
   - `~/.config/sway/config`:
@@ -282,6 +294,12 @@ What each package is expected to do:
   - `~/.config/mako/config`
   - `~/.config/waybar-hypr/config` and `style.css`
   - Hyprland-specific session glue while preserving the existing Sway package.
+- `niri/`
+  - `~/.config/niri/config.kdl`
+  - `~/.config/waybar-niri/config` and `style.css`
+  - `run-niri-swayidle` for conservative Stage 1 idle locking via `swayidle` + `swaylock`
+  - `niri-handle-lid.sh` for suspend-on-lid-close when no external monitor is connected
+  - Niri-specific session glue while preserving the existing Sway and Hyprland packages.
 
 If `stow` complains about conflicts, move the existing file into the appropriate place under `~/dotfiles/...` and re-run `stow`.
 
@@ -559,16 +577,42 @@ For a fresh user (personal or client-specific):
 
    ```bash
    cd ~/dotfiles
-   stow shell sway waybar alacritty tmux env
+   stow shell sway waybar alacritty tmux env hyprland niri
    ```
 
 9. **Log out and choose a session in GDM** to ensure environment + configs are applied.
    - Choose `Sway` to keep the current workflow.
    - Choose `Hyprland` to test the additive migration path on the same user.
+   - Choose `Niri` to test the official-repo additive path on the same user.
+
+10. **Validate the chosen session before treating the machine as ready**.
+
+   For any session:
+
+   ```bash
+   wifi-menu
+   rofi-bluetooth
+   ps aux | grep '[s]wayidle'
+   ```
+
+   Additional Niri checks:
+
+   ```bash
+   ps aux | grep '[n]iri'
+   ls -l ~/.config/niri/config.kdl ~/.config/waybar-niri/config ~/.config/waybar-niri/style.css
+   ```
+
+   Manual Niri checks:
+   - Waybar appears using the Niri-specific config.
+   - `Alt+Return` opens terminal + tmux.
+   - `Alt+Space` opens rofi.
+   - `Ctrl+Alt+Q` locks with `swaylock`.
+   - An X11 client still launches, for example `xeyes` or another known X11 app if installed.
+   - Lid-close behavior is acceptable on laptop hardware.
 
 After that, the new user has:
 
-- Same Sway/Waybar behavior,
+- Same Sway/Waybar behavior plus optional additive Hyprland/Niri sessions,
 - Same dev tools and fonts,
 - Their own git identity,
 - Correct lid + idle behavior,
@@ -622,4 +666,4 @@ After that, the new user has:
 ---
 
 This README is meant to be your full “rebuild from scratch” guide:  
-new user → dotfiles → bootstrap → stow → Sway/Waybar/scripts wired → dev-ready environment.
+new user → dotfiles → bootstrap → stow → Sway/Hyprland/Niri configs wired → dev-ready environment.

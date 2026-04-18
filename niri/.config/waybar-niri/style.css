@@ -1,0 +1,271 @@
+* {
+  font-family: JetBrainsMono, monospace;
+  font-size: 12px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: #d8dee9;
+}
+
+window#waybar > box {
+  margin: 12px 14px 0 14px;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, rgba(31, 36, 46, 0.94), rgba(18, 22, 30, 0.9));
+  border: 1px solid rgba(136, 192, 208, 0.18);
+  border-radius: 18px;
+}
+
+#workspaces {
+  padding: 3px;
+  background: rgba(27, 32, 42, 0.72);
+  border: 1px solid rgba(136, 192, 208, 0.1);
+  border-radius: 16px;
+}
+
+#workspaces button {
+  min-width: 34px;
+  padding: 0 16px;
+  margin: 0;
+  border-radius: 10px;
+  color: #8f9caf;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: none;
+}
+
+#workspaces button:hover {
+  background: rgba(76, 86, 106, 0.42);
+  color: #eceff4;
+}
+
+#workspaces button.active {
+  min-width: 50px;
+  background: linear-gradient(180deg, #88c0d0, #5e81ac);
+  color: #eceff4;
+  border-color: rgba(236, 239, 244, 0.34);
+}
+
+#workspaces button.urgent {
+  background: #bf616a;
+  color: #eceff4;
+}
+
+#window {
+  margin: 0 14px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: rgba(46, 52, 64, 0.78);
+  border: 1px solid rgba(136, 192, 208, 0.08);
+  color: #eceff4;
+}
+
+#memory,
+#network,
+#language,
+#custom-mullvad,
+#custom-protonvpn,
+#bluetooth,
+#pulseaudio,
+#temperature,
+#battery,
+#clock,
+#custom-cpugraph {
+  margin-left: 8px;
+  padding: 0 10px;
+  border-radius: 12px;
+  background: rgba(46, 52, 64, 0.78);
+  border: 1px solid rgba(136, 192, 208, 0.08);
+}
+
+#memory,
+#custom-cpugraph {
+  background: rgba(67, 76, 94, 0.72);
+}
+
+#custom-mullvad,
+#custom-protonvpn,
+#pulseaudio {
+  background: rgba(56, 61, 77, 0.88);
+}
+
+#temperature,
+#battery,
+#clock {
+  background: rgba(64, 72, 92, 0.88);
+}
+
+#custom-mullvad {
+  margin-left: 8px;
+}
+
+#custom-protonvpn {
+  margin-left: 0;
+}
+
+#custom-protonvpn,
+#custom-cpugraph,
+#memory,
+#temperature {
+  margin-right: -2px;
+}
+
+#custom-cpugraph {
+  margin-left: 10px;
+}
+
+#memory,
+#temperature,
+#battery {
+  margin-left: 0;
+}
+
+#custom-protonvpn,
+#custom-cpugraph,
+#memory,
+#temperature,
+#battery {
+  border-radius: 0;
+}
+
+#custom-mullvad {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#custom-protonvpn,
+#custom-cpugraph,
+#memory,
+#temperature {
+  border-left-width: 0;
+}
+
+#custom-protonvpn {
+  background: linear-gradient(180deg, rgba(78, 92, 117, 0.9), rgba(55, 64, 82, 0.94));
+}
+
+#custom-cpugraph,
+#memory,
+#temperature,
+#battery {
+  background: linear-gradient(180deg, rgba(73, 84, 106, 0.92), rgba(56, 65, 84, 0.96));
+}
+
+#battery {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#bluetooth,
+#language,
+#network,
+#pulseaudio,
+#clock {
+  color: #eceff4;
+}
+
+#bluetooth {
+  margin-left: 14px;
+  margin-right: -2px;
+  padding: 0 14px;
+  background: linear-gradient(180deg, rgba(90, 118, 152, 0.8), rgba(66, 81, 107, 0.92));
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#language {
+  margin-left: 0;
+  margin-right: -2px;
+  padding: 0 14px;
+  background: linear-gradient(180deg, rgba(96, 125, 159, 0.86), rgba(70, 84, 110, 0.94));
+  border-radius: 0;
+}
+
+#network {
+  margin-left: 0;
+  margin-right: -2px;
+  padding: 0 14px 0 12px;
+  background: linear-gradient(180deg, rgba(84, 112, 148, 0.88), rgba(63, 78, 104, 0.94));
+  border-radius: 0;
+}
+
+#pulseaudio {
+  margin-left: 0;
+  margin-right: -2px;
+  padding: 0 14px 0 12px;
+  background: linear-gradient(180deg, rgba(96, 125, 159, 0.92), rgba(70, 84, 110, 0.96));
+  border-radius: 0;
+}
+
+#battery.warning {
+  color: #ffb86c;
+}
+
+#battery.critical {
+  color: #ff5555;
+}
+
+#pulseaudio.muted {
+  color: #ff5555;
+}
+
+#bluetooth.connected {
+  color: #88c0d0;
+}
+
+#bluetooth.disconnected {
+  color: #d8dee9;
+}
+
+#bluetooth.off {
+  color: #8b96a8;
+}
+
+#custom-mullvad.connected {
+  color: #a3be8c;
+}
+
+#custom-mullvad.disconnected {
+  color: #bf616a;
+}
+
+#custom-mullvad.connecting {
+  color: #ffb86c;
+}
+
+#custom-protonvpn.connected {
+  color: #a3be8c;
+}
+
+#custom-protonvpn.disconnected {
+  color: #bf616a;
+}
+
+#custom-protonvpn.connecting {
+  color: #ffb86c;
+}
+
+#clock {
+  margin-left: 0;
+  padding: 0 18px 0 16px;
+  color: #eceff4;
+  background: linear-gradient(180deg, rgba(110, 145, 189, 0.96), rgba(76, 86, 106, 0.98));
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-weight: 700;
+}
+
+#workspaces button + button {
+  margin-left: 2px;
+}
+
+#workspaces button:nth-child(1) {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+#workspaces button:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}

@@ -70,6 +70,12 @@ HYPRLAND_PACKAGES=(
   xdg-desktop-portal-hyprland
 )
 
+NIRI_PACKAGES=(
+  niri
+  xwayland-satellite
+  xdg-desktop-portal-gnome
+)
+
 echo "[+] Installing core CLI, shared Wayland desktop, and Sway packages..."
 sudo dnf install -y \
   "${CORE_PACKAGES[@]}" \
@@ -116,6 +122,40 @@ if [ "$hyprland_install_mode" != "skip" ]; then
   fi
 else
   echo "[+] Skipping Hyprland package install."
+fi
+
+niri_install_mode="skip"
+
+if dnf -q list --available niri </dev/null >/dev/null 2>&1; then
+  niri_install_mode="available"
+fi
+
+echo "[+] Checking Niri package availability..."
+
+if [ "$niri_install_mode" = "available" ] && [ -t 0 ] && [ -r /dev/tty ]; then
+  echo "[+] Niri packages are available in the current enabled standard repositories."
+  echo "    Install the optional Niri session packages? [y/N]" > /dev/tty
+  read -r install_niri < /dev/tty
+  case "$install_niri" in
+    [yY]|[yY][eE][sS])
+      niri_install_mode="install"
+      ;;
+    *)
+      niri_install_mode="skip"
+      ;;
+  esac
+elif [ "$niri_install_mode" = "available" ]; then
+  echo "    Interactive terminal not available; skipping Niri package install."
+  niri_install_mode="skip"
+else
+  echo "[!] Niri packages are not available in the current enabled standard repositories."
+fi
+
+if [ "$niri_install_mode" = "install" ]; then
+  echo "[+] Installing Niri session packages..."
+  sudo dnf install -y "${NIRI_PACKAGES[@]}"
+else
+  echo "[+] Skipping Niri package install."
 fi
 
 echo "[+] Installing dev fonts (JetBrains Mono + FiraCode Nerd Font)..."

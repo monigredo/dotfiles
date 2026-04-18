@@ -12,7 +12,7 @@ I manage configs with **stow**:
 - After cloning, I typically run:
   ```bash
   cd ~/dotfiles
-  stow shell sway waybar alacritty tmux env hyprland
+  stow shell sway waybar alacritty tmux env hyprland niri
   ```
 
 Relevant pieces:
