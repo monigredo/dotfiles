@@ -13,7 +13,7 @@ input {
 
     touchpad {
         tap
-        drag
+        drag true
         dwt
         natural-scroll
         scroll-method "two-finger"
@@ -26,6 +26,8 @@ input {
         accel-profile "adaptive"
         accel-speed 0.02
     }
+
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 layout {
@@ -73,6 +75,8 @@ binds {
     Alt+Down { focus-window-down; }
     Alt+Up { focus-window-up; }
     Alt+Right { focus-column-right; }
+    Alt+Ctrl+Left { move-column-left; }
+    Alt+Ctrl+Right { move-column-right; }
 
     Alt+Shift+Left { focus-monitor-left; }
     Alt+Shift+Right { focus-monitor-right; }
@@ -102,6 +106,23 @@ binds {
     Ctrl+Left { focus-workspace-down; }
     Ctrl+Right { focus-workspace-up; }
 
+    Alt+WheelScrollLeft { focus-column-left; }
+    Alt+WheelScrollRight { focus-column-right; }
+    Alt+Ctrl+WheelScrollLeft { move-column-left; }
+    Alt+Ctrl+WheelScrollRight { move-column-right; }
+    Alt+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+    Alt+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Alt+Ctrl+WheelScrollUp cooldown-ms=150 { move-column-to-workspace-up; }
+    Alt+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Alt+TouchpadScrollLeft cooldown-ms=150 { focus-column-right; }
+    Alt+TouchpadScrollRight cooldown-ms=150 { focus-column-left; }
+    Alt+Ctrl+TouchpadScrollLeft cooldown-ms=150 { move-column-right; }
+    Alt+Ctrl+TouchpadScrollRight cooldown-ms=150 { move-column-left; }
+    Alt+TouchpadScrollUp cooldown-ms=150 { focus-workspace-up; }
+    Alt+TouchpadScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Alt+Ctrl+TouchpadScrollUp cooldown-ms=150 { move-column-to-workspace-up; }
+    Alt+Ctrl+TouchpadScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+
     Alt+F1 allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
     Alt+F2 allow-when-locked=true { spawn "brightnessctl" "set" "+5%"; }
 
@@ -119,6 +140,6 @@ binds {
     Alt+Ctrl+N { spawn "nm-connection-editor"; }
     Ctrl+Alt+Q { spawn "swaylock" "-f" "-c" "000000" "-k"; }
 
-    Alt+Shift+C { reload-config; }
+    Alt+Shift+C { spawn "niri" "msg" "action" "load-config-file"; }
     Alt+Shift+E { quit; }
 }
