@@ -153,10 +153,6 @@ bindsym $mod+Shift+e exec "swaymsg exit"
 # waybar - kill old, start one instance on startup & reload
 exec_always sh -c 'pkill waybar 2>/dev/null; waybar'
 
-# mullvad - autoconnect on login (safe on reload)
-exec_always ~/.local/bin/mullvad-autoconnect
-
-
 # --- Auto-lock + lock before sleep (lid close / suspend) ---
 # Use exec_always + pkill so reloads update swayidle cleanly
 # --- Lock immediately when lid closes ---

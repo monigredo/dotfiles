@@ -4,7 +4,7 @@
   "height": 34,
   "modules-left": ["niri/workspaces"],
   "modules-center": ["niri/window"],
-  "modules-right": ["custom/mullvad", "custom/protonvpn", "custom/cpugraph", "memory", "temperature", "battery", "bluetooth", "niri/language", "network", "pulseaudio", "clock"],
+  "modules-right": ["custom/cpugraph", "memory", "temperature", "battery", "bluetooth", "niri/language", "network", "pulseaudio", "clock"],
   "niri/workspaces": {
     "all-outputs": true,
     "format": "{value}"
@@ -29,22 +29,6 @@
   },
   "niri/language": {
     "format": "󰌌 {short}"
-  },
-  "custom/mullvad": {
-    "return-type": "json",
-    "exec": "~/.local/bin/mullvad-waybar",
-    "interval": 5,
-    "signal": 8,
-    "format": "  {text} ",
-    "on-click": "~/.local/bin/mullvad-waybar toggle && pkill -RTMIN+8 waybar"
-  },
-  "custom/protonvpn": {
-    "return-type": "json",
-    "exec": "~/.local/bin/protonvpn-waybar",
-    "interval": 5,
-    "signal": 9,
-    "format": "  {text} ",
-    "on-click": "~/.local/bin/protonvpn-waybar toggle && pkill -RTMIN+9 waybar"
   },
   "bluetooth": {
     "format": "󰂯",

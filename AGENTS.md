@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 - Root scripts: `bootstrap-fedora-dev.sh` (Fedora + Sway/Hyprland/Niri bootstrap) and `stow-clean-restow.sh` (remove conflicts then restow).
 - Stow packages: `shell/`, `sway/`, `waybar/`, `alacritty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
-- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `mullvad-waybar`, `mullvad-autoconnect`, `protonvpn-waybar`).
+- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`).
 - Docs: `README.md` (full), `README-quickstart.md` (concise), `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 
 ## Build, Test, and Development Commands
@@ -42,6 +42,6 @@
 
 ## Agent Notes
 - Keep `AGENTS.md` current when workflows, scripts, or package lists change (especially bootstrap/stow logic, Hyprland/Sway/Niri package lists, or helper script locations).
-- Document new helper scripts under `shell/.local/bin/` (e.g., `mullvad-waybar` for the Waybar Mullvad toggle, `sway-move-workspace-next-output` for moving the current workspace to the next active output) and ensure bootstrap/stow steps reflect them.***
+- Document new helper scripts under `shell/.local/bin/` (e.g., `sway-move-workspace-next-output` for moving the current workspace to the next active output) and ensure bootstrap/stow steps reflect them.***
 - `run-swayidle` locks after its timeout and powers displays off 30s later; update docs if timings or behavior change.
 - Codex CLI binary install is optional via bootstrap prompt calling `scripts/install-codex-binary.sh` (downloads latest GitHub release to `~/.local/bin/codex`).***

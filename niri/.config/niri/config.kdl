@@ -56,7 +56,6 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 spawn-at-startup "mako"
 spawn-at-startup "/usr/libexec/lxqt-policykit-agent"
 spawn-sh-at-startup "pkill waybar 2>/dev/null; exec waybar -c \"$HOME/.config/waybar-niri/config\" -s \"$HOME/.config/waybar-niri/style.css\""
-spawn-sh-at-startup "~/.local/bin/mullvad-autoconnect"
 spawn-sh-at-startup "~/.local/bin/run-niri-swayidle 3000"
 
 switch-events {

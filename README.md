@@ -260,19 +260,15 @@ What each package is expected to do:
     - aliases (`ls → eza` if installed, `cat → bat`, `grep → rg`, etc.).
   - `~/.local/bin/run-swayidle` (from above).
   - `~/.local/bin/run-niri-swayidle` and `~/.local/bin/niri-handle-lid.sh`
-  - `~/.local/bin/mullvad-autoconnect` (connects on login if disconnected).
 - `sway/`
   - `~/.config/sway/config`:
     - Alt as main modifier.
     - Keybindings (see cheat sheet below).
     - Lid binding → `sway-handle-lid.sh`.
     - Idle lock → `exec_always ~/.local/bin/run-swayidle 3000` (locks after 50 minutes; turns displays off 30s after locking).
-    - Mullvad autoconnect → `exec_always ~/.local/bin/mullvad-autoconnect`.
 - `waybar/`
   - `~/.config/waybar/config` and `style.css`:
-    - Right-side modules: CPU, memory, network, Mullvad + Proton VPN indicators, **bluetooth**, audio, temp, battery, clock.
-    - `on-click` for Mullvad → `~/.local/bin/mullvad-waybar` (toggle).
-    - `on-click` for Proton VPN → `~/.local/bin/protonvpn-waybar` (toggle).
+    - Right-side modules: CPU, memory, network, keyboard layout, **bluetooth**, audio, temp, battery, clock.
     - `on-click` for bluetooth → `~/.local/bin/rofi-bluetooth`.
     - `on-click` for network → `~/.local/bin/wifi-menu`.
 - `alacritty/`
@@ -332,16 +328,7 @@ Behavior:
 - **Laptop only**: lid close → `swaylock` then `systemctl suspend`.
 - **Laptop + external monitor**: lid close → no suspend, no lock (you lock manually).
 
-### 7.3 Mullvad autoconnect
-
-In `~/.config/sway/config`:
-
-```sway
-# Mullvad autoconnect after login
-exec_always ~/.local/bin/mullvad-autoconnect
-```
-
-### 7.4 Waybar: Bluetooth widget
+### 7.3 Waybar: Bluetooth widget
 
 In `~/.config/waybar/config`:
 
@@ -366,8 +353,6 @@ Add `"bluetooth"` into `"modules-right"`:
   "cpu",
   "memory",
   "network",
-  "custom/mullvad",
-  "custom/protonvpn",
   "bluetooth",
   "pulseaudio",
   "temperature",

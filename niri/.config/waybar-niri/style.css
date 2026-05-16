@@ -64,8 +64,6 @@ window#waybar > box {
 #memory,
 #network,
 #language,
-#custom-mullvad,
-#custom-protonvpn,
 #bluetooth,
 #pulseaudio,
 #temperature,
@@ -84,8 +82,6 @@ window#waybar > box {
   background: rgba(67, 76, 94, 0.72);
 }
 
-#custom-mullvad,
-#custom-protonvpn,
 #pulseaudio {
   background: rgba(56, 61, 77, 0.88);
 }
@@ -96,15 +92,6 @@ window#waybar > box {
   background: rgba(64, 72, 92, 0.88);
 }
 
-#custom-mullvad {
-  margin-left: 8px;
-}
-
-#custom-protonvpn {
-  margin-left: 0;
-}
-
-#custom-protonvpn,
 #custom-cpugraph,
 #memory,
 #temperature {
@@ -121,7 +108,6 @@ window#waybar > box {
   margin-left: 0;
 }
 
-#custom-protonvpn,
 #custom-cpugraph,
 #memory,
 #temperature,
@@ -129,20 +115,10 @@ window#waybar > box {
   border-radius: 0;
 }
 
-#custom-mullvad {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-#custom-protonvpn,
 #custom-cpugraph,
 #memory,
 #temperature {
   border-left-width: 0;
-}
-
-#custom-protonvpn {
-  background: linear-gradient(180deg, rgba(78, 92, 117, 0.9), rgba(55, 64, 82, 0.94));
 }
 
 #custom-cpugraph,
@@ -220,30 +196,6 @@ window#waybar > box {
 
 #bluetooth.off {
   color: #8b96a8;
-}
-
-#custom-mullvad.connected {
-  color: #a3be8c;
-}
-
-#custom-mullvad.disconnected {
-  color: #bf616a;
-}
-
-#custom-mullvad.connecting {
-  color: #ffb86c;
-}
-
-#custom-protonvpn.connected {
-  color: #a3be8c;
-}
-
-#custom-protonvpn.disconnected {
-  color: #bf616a;
-}
-
-#custom-protonvpn.connecting {
-  color: #ffb86c;
 }
 
 #clock {

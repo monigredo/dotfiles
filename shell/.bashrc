@@ -40,8 +40,6 @@ alias ccat='/usr/bin/cat'
 alias grep='rg'
 alias chef='docker run -it -p 8080:80 ghcr.io/gchq/cyberchef:latest'
 
-alias vpnr='mullvad-random'
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
