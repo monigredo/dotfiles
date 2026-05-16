@@ -236,6 +236,35 @@ fi
 
 echo "    Git defaults configured (without user.name/user.email)."
 
+echo "[+] Ensuring zsh is the default login shell..."
+zsh_path="$(command -v zsh || true)"
+if [ -n "$zsh_path" ]; then
+  current_shell="$(getent passwd "$USER" | cut -d: -f7)"
+  if [ "$current_shell" != "$zsh_path" ]; then
+    if [ -t 0 ]; then
+      read -r -p "    Change login shell for $USER from $current_shell to $zsh_path? [Y/n]: " change_shell
+      case "$change_shell" in
+        [nN]|[nN][oO])
+          echo "    Leaving login shell unchanged."
+          ;;
+        *)
+          if chsh -s "$zsh_path"; then
+            echo "    Login shell changed to $zsh_path. Log out and back in for it to take effect."
+          else
+            echo "    WARNING: chsh failed; run: chsh -s $zsh_path" >&2
+          fi
+          ;;
+      esac
+    else
+      echo "    Non-interactive shell detected; run later: chsh -s $zsh_path"
+    fi
+  else
+    echo "    Login shell already set to $zsh_path."
+  fi
+else
+  echo "    WARNING: zsh is not available after package install." >&2
+fi
+
 echo "[+] Configuring git identity (user.name / user.email)..."
 
 # Only prompt if running interactively (has a TTY)
@@ -417,5 +446,5 @@ echo "[+] Remember to:"
 echo "  - stow you dotfiles"
 echo "  - Install JetBrains Toolbox manually (browser/wget) and set up IntelliJ."
 echo "  - Install SDKMAN:  curl -s \"https://get.sdkman.io\" | bash"
-echo "  - Run:   files-to-prompt --markdown ~/.bashrc ~/.config/sway/config  | wl-copy"
+echo "  - Run:   files-to-prompt --markdown ~/.zshrc ~/.config/sway/config  | wl-copy"
 echo "    when you want to paste configs into ChatGPT."

@@ -22,7 +22,8 @@ Goals:
 From an existing admin user (or root), create a new user:
 
 ```bash
-sudo useradd -m -s /bin/bash user
+sudo dnf install -y zsh
+sudo useradd -m -s /usr/bin/zsh user
 sudo passwd user
 sudo usermod -aG wheel user
 ```
@@ -88,6 +89,8 @@ What it does:
     - Bootstrap installs it by default when the packages are available, and skips it with a warning if they are unavailable.
   - Containers:  
     `podman`, `podman-docker`, `podman-compose`
+- **Default shell**:
+  - Installs `zsh` and prompts to set it as the login shell for the current user.
   - Java:  
     Prefers `java-21-openjdk` / `java-21-openjdk-devel` when available, then falls back to Fedora's `java-latest-openjdk` or default `java-openjdk` package set. If no supported OpenJDK package set is available in enabled repositories, bootstrap skips Java instead of aborting the full install.
   - Misc:  
@@ -255,7 +258,7 @@ If you prefer the repo helper script instead of manual stow, `stow-clean-restow.
 What each package is expected to do:
 
 - `shell/`
-  - `~/.bashrc`, `~/.bash_profile`, `~/.profile`:
+  - `~/.zshrc`:
     - ensure `~/.local/bin` and `~/bin` are in PATH for shells.
     - aliases (`ls → eza` if installed, `cat → bat`, `grep → rg`, etc.).
   - `~/.local/bin/run-swayidle` (from above).
@@ -452,7 +455,7 @@ bindsym Ctrl+Alt+q exec swaylock -f -c 000000
 
 ## 9. Files-to-prompt helper (for debugging configs)
 
-Add this to `~/.bashrc` (or `shell/.bashrc` in dotfiles):
+Add this to `~/.zshrc` (or `shell/.zshrc` in dotfiles):
 
 ```bash
 ftpmd() {
@@ -468,7 +471,7 @@ ftpmd() {
 Example usage:
 
 ```bash
-ftpmd ~/.bashrc ~/.config/sway/config ~/.config/waybar/config
+ftpmd ~/.zshrc ~/.config/sway/config ~/.config/waybar/config
 ```
 
 Then paste directly into ChatGPT when debugging.
@@ -512,7 +515,8 @@ For a fresh user (personal or client-specific):
 1. **Create user + add to `wheel`** (from admin):
 
    ```bash
-   sudo useradd -m -s /bin/bash client_x
+   sudo dnf install -y zsh
+   sudo useradd -m -s /usr/bin/zsh client_x
    sudo passwd client_x
    sudo usermod -aG wheel client_x
    ```

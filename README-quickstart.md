@@ -9,7 +9,8 @@ This is the **short, command-only** checklist to bring a fresh user into your st
 Replace \`user\` with the new username (or \`client_x\` for a client persona):
 
 ```bash
-sudo useradd -m -s /bin/bash user
+sudo dnf install -y zsh
+sudo useradd -m -s /usr/bin/zsh user
 sudo passwd user
 sudo usermod -aG wheel user
 ```
@@ -46,7 +47,7 @@ cd ~/dotfiles
 
 ## 3. Run bootstrap script
 
-This installs packages, fonts, git defaults, and **prompts for git user.name/email**. It also installs \`rofi-bluetooth\` from GitHub and links it into \`~/.local/bin\` for you:
+This installs packages, fonts, git defaults, and **prompts for git user.name/email**. It also prompts to set `zsh` as your login shell, installs \`rofi-bluetooth\` from GitHub, and links it into \`~/.local/bin\` for you:
 
 ```bash
 cd ~/dotfiles

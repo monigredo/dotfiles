@@ -7,7 +7,8 @@ Use this checklist to test the additive Niri session on a fresh Fedora user with
 From an existing admin account:
 
 ```bash
-sudo useradd -m -s /bin/bash niri_test
+sudo dnf install -y zsh
+sudo useradd -m -s /usr/bin/zsh niri_test
 sudo passwd niri_test
 sudo usermod -aG wheel niri_test
 ```

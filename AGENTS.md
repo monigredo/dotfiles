@@ -7,7 +7,7 @@
 - Docs: `README.md` (full), `README-quickstart.md` (concise), `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 
 ## Build, Test, and Development Commands
-- Bootstrap a machine (installs packages, fonts, helper scripts, rofi-bluetooth):  
+- Bootstrap a machine (installs packages, sets up zsh as the default login shell when confirmed, fonts, helper scripts, rofi-bluetooth):  
   ```bash
   ./bootstrap-fedora-dev.sh
   ```
@@ -23,6 +23,7 @@
 
 ## Coding Style & Naming Conventions
 - Shell scripts: `#!/usr/bin/env bash`, `set -euo pipefail`; prefer simple POSIX-friendly constructs.
+- Interactive shell defaults live in `shell/.zshrc`; keep bash-only shell hooks out of that file.
 - File naming: use kebab-case for helper scripts; keep helper paths under `shell/.local/bin/`.
 - Keep configs ASCII; minimal comments unless clarity is needed.
 
