@@ -85,7 +85,7 @@ What it does:
   - Niri desktop runtime:
     `niri`, `xwayland-satellite`, `xdg-desktop-portal-gnome`
     - On Fedora 43, this path is available from the official Fedora repos.
-    - Bootstrap currently offers it as an optional additive session install.
+    - Bootstrap installs it by default when the packages are available, and skips it with a warning if they are unavailable.
   - Containers:  
     `podman`, `podman-docker`, `podman-compose`
   - Java:  
@@ -246,10 +246,10 @@ stow hyprland
 stow niri
 ```
 
-If you prefer the repo helper script instead of manual stow, note that `stow-clean-restow.sh` still defaults to the long-standing package set and does **not** include `niri` by default yet. For Stage 1 testing, either run manual `stow niri` or call:
+If you prefer the repo helper script instead of manual stow, `stow-clean-restow.sh` includes `niri` in its default package set:
 
 ```bash
-./stow-clean-restow.sh shell sway waybar alacritty tmux env hyprland niri
+./stow-clean-restow.sh
 ```
 
 What each package is expected to do:

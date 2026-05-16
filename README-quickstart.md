@@ -56,7 +56,7 @@ cd ~/dotfiles
 During bootstrap:
 
 - Hyprland may prompt for an extra COPR-backed install path on Fedora 43 if it is not available in the enabled standard repos.
-- Niri will prompt as an optional install when it is available in the enabled standard Fedora repos.
+- Niri installs by default when it is available in the enabled standard Fedora repos.
 
 ---
 

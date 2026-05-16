@@ -140,38 +140,22 @@ else
   echo "[+] Skipping Hyprland package install."
 fi
 
-niri_install_mode="skip"
-
-if dnf -q list --available niri </dev/null >/dev/null 2>&1; then
-  niri_install_mode="available"
-fi
+niri_install_mode="install"
 
 echo "[+] Checking Niri package availability..."
 
-if [ "$niri_install_mode" = "available" ] && [ -t 0 ] && [ -r /dev/tty ]; then
-  echo "[+] Niri packages are available in the current enabled standard repositories."
-  echo "    Install the optional Niri session packages? [y/N]" > /dev/tty
-  read -r install_niri < /dev/tty
-  case "$install_niri" in
-    [yY]|[yY][eE][sS])
-      niri_install_mode="install"
-      ;;
-    *)
-      niri_install_mode="skip"
-      ;;
-  esac
-elif [ "$niri_install_mode" = "available" ]; then
-  echo "    Interactive terminal not available; skipping Niri package install."
-  niri_install_mode="skip"
-else
-  echo "[!] Niri packages are not available in the current enabled standard repositories."
-fi
+for pkg in "${NIRI_PACKAGES[@]}"; do
+  if ! package_available "$pkg"; then
+    echo "[!] Niri package '$pkg' is not available in the current enabled repositories."
+    niri_install_mode="skip"
+  fi
+done
 
 if [ "$niri_install_mode" = "install" ]; then
   echo "[+] Installing Niri session packages..."
   sudo dnf install -y "${NIRI_PACKAGES[@]}"
 else
-  echo "[+] Skipping Niri package install."
+  echo "[+] Skipping Niri package install; required packages are unavailable."
 fi
 
 echo "[+] Installing dev fonts (JetBrains Mono + FiraCode Nerd Font)..."
@@ -394,6 +378,23 @@ if [ "$hyprland_install_mode" != "skip" ]; then
       echo "    WARNING: missing executable: $path" >&2
     fi
   done
+fi
+
+if [ "$niri_install_mode" = "install" ]; then
+  niri_required_cmds=(
+    niri
+    xwayland-satellite
+  )
+
+  for cmd in "${niri_required_cmds[@]}"; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+      echo "    WARNING: missing command: $cmd" >&2
+    fi
+  done
+
+  if [ ! -f /usr/share/wayland-sessions/niri.desktop ]; then
+    echo "    WARNING: missing Niri session file: /usr/share/wayland-sessions/niri.desktop" >&2
+  fi
 fi
 
 

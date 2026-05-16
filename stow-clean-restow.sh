@@ -10,7 +10,7 @@ TARGET="${TARGET:-$HOME}"
 if [ "$#" -gt 0 ]; then
   PACKAGES=("$@")
 else
-  PACKAGES=(shell sway waybar alacritty tmux env hyprland)
+  PACKAGES=(shell sway waybar alacritty tmux env hyprland niri)
 fi
 
 echo "[stow-clean] Target: $TARGET"
