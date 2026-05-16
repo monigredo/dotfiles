@@ -89,7 +89,7 @@ What it does:
   - Containers:  
     `podman`, `podman-docker`, `podman-compose`
   - Java:  
-    `java-21-openjdk`, `java-21-openjdk-devel`
+    Prefers `java-21-openjdk` / `java-21-openjdk-devel` when available, then falls back to Fedora's `java-latest-openjdk` or default `java-openjdk` package set. If no supported OpenJDK package set is available in enabled repositories, bootstrap skips Java instead of aborting the full install.
   - Misc:  
     `flatpak`, `pipx`, `jetbrains-mono-fonts`, `NetworkManager-tui`, `gh`, and others as added.
 - **pipx & CLI helper**:

@@ -33,8 +33,6 @@ CORE_PACKAGES=(
   podman
   podman-docker
   podman-compose
-  java-21-openjdk
-  java-21-openjdk-devel
   flatpak
   pipx
   direnv
@@ -76,9 +74,27 @@ NIRI_PACKAGES=(
   xdg-desktop-portal-gnome
 )
 
+package_available() {
+  dnf -q list --available "$1" </dev/null >/dev/null 2>&1 ||
+    dnf -q list --installed "$1" </dev/null >/dev/null 2>&1
+}
+
+JAVA_PACKAGES=()
+
+if package_available java-21-openjdk && package_available java-21-openjdk-devel; then
+  JAVA_PACKAGES=(java-21-openjdk java-21-openjdk-devel)
+elif package_available java-latest-openjdk && package_available java-latest-openjdk-devel; then
+  JAVA_PACKAGES=(java-latest-openjdk java-latest-openjdk-devel)
+elif package_available java-openjdk && package_available java-openjdk-devel; then
+  JAVA_PACKAGES=(java-openjdk java-openjdk-devel)
+else
+  echo "[!] No supported OpenJDK package set found in enabled repositories; skipping Java install."
+fi
+
 echo "[+] Installing core CLI, shared Wayland desktop, and Sway packages..."
 sudo dnf install -y \
   "${CORE_PACKAGES[@]}" \
+  "${JAVA_PACKAGES[@]}" \
   "${SHARED_WAYLAND_PACKAGES[@]}" \
   "${SWAY_PACKAGES[@]}"
 
