@@ -23,7 +23,7 @@
 
 ## Coding Style & Naming Conventions
 - Shell scripts: `#!/usr/bin/env bash`, `set -euo pipefail`; prefer simple POSIX-friendly constructs.
-- Interactive shell defaults live in `shell/.zshrc`; keep bash-only shell hooks out of that file.
+- Interactive shell defaults live in `shell/.zshrc` and `shell/.config/zsh/*.zsh`; keep bash-only shell hooks out of those files.
 - File naming: use kebab-case for helper scripts; keep helper paths under `shell/.local/bin/`.
 - Keep configs ASCII; minimal comments unless clarity is needed.
 

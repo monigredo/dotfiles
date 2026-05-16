@@ -258,7 +258,7 @@ If you prefer the repo helper script instead of manual stow, `stow-clean-restow.
 What each package is expected to do:
 
 - `shell/`
-  - `~/.zshrc`:
+  - `~/.zshrc` and `~/.config/zsh/*.zsh`:
     - ensure `~/.local/bin` and `~/bin` are in PATH for shells.
     - aliases (`ls → eza` if installed, `cat → bat`, `grep → rg`, etc.).
   - `~/.local/bin/run-swayidle` (from above).
@@ -455,7 +455,7 @@ bindsym Ctrl+Alt+q exec swaylock -f -c 000000
 
 ## 9. Files-to-prompt helper (for debugging configs)
 
-Add this to `~/.zshrc` (or `shell/.zshrc` in dotfiles):
+Add this to `~/.config/zsh/40-functions.zsh` (or `shell/.config/zsh/40-functions.zsh` in dotfiles):
 
 ```bash
 ftpmd() {

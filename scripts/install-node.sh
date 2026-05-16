@@ -14,6 +14,7 @@ fi
 
 NPM_GLOBAL_PREFIX="$HOME/.local/npm-global"
 NPM_GLOBAL_BIN="$NPM_GLOBAL_PREFIX/bin"
+NPM_GLOBAL_BIN_ZSH='$HOME/.local/npm-global/bin'
 
 echo "[+] Configuring npm user-global prefix..."
 mkdir -p "$NPM_GLOBAL_PREFIX"
@@ -34,4 +35,4 @@ ensure_path_line() {
 
 echo "[+] Ensuring npm bin path is exported in shell configs..."
 ensure_path_line "$DOTFILES_DIR/shell/.bashrc" "$NPM_GLOBAL_BIN"
-ensure_path_line "$DOTFILES_DIR/shell/.zshrc" "$NPM_GLOBAL_BIN"
+ensure_path_line "$DOTFILES_DIR/shell/.config/zsh/10-path.zsh" "$NPM_GLOBAL_BIN_ZSH"
