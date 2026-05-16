@@ -265,7 +265,7 @@ What each package is expected to do:
   - `~/.local/bin/run-niri-swayidle` and `~/.local/bin/niri-handle-lid.sh`
 - `sway/`
   - `~/.config/sway/config`:
-    - Alt as main modifier.
+    - Super/Win as main modifier.
     - Keybindings (see cheat sheet below).
     - Lid binding → `sway-handle-lid.sh`.
     - Idle lock → `exec_always ~/.local/bin/run-swayidle 3000` (locks after 50 minutes; turns displays off 30s after locking).
@@ -298,6 +298,7 @@ What each package is expected to do:
   - `~/.config/waybar-niri/config` and `style.css`
   - `run-niri-swayidle` for conservative Stage 1 idle locking via `swayidle` + `swaylock`
   - `niri-handle-lid.sh` for suspend-on-lid-close when no external monitor is connected
+  - Super/Win as Niri `Mod`, with Alt reserved as the nested-session modifier.
   - Niri-specific session glue while preserving the existing Sway and Hyprland packages.
 
 If `stow` complains about conflicts, move the existing file into the appropriate place under `~/dotfiles/...` and re-run `stow`.
@@ -403,30 +404,30 @@ In `~/.config/sway/config` you should have (or add):
 
 ### Core
 
-- **Mod key**: `Alt` (`Mod1`).
-- `Alt+Enter` – Alacritty into persistent tmux session (`main`).
-- `Alt+Shift+Enter` – Alacritty (terminal).
-- `Alt+Space` – rofi app launcher.
-- `Alt+Q` – close window.
+- **Mod key**: `Super` / `Win` (`Mod4`).
+- `Super+Enter` – Alacritty into persistent tmux session (`main`).
+- `Super+Shift+Enter` – Alacritty (terminal).
+- `Super+Space` – rofi app launcher.
+- `Super+Q` – close window.
 
 ### Focus / move windows
 
-- `Alt+Arrow` – move focus.
-- `Alt+Shift+Arrow` – move window.
+- `Super+Arrow` – move focus.
+- `Super+Shift+Arrow` – move window.
 
 ### Workspaces
 
-- `Alt+1..9` – switch to workspace.
-- `Alt+Shift+1..9` – move focused container to workspace.
+- `Super+1..9` – switch to workspace.
+- `Ctrl+Super+Shift+1..9` – move focused container to workspace.
 - `Ctrl+Left/Right` – prev/next workspace.
 - 3-finger swipe left/right – workspace navigation (via your gesture setup).
 
 ### Media / brightness
 
-- `Alt+F1/F2` – brightness down/up.
-- `Alt+F11/F12` – volume down/up.
-- `Alt+Shift+F12` – mute.
-- `Alt+F8/F9/F10` – play-pause / prev / next (`playerctl`).
+- `Super+F1/F2` – brightness down/up.
+- `Super+F11/F12` – volume down/up.
+- `Super+Shift+F12` – mute.
+- `Super+F8/F9/F10` – play-pause / prev / next (`playerctl`).
 
 ### Network & Bluetooth helpers
 
@@ -445,7 +446,7 @@ bindsym $mod+Ctrl+n exec nm-connection-editor
 
 ```sway
 # Manual lock
-bindsym Ctrl+Alt+q exec swaylock -f -c 000000
+bindsym Ctrl+$mod+q exec swaylock -f -c 000000
 ```
 
 - Auto-lock after `run-swayidle` timeout (currently 3000s) and turn screens off 30s later.
@@ -481,7 +482,7 @@ Then paste directly into ChatGPT when debugging.
 ## 10. Terminal: Alacritty + tmux
 
 - Sway launch:
-  - `Alt+Enter` starts `alacritty -e tmux new-session -A -s main` (reattach/create `main`).
+  - `Super+Enter` starts `alacritty -e tmux new-session -A -s main` (reattach/create `main`).
 - Manual launch:
   - `tmux new -A -s main`
 - Clipboard model:
@@ -593,9 +594,9 @@ For a fresh user (personal or client-specific):
 
    Manual Niri checks:
    - Waybar appears using the Niri-specific config.
-   - `Alt+Return` opens terminal + tmux.
-   - `Alt+Space` opens rofi.
-   - `Ctrl+Alt+Q` locks with `swaylock`.
+   - `Super+Return` opens terminal + tmux.
+   - `Super+Space` opens rofi.
+   - `Ctrl+Super+Q` locks with `swaylock`.
    - An X11 client still launches, for example `xeyes` or another known X11 app if installed.
    - Lid-close behavior is acceptable on laptop hardware.
 

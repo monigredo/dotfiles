@@ -32,8 +32,8 @@ input "type:mouse" {
 }
 
 # --- Mod key & common apps ---
-# Treat Alt as "Cmd" in your head
-set $mod Mod1
+# Treat Super/Win as "Cmd" in your head
+set $mod Mod4
 
 set $term alacritty
 set $term_tmux alacritty -e tmux new-session -A -s main
@@ -47,7 +47,7 @@ bindsym $mod+Shift+Return exec $term
 # Spotlight-style launcher
 bindsym $mod+space exec $menu
 
-# Close window (Alt+Q)
+# Close window (Super+Q)
 bindsym $mod+q kill
 
 # Keyboard layout switch (US <-> Ukrainian)
@@ -88,7 +88,7 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 
-# Send window to workspace (Ctrl + Alt + Shift + number)
+# Send window to workspace (Ctrl + Super + Shift + number)
 bindsym Ctrl+$mod+Shift+1 move container to workspace $ws1
 bindsym Ctrl+$mod+Shift+2 move container to workspace $ws2
 bindsym Ctrl+$mod+Shift+3 move container to workspace $ws3
@@ -112,21 +112,21 @@ bindsym $mod+n exec ~/.local/bin/sway-move-workspace-next-output
 bindgesture swipe:3:left  workspace next
 bindgesture swipe:3:right workspace prev
 
-# --- Brightness: Alt + F1/F2 (left edge) ---
-bindsym Mod1+F1 exec brightnessctl set 5%-
-bindsym Mod1+F2 exec brightnessctl set +5%
+# --- Brightness: Super + F1/F2 (left edge) ---
+bindsym $mod+F1 exec brightnessctl set 5%-
+bindsym $mod+F2 exec brightnessctl set +5%
 
-# --- Volume: Alt + F11/F12 (right edge) ---
-bindsym Mod1+F11 exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-bindsym Mod1+F12 exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-bindsym Mod1+Shift+F12 exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+# --- Volume: Super + F11/F12 (right edge) ---
+bindsym $mod+F11 exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym $mod+F12 exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym $mod+Shift+F12 exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
-# --- Media: Alt + F8/F9/F10 (cluster near right side) ---
-bindsym Mod1+F8  exec playerctl play-pause
-bindsym Mod1+F9  exec playerctl previous
-bindsym Mod1+F10 exec playerctl next
+# --- Media: Super + F8/F9/F10 (cluster near right side) ---
+bindsym $mod+F8  exec playerctl play-pause
+bindsym $mod+F9  exec playerctl previous
+bindsym $mod+F10 exec playerctl next
 
-# --- Screenshot: Alt + Shift + 4 (region to clipboard) ---
+# --- Screenshot: Super + Shift + 4 (region to clipboard) ---
 bindsym $mod+Shift+4 exec sh -c 'grim -g "$(slurp)" - | wl-copy'
 
 # bluetooth
@@ -135,16 +135,15 @@ bindsym $mod+Shift+b exec $bluetooth_menu
 
 
 # Network tools
-# Alt+Shift+N → quick TUI Wi-Fi/Network manager
+# Super+Shift+N -> quick TUI Wi-Fi/Network manager
 bindsym $mod+Shift+n exec ~/.local/bin/wifi-menu
 
-# Alt+Ctrl+N → full GUI connection editor
+# Super+Ctrl+N -> full GUI connection editor
 bindsym $mod+Ctrl+n exec nm-connection-editor
 
 
-# --- Manual lock: Ctrl + Alt + Q ---
-# (Mod1 = Alt in our config)
-    bindsym Ctrl+Mod1+q exec swaylock -f -c 000000 -k
+# --- Manual lock: Ctrl + Super + Q ---
+bindsym Ctrl+$mod+q exec swaylock -f -c 000000 -k
 
 # --- Reload / exit Sway ---
 bindsym $mod+Shift+c reload

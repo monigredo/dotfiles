@@ -84,11 +84,11 @@ rofi-bluetooth
 ## 8. Manual checks inside Niri
 
 - Waybar appears.
-- `Alt+Return` opens Alacritty + tmux.
-- `Alt+Shift+Return` opens plain Alacritty.
-- `Alt+Space` opens rofi.
-- `Ctrl+Alt+Q` locks the screen.
-- `Alt+Shift+4` screenshot flow works.
+- `Super+Return` opens Alacritty + tmux.
+- `Super+Shift+Return` opens plain Alacritty.
+- `Super+Space` opens rofi.
+- `Ctrl+Super+Q` locks the screen.
+- `Super+Shift+4` screenshot flow works.
 - An X11 app launches if available.
 - Lid-close behavior is acceptable on the laptop.
 
