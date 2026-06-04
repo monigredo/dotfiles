@@ -98,6 +98,8 @@ What it does:
 - **pipx & CLI helper**:
   - `pipx ensurepath`
   - `pipx install files-to-prompt`
+- **Development workspace**:
+  - Creates `~/code` if it does not already exist.
 - **Fonts**:
   - Installs JetBrains Mono (via `dnf`).
   - Downloads **FiraCode Nerd Font** into `~/.local/share/fonts/FiraCode-Nerd` and runs `fc-cache`.
@@ -127,12 +129,9 @@ If run non-interactively, it skips identity prompts and prints manual `git confi
 This is not in the repo; you install it once per user.
 
 ```bash
-mkdir -p ~/code
-cd ~/code
-
-git clone https://github.com/nickclyde/rofi-bluetooth.git
-mkdir -p ~/.local/bin
-cp ~/code/rofi-bluetooth/rofi-bluetooth ~/.local/bin/
+mkdir -p ~/.local/share ~/.local/bin
+git clone https://github.com/nickclyde/rofi-bluetooth.git ~/.local/share/rofi-bluetooth
+ln -sf ~/.local/share/rofi-bluetooth/rofi-bluetooth ~/.local/bin/rofi-bluetooth
 chmod +x ~/.local/bin/rofi-bluetooth
 ```
 
@@ -548,11 +547,9 @@ For a fresh user (personal or client-specific):
 6. **Install `rofi-bluetooth`** (once per user):
 
    ```bash
-   mkdir -p ~/code
-   cd ~/code
-   git clone https://github.com/nickclyde/rofi-bluetooth.git
-   mkdir -p ~/.local/bin
-   cp ~/code/rofi-bluetooth/rofi-bluetooth ~/.local/bin/
+   mkdir -p ~/.local/share ~/.local/bin
+   git clone https://github.com/nickclyde/rofi-bluetooth.git ~/.local/share/rofi-bluetooth
+   ln -sf ~/.local/share/rofi-bluetooth/rofi-bluetooth ~/.local/bin/rofi-bluetooth
    chmod +x ~/.local/bin/rofi-bluetooth
    ```
 

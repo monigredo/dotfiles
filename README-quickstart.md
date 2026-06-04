@@ -47,7 +47,7 @@ cd ~/dotfiles
 
 ## 3. Run bootstrap script
 
-This installs packages, fonts, git defaults, and **prompts for git user.name/email**. It also prompts to set `zsh` as your login shell, installs \`rofi-bluetooth\` from GitHub, and links it into \`~/.local/bin\` for you:
+This installs packages, fonts, git defaults, creates `~/code`, and **prompts for git user.name/email**. It also prompts to set `zsh` as your login shell, installs \`rofi-bluetooth\` from GitHub, and links it into \`~/.local/bin\` for you:
 
 ```bash
 cd ~/dotfiles

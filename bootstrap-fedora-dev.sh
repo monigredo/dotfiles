@@ -193,6 +193,8 @@ systemctl --user enable --now podman.socket || true
 echo "[+] Setting DOCKER_HOST export hint (add this to your shell rc manually if you want it global):"
 echo "    export DOCKER_HOST=\"unix://\$XDG_RUNTIME_DIR/podman/podman.sock\""
 
+echo "[+] Ensuring development workspace directory..."
+mkdir -p "$HOME/code"
 
 echo "[+] Configuring global git defaults..."
 
@@ -339,9 +341,9 @@ else
 fi
 
 echo "[+] Ensuring rofi-bluetooth helper..."
-ROFI_BT_DIR="$HOME/code/rofi-bluetooth"
+ROFI_BT_DIR="$HOME/.local/share/rofi-bluetooth"
 ROFI_BT_TARGET="$HOME/.local/bin/rofi-bluetooth"
-mkdir -p "$HOME/code"
+mkdir -p "$HOME/.local/share"
 
 if [ -d "$ROFI_BT_DIR/.git" ]; then
   if ! git -C "$ROFI_BT_DIR" pull --ff-only; then
