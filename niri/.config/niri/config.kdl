@@ -41,6 +41,20 @@ layout {
         proportion 0.5
     }
 
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
     focus-ring {
         width 2
         active-color "#88c0d0"
@@ -79,6 +93,10 @@ binds {
     Super+Right { focus-column-right; }
     Super+Ctrl+Left { move-column-left; }
     Super+Ctrl+Right { move-column-right; }
+    Super+R { switch-preset-column-width; }
+    Super+Shift+R { switch-preset-window-height; }
+    Super+F { fullscreen-window; }
+    Super+Shift+F { maximize-column; }
 
     Super+Shift+Left { focus-monitor-left; }
     Super+Shift+Right { focus-monitor-right; }
