@@ -283,6 +283,7 @@ What each package is expected to do:
     - Truecolor and clipboard terminal features for Ghostty.
     - Vi copy-mode + sane history/window defaults.
     - fzf-powered switchers for sessions/windows/panes/buffers.
+    - See `TMUX-CHEATSHEET.md` for tmux shortcuts and persistence bindings.
 - `env/`
   - Optional: `~/.config/environment.d/10-local-bin.conf` if you decide to keep it.  
     GUI config mostly uses explicit `~/.local/bin/...`, so this is optional.
@@ -298,6 +299,7 @@ What each package is expected to do:
   - `niri-handle-lid.sh` for suspend-on-lid-close when no external monitor is connected
   - Super/Win as Niri `Mod`, with Alt reserved as the nested-session modifier.
   - Niri-specific session glue while preserving the existing Sway and Hyprland packages.
+  - See `NIRI-CHEATSHEET.md` for Niri desktop shortcuts.
 
 If `stow` complains about conflicts, move the existing file into the appropriate place under `~/dotfiles/...` and re-run `stow`.
 
@@ -504,6 +506,24 @@ Bindings (tmux prefix + key):
 Notes:
 - If `fzf` / `fzf-tmux` is missing, tmux shows a message instead of failing.
 - `tmux-sessionizer` scans project roots (`~/code`, `~/workdir`, `~/Documents`) for git repos, then creates/switches to a session based on selected directory name.
+
+### 10.2 tmux session persistence
+
+The tmux config uses TPM with `tmux-resurrect` and `tmux-continuum` to preserve sessions, windows, panes, layouts, current directories, and supported editor session state across restarts.
+
+If TPM is not installed yet:
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+After stowing or reloading the tmux config, press `Ctrl+B I` to install plugins.
+
+Useful bindings:
+- `Ctrl+B Ctrl-s` — save tmux state manually.
+- `Ctrl+B Ctrl-r` — restore saved tmux state manually.
+
+Continuum automatically saves every 15 minutes and restores when a tmux server starts. It does not checkpoint arbitrary process memory; long-running programs only come back where `tmux-resurrect` has explicit support or a sensible restart strategy.
 
 ---
 

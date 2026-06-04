@@ -4,7 +4,7 @@
 - Root scripts: `bootstrap-fedora-dev.sh` (Fedora + Sway/Hyprland/Niri bootstrap) and `stow-clean-restow.sh` (remove conflicts then restow).
 - Stow packages: `shell/`, `sway/`, `waybar/`, `ghostty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
 - Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`).
-- Docs: `README.md` (full), `README-quickstart.md` (concise), `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
+- Docs: `README.md` (full), `README-quickstart.md` (concise), `NIRI-CHEATSHEET.md`, `TMUX-CHEATSHEET.md`, `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 
 ## Build, Test, and Development Commands
 - Bootstrap a machine (installs packages, sets up zsh as the default login shell when confirmed, fonts, helper scripts, rofi-bluetooth):  
