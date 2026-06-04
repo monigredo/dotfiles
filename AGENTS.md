@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 - Root scripts: `bootstrap-fedora-dev.sh` (Fedora + Sway/Hyprland/Niri bootstrap) and `stow-clean-restow.sh` (remove conflicts then restow).
-- Stow packages: `shell/`, `sway/`, `waybar/`, `alacritty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
+- Stow packages: `shell/`, `sway/`, `waybar/`, `ghostty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
 - Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`).
 - Docs: `README.md` (full), `README-quickstart.md` (concise), `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 
@@ -13,13 +13,14 @@
   ```
   Includes core CLI tooling (including `eza` for interactive `l`/`la`/`ll`/`lg`/`lll` aliases), shared Wayland desktop support (`waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-gtk`, `nm-connection-editor`), the current Sway runtime (`sway`, `swayidle`, `swaylock`), the default Niri runtime (`niri`, `xwayland-satellite`, `xdg-desktop-portal-gnome`), plus the optional Hyprland runtime used by the repo (`hyprland`, `hypridle`, `hyprlock`, `qt6-qtwayland`, `xdg-desktop-portal-hyprland`).
   Java packages are resolved dynamically: bootstrap prefers Java 21 when available, falls back to Fedora's latest/default OpenJDK package set, and skips Java if no supported OpenJDK packages are available in enabled repositories.
+  Ghostty is the default terminal; bootstrap prompts to enable the unofficial `scottames/ghostty` COPR if Ghostty is not available in enabled standard Fedora repositories.
   Fedora 43 Hyprland support is currently experimental and may rely on the `solopasha/hyprland` COPR; optional packages such as `hyprland-qtutils` are not treated as bootstrap requirements because they can lag behind Fedora Qt updates.
 - Restow cleanly (removes conflicting files first, then stows common packages):  
   ```bash
-  ./stow-clean-restow.sh                # defaults to shell sway waybar alacritty tmux env hyprland niri
+  ./stow-clean-restow.sh                # defaults to shell sway waybar ghostty tmux env hyprland niri
   ./stow-clean-restow.sh shell sway     # choose packages
   ```
-- Standard stow (if you do it manually): `stow shell sway waybar alacritty tmux env hyprland niri`
+- Standard stow (if you do it manually): `stow shell sway waybar ghostty tmux env hyprland niri`
 
 ## Coding Style & Naming Conventions
 - Shell scripts: `#!/usr/bin/env bash`, `set -euo pipefail`; prefer simple POSIX-friendly constructs.

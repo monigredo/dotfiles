@@ -12,7 +12,7 @@ I manage configs with **stow**:
 - After cloning, I typically run:
   ```bash
   cd ~/dotfiles
-  stow shell sway waybar alacritty tmux env hyprland niri
+  stow shell sway waybar ghostty tmux env hyprland niri
   ```
 
 Relevant pieces:
@@ -30,7 +30,7 @@ Some helper scripts are already present / expected:
 - `sway-handle-lid.sh` – uses `swaymsg` + `jq` to:
   - If **no external monitor** → `swaylock -f -c 000000` then `systemctl suspend`.
   - If external monitor present → do nothing on lid close.
-- `wifi-menu` – runs `alacritty -e nmtui`.
+- `wifi-menu` – runs `ghostty -e nmtui`.
 - `rofi-bluetooth` – rofi-based Bluetooth controller, expected at `~/.local/bin/rofi-bluetooth`.
 
 At the moment:

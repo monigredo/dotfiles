@@ -56,6 +56,7 @@ cd ~/dotfiles
 
 During bootstrap:
 
+- Ghostty may prompt for an extra COPR-backed install path if it is not available in the enabled standard repos.
 - Hyprland may prompt for an extra COPR-backed install path on Fedora 43 if it is not available in the enabled standard repos.
 - Niri installs by default when it is available in the enabled standard Fedora repos.
 
@@ -68,7 +69,7 @@ cd ~/dotfiles
 stow shell
 stow sway
 stow waybar
-stow alacritty
+stow ghostty
 stow tmux
 stow env
 stow hyprland
@@ -92,7 +93,7 @@ This picks up:
 - Hyprland config
 - Niri config
 - Waybar config
-- Alacritty config
+- Ghostty config
 - Shell config
 - Helper scripts in \`~/.local/bin\`
 

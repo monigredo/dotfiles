@@ -59,7 +59,7 @@ During bootstrap:
 
 ```bash
 cd ~/dotfiles
-stow shell sway waybar alacritty tmux env hyprland niri
+stow shell sway waybar ghostty tmux env hyprland niri
 ```
 
 ## 6. Log out and choose Niri in GDM
@@ -84,8 +84,8 @@ rofi-bluetooth
 ## 8. Manual checks inside Niri
 
 - Waybar appears.
-- `Super+Return` opens Alacritty + tmux.
-- `Super+Shift+Return` opens plain Alacritty.
+- `Super+Return` opens Ghostty + tmux.
+- `Super+Shift+Return` opens plain Ghostty.
 - `Super+Space` opens rofi.
 - `Ctrl+Super+Q` locks the screen.
 - `Super+Shift+4` screenshot flow works.

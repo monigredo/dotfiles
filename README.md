@@ -6,7 +6,7 @@ Goals:
 
 - Keyboard-driven Wayland workflow (Sway + Hyprland + Niri + Waybar).
 - Reproducible setup via **GNU Stow**.
-- Good defaults for **development**: git, Java, containers, Alacritty, rofi.
+- Good defaults for **development**: git, Java, containers, Ghostty, rofi.
 - Small helper scripts in `~/.local/bin` for:
   - idle locking,
   - lid handling,
@@ -149,7 +149,7 @@ You should see `/home/<user>/.local/bin/rofi-bluetooth`.
 
 These live in `~/.local/bin`. Some are also mirrored under `~/dotfiles/shell/.local/bin` – adapt as your repo evolves.
 
-### 5.1 `wifi-menu` – Wi-Fi TUI via Alacritty + `nmtui`
+### 5.1 `wifi-menu` – Wi-Fi TUI via Ghostty + `nmtui`
 
 ```bash
 mkdir -p ~/.local/bin
@@ -158,7 +158,7 @@ cat > ~/.local/bin/wifi-menu << 'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 
-alacritty -e nmtui
+ghostty -e nmtui
 EOF
 
 chmod +x ~/.local/bin/wifi-menu
@@ -241,7 +241,7 @@ cd ~/dotfiles
 stow shell
 stow sway
 stow waybar
-stow alacritty
+stow ghostty
 stow tmux
 stow env
 stow hyprland
@@ -273,15 +273,14 @@ What each package is expected to do:
     - Right-side modules: CPU, memory, network, keyboard layout, **bluetooth**, audio, temp, battery, clock.
     - `on-click` for bluetooth → `~/.local/bin/rofi-bluetooth`.
     - `on-click` for network → `~/.local/bin/wifi-menu`.
-- `alacritty/`
-  - `~/.config/alacritty/alacritty.toml`:
-    - JetBrains Mono; dark theme; padding.
-    - `TERM=xterm-256color` for SSH compatibility.
-    - OSC52 copy enabled with `OnlyCopy`.
+- `ghostty/`
+  - `~/.config/ghostty/config.ghostty`:
+    - JetBrains Mono; dark theme; padding; light opacity.
+    - Shared XDG config usable on Linux and macOS.
 - `tmux/`
   - `~/.config/tmux/tmux.conf`:
     - `default-terminal` uses `tmux-256color` when available, else `screen-256color`.
-    - Truecolor and clipboard terminal features for Alacritty.
+    - Truecolor and clipboard terminal features for Ghostty.
     - Vi copy-mode + sane history/window defaults.
     - fzf-powered switchers for sessions/windows/panes/buffers.
 - `env/`
@@ -393,7 +392,7 @@ In `~/.config/waybar/config` network module:
 },
 ```
 
-Clicking the network icon opens `nmtui` in Alacritty.
+Clicking the network icon opens `nmtui` in Ghostty.
 
 ---
 
@@ -404,8 +403,8 @@ In `~/.config/sway/config` you should have (or add):
 ### Core
 
 - **Mod key**: `Super` / `Win` (`Mod4`).
-- `Super+Enter` – Alacritty into persistent tmux session (`main`).
-- `Super+Shift+Enter` – Alacritty (terminal).
+- `Super+Enter` – Ghostty into persistent tmux session (`main`).
+- `Super+Shift+Enter` – Ghostty (terminal).
 - `Super+Space` – rofi app launcher.
 - `Super+Q` – close window.
 
@@ -434,7 +433,7 @@ In `~/.config/sway/config` you should have (or add):
 # Bluetooth menu (rofi)
 bindsym $mod+Shift+b exec ~/.local/bin/rofi-bluetooth
 
-# Wi-Fi menu (nmtui in Alacritty)
+# Wi-Fi menu (nmtui in Ghostty)
 bindsym $mod+Shift+n exec ~/.local/bin/wifi-menu
 
 # Full GUI network editor
@@ -478,14 +477,14 @@ Then paste directly into ChatGPT when debugging.
 
 ---
 
-## 10. Terminal: Alacritty + tmux
+## 10. Terminal: Ghostty + tmux
 
 - Sway launch:
-  - `Super+Enter` starts `alacritty -e tmux new-session -A -s main` (reattach/create `main`).
+  - `Super+Enter` starts `ghostty -e tmux new-session -A -s main` (reattach/create `main`).
 - Manual launch:
   - `tmux new -A -s main`
 - Clipboard model:
-  - Alacritty enables OSC52 with `OnlyCopy` (copy out allowed, clipboard reads blocked).
+  - Ghostty is configured as the default terminal, with tmux feature flags for truecolor and clipboard integration.
   - tmux `set-clipboard` is auto-selected (`external` on tmux >= 2.6, `on` on older tmux).
   - This supports local Wayland clipboard copy and remote SSH copy via OSC52-capable terminals.
 
@@ -564,7 +563,7 @@ For a fresh user (personal or client-specific):
 
    ```bash
    cd ~/dotfiles
-   stow shell sway waybar alacritty tmux env hyprland niri
+   stow shell sway waybar ghostty tmux env hyprland niri
    ```
 
 9. **Log out and choose a session in GDM** to ensure environment + configs are applied.

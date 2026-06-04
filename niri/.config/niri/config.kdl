@@ -80,8 +80,8 @@ switch-events {
 }
 
 binds {
-    Super+Return { spawn "alacritty" "-e" "tmux" "new-session" "-A" "-s" "main"; }
-    Super+Shift+Return { spawn "alacritty"; }
+    Super+Return { spawn "ghostty" "-e" "tmux" "new-session" "-A" "-s" "main"; }
+    Super+Shift+Return { spawn "ghostty"; }
     Super+Space { spawn "rofi" "-show" "drun"; }
     Super+Q repeat=false { close-window; }
 

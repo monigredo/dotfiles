@@ -35,8 +35,8 @@ input "type:mouse" {
 # Treat Super/Win as "Cmd" in your head
 set $mod Mod4
 
-set $term alacritty
-set $term_tmux alacritty -e tmux new-session -A -s main
+set $term ghostty
+set $term_tmux ghostty -e tmux new-session -A -s main
 set $menu rofi -show drun
 
 # --- App launch / basics ---

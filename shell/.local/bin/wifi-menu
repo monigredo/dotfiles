@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Simple wrapper: open nmtui in a terminal
-# Adjust terminal command here if you ever switch from alacritty.
-alacritty -e nmtui
+# Simple wrapper: open nmtui in a terminal.
+ghostty -e nmtui

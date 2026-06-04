@@ -23,7 +23,6 @@ CORE_PACKAGES=(
   fd-find
   bat
   eza
-  alacritty
   tmux
   htop
   wl-clipboard
@@ -98,6 +97,46 @@ sudo dnf install -y \
   "${JAVA_PACKAGES[@]}" \
   "${SHARED_WAYLAND_PACKAGES[@]}" \
   "${SWAY_PACKAGES[@]}"
+
+ghostty_install_mode="install"
+
+echo "[+] Checking Ghostty package availability..."
+
+if ! package_available ghostty; then
+  ghostty_install_mode="missing"
+fi
+
+if [ "$ghostty_install_mode" = "missing" ] && [ -t 0 ] && [ -r /dev/tty ]; then
+  echo "[!] Ghostty is not available in the current enabled standard repositories."
+  echo "    Fedora may need an extra source such as the scottames/ghostty COPR."
+  echo "    COPR package sets are unofficial and can lag behind Fedora updates."
+  echo "    Enable COPR scottames/ghostty and install Ghostty? [y/N]" > /dev/tty
+  read -r enable_ghostty_copr < /dev/tty
+  case "$enable_ghostty_copr" in
+    [yY]|[yY][eE][sS])
+      echo "[+] Enabling COPR repository for Ghostty..."
+      sudo dnf copr enable -y scottames/ghostty
+      ghostty_install_mode="copr"
+      ;;
+    *)
+      ghostty_install_mode="skip"
+      ;;
+  esac
+elif [ "$ghostty_install_mode" = "missing" ]; then
+  echo "[!] Ghostty is not available in the current enabled standard repositories."
+  echo "    Interactive terminal not available; skipping Ghostty package install."
+  ghostty_install_mode="skip"
+fi
+
+if [ "$ghostty_install_mode" != "skip" ]; then
+  echo "[+] Installing Ghostty..."
+  sudo dnf install -y ghostty
+  if [ "$ghostty_install_mode" = "copr" ]; then
+    echo "    NOTE: Ghostty was installed from the unofficial scottames/ghostty COPR."
+  fi
+else
+  echo "[+] Skipping Ghostty package install."
+fi
 
 hyprland_install_mode="official"
 
@@ -368,7 +407,7 @@ required_cmds=(
   swaylock
   waybar
   rofi
-  alacritty
+  ghostty
   grim
   slurp
   wl-copy

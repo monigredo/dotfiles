@@ -1,7 +1,0 @@
-[general]
-import = [
-  "~/.config/alacritty/alacritty.toml"
-]
-
-[font]
-size = 11.0
