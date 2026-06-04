@@ -5,6 +5,10 @@ async-backend = epoll
 window-decoration = none
 window-padding-x = 6
 window-padding-y = 6
+window-inherit-working-directory = true
+tab-inherit-working-directory = true
+split-inherit-working-directory = true
+confirm-close-surface = true
 
 background = #1e1e2e
 foreground = #cdd6f4

@@ -36,7 +36,7 @@ input "type:mouse" {
 set $mod Mod4
 
 set $term ghostty
-set $term_tmux ghostty -e tmux new-session -A -s main
+set $term_tmux ~/.local/bin/dev-terminal
 set $menu rofi -show drun
 
 # --- App launch / basics ---

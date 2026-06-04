@@ -80,8 +80,8 @@ switch-events {
 }
 
 binds {
-    Super+Return { spawn "ghostty" "-e" "tmux" "new-session" "-A" "-s" "main"; }
-    Super+Shift+Return { spawn "ghostty"; }
+    Super+Return { spawn "ghostty"; }
+    Super+Shift+Return { spawn-sh "~/.local/bin/dev-terminal"; }
     Super+Space { spawn "rofi" "-show" "drun"; }
     Super+O { spawn-sh "~/.local/bin/obsidian-launch"; }
     Super+Q repeat=false { close-window; }

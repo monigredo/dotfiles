@@ -29,11 +29,17 @@ Default prefix is tmux's standard `Ctrl+B`.
 Useful commands:
 
 ```bash
+t
+t main
+t dotfiles
+t work
 tmux new -A -s main
 tmux ls
 tmux attach -t main
 tmux kill-session -t main
 ```
+
+The `t [session]` zsh helper defaults to `main`. From inside tmux it creates the session in the background if needed and switches to it; outside tmux it attaches to or creates it.
 
 ## Windows
 

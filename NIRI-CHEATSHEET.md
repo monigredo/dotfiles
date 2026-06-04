@@ -6,8 +6,8 @@ This repo uses `Super` / `Win` as the main Niri modifier. Niri uses `Alt` as the
 
 | Shortcut | Action |
 | --- | --- |
-| `Super+Enter` | Open Ghostty attached to tmux session `main` |
-| `Super+Shift+Enter` | Open Ghostty |
+| `Super+Enter` | Open plain Ghostty |
+| `Super+Shift+Enter` | Open Ghostty attached to tmux session `main` |
 | `Super+Space` | Open rofi app launcher |
 | `Super+Q` | Close focused window |
 | `Ctrl+Space` | Switch keyboard layout |

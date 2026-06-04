@@ -264,9 +264,11 @@ What each package is expected to do:
   - `~/.zshrc` and `~/.config/zsh/*.zsh`:
     - ensure `~/.local/bin` and `~/bin` are in PATH for shells.
     - aliases (`l` icons/default view, `la` icons + dotfiles, `ll` long + ISO time, `lg` long + dotfiles + git, `lll` long + modified-time sort via `eza`; `cat → bat`, `grep → rg`, etc.).
+    - `t [session]` zsh helper attaches to or creates a tmux session, defaulting to `main`.
   - `~/.local/bin/run-swayidle` (from above).
   - `~/.local/bin/run-niri-swayidle` and `~/.local/bin/niri-handle-lid.sh`
   - `~/.local/bin/obsidian-launch`, which opens native Obsidian when available or the Flatpak app otherwise.
+  - `~/.local/bin/dev-terminal`, which opens Ghostty attached to a tmux session.
 - `sway/`
   - `~/.config/sway/config`:
     - Super/Win as main modifier.
@@ -281,6 +283,8 @@ What each package is expected to do:
 - `ghostty/`
   - `~/.config/ghostty/config.ghostty`:
     - JetBrains Mono; dark theme; padding; light opacity.
+    - Plain Ghostty launches stay as disposable shell terminals by default.
+    - New Ghostty windows, tabs, and splits inherit working directories when shell integration can report them.
     - Shared XDG config usable on Linux and macOS.
 - `tmux/`
   - `~/.config/tmux/tmux.conf`:
@@ -413,7 +417,7 @@ In `~/.config/sway/config` you should have (or add):
 
 - **Mod key**: `Super` / `Win` (`Mod4`).
 - `Super+Enter` – Ghostty into persistent tmux session (`main`).
-- `Super+Shift+Enter` – Ghostty (terminal).
+- `Super+Shift+Enter` – plain Ghostty terminal.
 - `Super+Space` – rofi app launcher.
 - `Super+O` – Obsidian (`obsidian-launch`).
 - `Super+Q` – close window.
@@ -489,10 +493,19 @@ Then paste directly into ChatGPT when debugging.
 
 ## 10. Terminal: Ghostty + tmux
 
-- Sway launch:
-  - `Super+Enter` starts `ghostty -e tmux new-session -A -s main` (reattach/create `main`).
+- Ghostty launch:
+  - Plain `ghostty` starts a disposable shell terminal by default.
+  - `dev-terminal` opens Ghostty and runs `tmux new -A -s main` by default.
+  - `dev-terminal work` opens Ghostty attached to tmux session `work`.
+- Niri launch:
+  - `Super+Enter` starts plain Ghostty.
+  - `Super+Shift+Enter` starts `dev-terminal`, which attaches to tmux session `main`.
+  - Window-manager integration belongs in `niri/.config/niri/config.kdl`; do not use Sway keybinding syntax for Niri.
 - Manual launch:
   - `tmux new -A -s main`
+  - `t main`, `t dotfiles`, or `t work` attaches to or creates that tmux session from the current shell.
+- Working directories:
+  - Ghostty is configured to inherit working directories for new windows, tabs, and splits when shell integration supports it.
 - Clipboard model:
   - Ghostty is configured as the default terminal, with tmux feature flags for truecolor and clipboard integration.
   - tmux `set-clipboard` is auto-selected (`external` on tmux >= 2.6, `on` on older tmux).
@@ -532,6 +545,8 @@ Useful bindings:
 - `Ctrl+B Ctrl-r` — restore saved tmux state manually.
 
 Continuum automatically saves every 15 minutes and restores when a tmux server starts. It does not checkpoint arbitrary process memory; long-running programs only come back where `tmux-resurrect` has explicit support or a sensible restart strategy.
+
+On Linux, rely on tmux-resurrect and tmux-continuum for terminal session recovery across reboots. Ghostty window-state restoration is not a replacement for tmux persistence on this setup.
 
 ---
 

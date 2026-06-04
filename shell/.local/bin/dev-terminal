@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+session="${1:-main}"
+shift || true
+
+exec ghostty -e tmux new -A -s "$session" "$@"
