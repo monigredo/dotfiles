@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if command -v obsidian >/dev/null 2>&1; then
+  exec obsidian "$@"
+fi
+
+if command -v flatpak >/dev/null 2>&1 && flatpak info md.obsidian.Obsidian >/dev/null 2>&1; then
+  exec flatpak run md.obsidian.Obsidian "$@"
+fi
+
+echo "obsidian-launch: Obsidian is not installed." >&2
+echo "Install it with: flatpak install flathub md.obsidian.Obsidian" >&2
+exit 127

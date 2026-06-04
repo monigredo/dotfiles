@@ -18,7 +18,7 @@ I manage configs with **stow**:
 Relevant pieces:
 
 - **Bootstrap script**: `~/dotfiles/bootstrap-fedora-dev.sh`
-  - Installs core packages and sets global git defaults.
+  - Installs core packages, prompts for optional tools, and sets global git defaults.
 - **Helper scripts directory in repo** (intended canonical source):
   - `~/dotfiles/shell/.local/bin/`
 - **Runtime helper scripts location on system**:
@@ -31,6 +31,7 @@ Some helper scripts are already present / expected:
   - If **no external monitor** → `swaylock -f -c 000000` then `systemctl suspend`.
   - If external monitor present → do nothing on lid close.
 - `wifi-menu` – runs `ghostty -e nmtui`.
+- `obsidian-launch` – launches native Obsidian when available or the `md.obsidian.Obsidian` Flatpak otherwise.
 - `rofi-bluetooth` – rofi-based Bluetooth controller, expected at `~/.local/bin/rofi-bluetooth`.
 
 At the moment:
@@ -55,6 +56,7 @@ Do the following:
      - `run-swayidle`
      - `sway-handle-lid.sh`
      - `wifi-menu`
+     - `obsidian-launch`
      - `rofi-bluetooth` (if I’ve already added it; if not, leave a clear TODO comment in the bootstrap script and do not invent its contents).
    - For any helper script in the repo:
      - Ensure it has:
@@ -90,7 +92,7 @@ Do the following:
    - Add a small helper section in `bootstrap-fedora-dev.sh` that:
      - Verifies that the helper scripts that are supposed to exist actually do after setup, e.g. something like:
        ```bash
-       for bin in run-swayidle sway-handle-lid.sh wifi-menu; do
+       for bin in run-swayidle sway-handle-lid.sh wifi-menu obsidian-launch; do
          if [ ! -x "$HOME/.local/bin/$bin" ]; then
            echo "WARNING: $HOME/.local/bin/$bin is missing or not executable" >&2
          fi
@@ -104,7 +106,10 @@ Do the following:
      - `~/.local/bin/run-swayidle`
      - `~/.local/bin/sway-handle-lid.sh`
      - `~/.local/bin/wifi-menu`
+     - `~/.local/bin/obsidian-launch`
      - `~/.local/bin/rofi-bluetooth`
+
+Obsidian vault contents should stay outside dotfiles. Bootstrap may offer the Flathub install for the app itself, but do not add vault notes or private Obsidian data to the repo.
    - The only allowed change is to make sure those paths are satisfied by installing/symlinking scripts from the dotfiles repo.
 
 5. **Produce a clear diff**

@@ -59,6 +59,7 @@ During bootstrap:
 - Ghostty may prompt for an extra COPR-backed install path if it is not available in the enabled standard repos.
 - Hyprland may prompt for an extra COPR-backed install path on Fedora 43 if it is not available in the enabled standard repos.
 - Niri installs by default when it is available in the enabled standard Fedora repos.
+- Obsidian is optional; bootstrap can install the Flathub Flatpak and the dotfiles provide `obsidian-launch`.
 
 ---
 
@@ -96,6 +97,7 @@ This picks up:
 - Ghostty config
 - Shell config
 - Helper scripts in \`~/.local/bin\`
+- `Super+O` launches Obsidian through `obsidian-launch` when installed
 
 ---
 
@@ -112,6 +114,9 @@ wifi-menu
 
 # Check bluetooth menu
 rofi-bluetooth
+
+# Check Obsidian launcher
+obsidian-launch
 ```
 
 For `Niri`, also check:

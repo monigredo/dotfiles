@@ -98,6 +98,10 @@ What it does:
 - **pipx & CLI helper**:
   - `pipx ensurepath`
   - `pipx install files-to-prompt`
+- **Obsidian (optional)**:
+  - Prompts to install the Flathub Flatpak: `md.obsidian.Obsidian`.
+  - Adds the Flathub remote if needed.
+  - Vault contents are not stored in this repo; keep notes in a separate vault/sync location.
 - **Development workspace**:
   - Creates `~/code` if it does not already exist.
 - **Fonts**:
@@ -262,6 +266,7 @@ What each package is expected to do:
     - aliases (`l` icons/default view, `la` icons + dotfiles, `ll` long + ISO time, `lg` long + dotfiles + git, `lll` long + modified-time sort via `eza`; `cat → bat`, `grep → rg`, etc.).
   - `~/.local/bin/run-swayidle` (from above).
   - `~/.local/bin/run-niri-swayidle` and `~/.local/bin/niri-handle-lid.sh`
+  - `~/.local/bin/obsidian-launch`, which opens native Obsidian when available or the Flatpak app otherwise.
 - `sway/`
   - `~/.config/sway/config`:
     - Super/Win as main modifier.
@@ -300,6 +305,8 @@ What each package is expected to do:
   - Super/Win as Niri `Mod`, with Alt reserved as the nested-session modifier.
   - Niri-specific session glue while preserving the existing Sway and Hyprland packages.
   - See `NIRI-CHEATSHEET.md` for Niri desktop shortcuts.
+
+Obsidian note vaults are intentionally not a stow package. Keep vaults in a normal data/sync location, for example `~/Documents/Obsidian`, and use dotfiles only for launch/install glue.
 
 If `stow` complains about conflicts, move the existing file into the appropriate place under `~/dotfiles/...` and re-run `stow`.
 
@@ -408,6 +415,7 @@ In `~/.config/sway/config` you should have (or add):
 - `Super+Enter` – Ghostty into persistent tmux session (`main`).
 - `Super+Shift+Enter` – Ghostty (terminal).
 - `Super+Space` – rofi app launcher.
+- `Super+O` – Obsidian (`obsidian-launch`).
 - `Super+Q` – close window.
 
 ### Focus / move windows
@@ -575,6 +583,7 @@ For a fresh user (personal or client-specific):
 7. **Ensure helper scripts exist** (either in dotfiles or recreate):
 
    - `~/.local/bin/wifi-menu`
+   - `~/.local/bin/obsidian-launch`
    - `~/.local/bin/sway-handle-lid.sh`
    - `~/.local/bin/run-swayidle` (via `stow shell`)
    - `~/.local/bin/tmux-sessionizer` (via `stow shell`, optional)

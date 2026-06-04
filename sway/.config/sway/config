@@ -47,6 +47,9 @@ bindsym $mod+Shift+Return exec $term
 # Spotlight-style launcher
 bindsym $mod+space exec $menu
 
+# Notes
+bindsym $mod+o exec ~/.local/bin/obsidian-launch
+
 # Close window (Super+Q)
 bindsym $mod+q kill
 

@@ -83,6 +83,7 @@ binds {
     Super+Return { spawn "ghostty" "-e" "tmux" "new-session" "-A" "-s" "main"; }
     Super+Shift+Return { spawn "ghostty"; }
     Super+Space { spawn "rofi" "-show" "drun"; }
+    Super+O { spawn-sh "~/.local/bin/obsidian-launch"; }
     Super+Q repeat=false { close-window; }
 
     Ctrl+Space { switch-layout "next"; }

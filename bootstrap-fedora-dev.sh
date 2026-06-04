@@ -359,6 +359,26 @@ else
   echo "    Non-interactive shell detected; skipping Node.js/npm prompt."
 fi
 
+echo "[+] Optional: Obsidian setup..."
+if [ -t 0 ]; then
+  read -r -p "    Install Obsidian via Flatpak from Flathub? [y/N]: " install_obsidian
+  case "$install_obsidian" in
+    [yY]|[yY][eE][sS])
+      if command -v flatpak >/dev/null 2>&1; then
+        sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        sudo flatpak install -y flathub md.obsidian.Obsidian
+      else
+        echo "    WARNING: flatpak is not available; cannot install Obsidian." >&2
+      fi
+      ;;
+    *)
+      echo "    Skipping Obsidian install."
+      ;;
+  esac
+else
+  echo "    Non-interactive shell detected; skipping Obsidian prompt."
+fi
+
 echo "[+] Linking helper scripts into ~/.local/bin via stow..."
 mkdir -p "$HOME/.local/bin"
 
@@ -399,6 +419,13 @@ if [ -n "${ROFI_BT_DIR:-}" ] && [ -f "$ROFI_BT_DIR/rofi-bluetooth" ]; then
   ln -sf "$ROFI_BT_DIR/rofi-bluetooth" "$ROFI_BT_TARGET"
   chmod +x "$ROFI_BT_TARGET"
 fi
+
+echo "[+] Verifying helper scripts..."
+for bin in run-swayidle run-niri-swayidle sway-handle-lid.sh niri-handle-lid.sh hypr-handle-lid.sh hypr-kblayout-waybar hypr-move-workspace-next-output wifi-menu obsidian-launch rofi-bluetooth; do
+  if [ ! -x "$HOME/.local/bin/$bin" ]; then
+    echo "    WARNING: $HOME/.local/bin/$bin is missing or not executable" >&2
+  fi
+done
 
 echo "[+] Checking required desktop commands..."
 required_cmds=(

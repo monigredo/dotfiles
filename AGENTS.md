@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 - Root scripts: `bootstrap-fedora-dev.sh` (Fedora + Sway/Hyprland/Niri bootstrap) and `stow-clean-restow.sh` (remove conflicts then restow).
 - Stow packages: `shell/`, `sway/`, `waybar/`, `ghostty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
-- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`).
+- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `obsidian-launch`).
 - Docs: `README.md` (full), `README-quickstart.md` (concise), `NIRI-CHEATSHEET.md`, `TMUX-CHEATSHEET.md`, `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 
 ## Build, Test, and Development Commands
@@ -13,6 +13,7 @@
   ```
   Includes core CLI tooling (including `eza` for interactive `l`/`la`/`ll`/`lg`/`lll` aliases), shared Wayland desktop support (`waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-gtk`, `nm-connection-editor`), the current Sway runtime (`sway`, `swayidle`, `swaylock`), the default Niri runtime (`niri`, `xwayland-satellite`, `xdg-desktop-portal-gnome`), plus the optional Hyprland runtime used by the repo (`hyprland`, `hypridle`, `hyprlock`, `qt6-qtwayland`, `xdg-desktop-portal-hyprland`).
   Java packages are resolved dynamically: bootstrap prefers Java 21 when available, falls back to Fedora's latest/default OpenJDK package set, and skips Java if no supported OpenJDK packages are available in enabled repositories.
+  Obsidian is optional via a bootstrap Flatpak prompt (`md.obsidian.Obsidian` from Flathub); vault contents stay outside dotfiles.
   Ghostty is the default terminal; bootstrap prompts to enable the unofficial `scottames/ghostty` COPR if Ghostty is not available in enabled standard Fedora repositories.
   Fedora 43 Hyprland support is currently experimental and may rely on the `solopasha/hyprland` COPR; optional packages such as `hyprland-qtutils` are not treated as bootstrap requirements because they can lag behind Fedora Qt updates.
 - Restow cleanly (removes conflicting files first, then stows common packages):  
@@ -41,7 +42,7 @@
 
 ## Security & Configuration Tips
 - Never run destructive commands (`git reset --hard`, `rm -rf ~`) in automation; prefer stow-clean-restow for conflict handling.
-- Network installs are confined to expected downloads in bootstrap (dnf, pipx, rofi-bluetooth clone); avoid adding new network calls without need.
+- Network installs are confined to expected downloads in bootstrap (dnf, pipx, rofi-bluetooth clone, optional Flathub Obsidian install); avoid adding new network calls without need.
 
 ## Agent Notes
 - Keep `AGENTS.md` current when workflows, scripts, or package lists change (especially bootstrap/stow logic, Hyprland/Sway/Niri package lists, or helper script locations).
