@@ -34,7 +34,9 @@ unset rc
 
 alias edsw="code ~/.config/sway/config"
 
-alias ls='eza'
+alias l='eza --group-directories-first'
+alias la='eza --all --group-directories-first'
+alias ll='eza -l --group-directories-first'
 alias cat='bat'
 alias ccat='/usr/bin/cat'
 alias grep='rg'

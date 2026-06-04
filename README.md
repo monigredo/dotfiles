@@ -260,7 +260,7 @@ What each package is expected to do:
 - `shell/`
   - `~/.zshrc` and `~/.config/zsh/*.zsh`:
     - ensure `~/.local/bin` and `~/bin` are in PATH for shells.
-    - aliases (`ls → eza` if installed, `cat → bat`, `grep → rg`, etc.).
+    - aliases (`l`, `la`, `ll` via `eza`; `cat → bat`, `grep → rg`, etc.).
   - `~/.local/bin/run-swayidle` (from above).
   - `~/.local/bin/run-niri-swayidle` and `~/.local/bin/niri-handle-lid.sh`
 - `sway/`

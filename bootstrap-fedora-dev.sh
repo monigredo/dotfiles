@@ -22,6 +22,7 @@ CORE_PACKAGES=(
   ripgrep
   fd-find
   bat
+  eza
   alacritty
   tmux
   htop

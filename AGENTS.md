@@ -11,7 +11,7 @@
   ```bash
   ./bootstrap-fedora-dev.sh
   ```
-  Includes core CLI tooling, shared Wayland desktop support (`waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-gtk`, `nm-connection-editor`), the current Sway runtime (`sway`, `swayidle`, `swaylock`), the default Niri runtime (`niri`, `xwayland-satellite`, `xdg-desktop-portal-gnome`), plus the optional Hyprland runtime used by the repo (`hyprland`, `hypridle`, `hyprlock`, `qt6-qtwayland`, `xdg-desktop-portal-hyprland`).
+  Includes core CLI tooling (including `eza` for interactive `l`/`la`/`ll` aliases), shared Wayland desktop support (`waybar`, `rofi-wayland`, `grim`, `slurp`, `brightnessctl`, `playerctl`, `pavucontrol`, `wireplumber`, `mako`, `lxqt-policykit`, `xdg-desktop-portal`, `xdg-desktop-portal-gtk`, `nm-connection-editor`), the current Sway runtime (`sway`, `swayidle`, `swaylock`), the default Niri runtime (`niri`, `xwayland-satellite`, `xdg-desktop-portal-gnome`), plus the optional Hyprland runtime used by the repo (`hyprland`, `hypridle`, `hyprlock`, `qt6-qtwayland`, `xdg-desktop-portal-hyprland`).
   Java packages are resolved dynamically: bootstrap prefers Java 21 when available, falls back to Fedora's latest/default OpenJDK package set, and skips Java if no supported OpenJDK packages are available in enabled repositories.
   Fedora 43 Hyprland support is currently experimental and may rely on the `solopasha/hyprland` COPR; optional packages such as `hyprland-qtutils` are not treated as bootstrap requirements because they can lag behind Fedora Qt updates.
 - Restow cleanly (removes conflicting files first, then stows common packages):  
