@@ -8,10 +8,4 @@ path=(
   $path
 )
 
-export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
-path+=(
-  "$ANDROID_SDK_ROOT/platform-tools"
-  "$ANDROID_SDK_ROOT/emulator"
-)
-
 export PATH
