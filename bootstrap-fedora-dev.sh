@@ -2,7 +2,47 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+DEV_VERSIONS_FILE="$DOTFILES_DIR/config/dev-versions.sh"
 LEGACY_GITCONFIG_PATH="$HOME/.gitconfig"
+
+NODE_PACKAGE_CANDIDATES=(nodejs)
+NPM_PACKAGE_CANDIDATES=(npm)
+JAVA_PACKAGE_CANDIDATES=(java-21-openjdk java-latest-openjdk java-openjdk)
+GO_PACKAGE_CANDIDATES=(golang)
+PYTHON_DEV_PACKAGES=(python3-pip python3-devel python3-virtualenv python3-pytest python3-ruff)
+SHELL_DEV_PACKAGES=(ShellCheck)
+KOTLIN_SDKMAN_CANDIDATE=kotlin
+VSCODE_PACKAGE=code
+VSCODE_EXTENSIONS=()
+
+if [ -f "$DEV_VERSIONS_FILE" ]; then
+  # shellcheck source=/dev/null
+  source "$DEV_VERSIONS_FILE"
+else
+  echo "[!] Missing $DEV_VERSIONS_FILE; using built-in bootstrap defaults."
+fi
+
+FALLBACK_WARNINGS=()
+BOOTSTRAP_FALLBACK_LOG="$(mktemp)"
+export BOOTSTRAP_FALLBACK_LOG
+
+cleanup_bootstrap() {
+  rm -f "$BOOTSTRAP_FALLBACK_LOG"
+}
+trap cleanup_bootstrap EXIT
+
+record_fallback_warning() {
+  local message="$1"
+
+  echo >&2
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
+  echo "!! BOOTSTRAP VERSION FALLBACK" >&2
+  echo "!! $message" >&2
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
+  echo >&2
+
+  printf '%s\n' "$message" >> "$BOOTSTRAP_FALLBACK_LOG"
+}
 
 if [ -L "$LEGACY_GITCONFIG_PATH" ] && [ "$(readlink -f "$LEGACY_GITCONFIG_PATH")" = "$DOTFILES_DIR/git/.gitconfig" ]; then
   echo "[+] Removing legacy stowed ~/.gitconfig symlink..."
@@ -79,14 +119,61 @@ package_available() {
     dnf -q list --installed "$1" </dev/null >/dev/null 2>&1
 }
 
+resolve_first_available_package() {
+  local label="$1"
+  shift
+
+  local preferred="${1:-}"
+  local candidate
+
+  for candidate in "$@"; do
+    if package_available "$candidate"; then
+      if [ -n "$preferred" ] && [ "$candidate" != "$preferred" ]; then
+        record_fallback_warning "$label: preferred package '$preferred' unavailable; using '$candidate'."
+      fi
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+
+  if [ -n "$preferred" ]; then
+    record_fallback_warning "$label: none of the preferred packages are available: $*."
+  fi
+  return 1
+}
+
+install_available_packages() {
+  local label="$1"
+  shift
+
+  local packages=()
+  local pkg
+
+  for pkg in "$@"; do
+    if package_available "$pkg"; then
+      packages+=("$pkg")
+    else
+      record_fallback_warning "$label: package '$pkg' is unavailable and will be skipped."
+    fi
+  done
+
+  if [ "${#packages[@]}" -gt 0 ]; then
+    sudo dnf install -y "${packages[@]}"
+  else
+    echo "    No available $label packages to install."
+  fi
+}
+
 JAVA_PACKAGES=()
 
-if package_available java-21-openjdk && package_available java-21-openjdk-devel; then
-  JAVA_PACKAGES=(java-21-openjdk java-21-openjdk-devel)
-elif package_available java-latest-openjdk && package_available java-latest-openjdk-devel; then
-  JAVA_PACKAGES=(java-latest-openjdk java-latest-openjdk-devel)
-elif package_available java-openjdk && package_available java-openjdk-devel; then
-  JAVA_PACKAGES=(java-openjdk java-openjdk-devel)
+if java_package="$(resolve_first_available_package "Java runtime" "${JAVA_PACKAGE_CANDIDATES[@]}")"; then
+  java_devel_package="${java_package}-devel"
+  if package_available "$java_devel_package"; then
+    JAVA_PACKAGES=("$java_package" "$java_devel_package")
+  else
+    JAVA_PACKAGES=("$java_package")
+    record_fallback_warning "Java development package '$java_devel_package' unavailable; installing runtime only."
+  fi
 else
   echo "[!] No supported OpenJDK package set found in enabled repositories; skipping Java install."
 fi
@@ -278,6 +365,94 @@ fi
 
 echo "    Git defaults configured (without user.name/user.email)."
 
+install_vscode_package() {
+  if command -v "$VSCODE_PACKAGE" >/dev/null 2>&1; then
+    echo "    VS Code command '$VSCODE_PACKAGE' already available."
+    return 0
+  fi
+
+  echo "    Adding Microsoft VS Code repository..."
+  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+  printf '%s\n' \
+    '[code]' \
+    'name=Visual Studio Code' \
+    'baseurl=https://packages.microsoft.com/yumrepos/vscode' \
+    'enabled=1' \
+    'autorefresh=1' \
+    'type=rpm-md' \
+    'gpgcheck=1' \
+    'gpgkey=https://packages.microsoft.com/keys/microsoft.asc' |
+    sudo tee /etc/yum.repos.d/vscode.repo >/dev/null
+
+  echo "    Installing VS Code package '$VSCODE_PACKAGE'..."
+  sudo dnf install -y "$VSCODE_PACKAGE"
+}
+
+install_sdkman_kotlin() {
+  local sdkman_init="$HOME/.sdkman/bin/sdkman-init.sh"
+
+  if [ ! -s "$sdkman_init" ]; then
+    echo "    Installing SDKMAN without rewriting shell rc files..."
+    curl -s "https://get.sdkman.io?ci=true&rcupdate=false" | bash
+  fi
+
+  if [ ! -s "$sdkman_init" ]; then
+    record_fallback_warning "SDKMAN init script was not found after install; skipping Kotlin SDKMAN candidate '$KOTLIN_SDKMAN_CANDIDATE'."
+    return 0
+  fi
+
+  set +u
+  # shellcheck source=/dev/null
+  source "$sdkman_init"
+  set -u
+
+  if command -v kotlin >/dev/null 2>&1; then
+    echo "    Kotlin already available."
+  else
+    echo "    Installing Kotlin via SDKMAN candidate '$KOTLIN_SDKMAN_CANDIDATE'..."
+    sdk install "$KOTLIN_SDKMAN_CANDIDATE" || record_fallback_warning "SDKMAN failed to install Kotlin candidate '$KOTLIN_SDKMAN_CANDIDATE'."
+  fi
+}
+
+install_vscode_extensions() {
+  local extension
+
+  if ! command -v "$VSCODE_PACKAGE" >/dev/null 2>&1; then
+    record_fallback_warning "VS Code command '$VSCODE_PACKAGE' unavailable; skipping VS Code extension install."
+    return 0
+  fi
+
+  if [ "${#VSCODE_EXTENSIONS[@]}" -eq 0 ]; then
+    echo "    No VS Code extensions configured."
+    return 0
+  fi
+
+  echo "    Installing VS Code extensions..."
+  for extension in "${VSCODE_EXTENSIONS[@]}"; do
+    if ! "$VSCODE_PACKAGE" --install-extension "$extension" --force; then
+      record_fallback_warning "VS Code extension '$extension' failed to install."
+    fi
+  done
+}
+
+install_full_vscode_dev_stack() {
+  echo "[+] Installing VS Code full dev stack..."
+  "$DOTFILES_DIR/scripts/install-node.sh"
+
+  if go_package="$(resolve_first_available_package "Go" "${GO_PACKAGE_CANDIDATES[@]}")"; then
+    sudo dnf install -y "$go_package"
+  fi
+
+  echo "    Installing Python development packages..."
+  install_available_packages "Python development" "${PYTHON_DEV_PACKAGES[@]}"
+
+  echo "    Installing shell development packages..."
+  install_available_packages "shell development" "${SHELL_DEV_PACKAGES[@]}"
+
+  install_sdkman_kotlin
+  install_vscode_extensions
+}
+
 echo "[+] Ensuring zsh is the default login shell..."
 zsh_path="$(command -v zsh || true)"
 if [ -n "$zsh_path" ]; then
@@ -379,6 +554,25 @@ else
   echo "    Non-interactive shell detected; skipping Obsidian prompt."
 fi
 
+vscode_install_mode="skip"
+
+echo "[+] Optional: VS Code setup..."
+if [ -t 0 ]; then
+  read -r -p "    Install VS Code + full pet-project dev stack? [y/N]: " install_vscode
+  case "$install_vscode" in
+    [yY]|[yY][eE][sS])
+      vscode_install_mode="install"
+      install_vscode_package
+      install_full_vscode_dev_stack
+      ;;
+    *)
+      echo "    Skipping VS Code install."
+      ;;
+  esac
+else
+  echo "    Non-interactive shell detected; skipping VS Code prompt."
+fi
+
 echo "[+] Linking helper scripts into ~/.local/bin via stow..."
 mkdir -p "$HOME/.local/bin"
 
@@ -452,6 +646,10 @@ for cmd in "${required_cmds[@]}"; do
   fi
 done
 
+if [ "$vscode_install_mode" = "install" ] && ! command -v "$VSCODE_PACKAGE" >/dev/null 2>&1; then
+  echo "    WARNING: missing command: $VSCODE_PACKAGE" >&2
+fi
+
 if [ "$hyprland_install_mode" != "skip" ]; then
   hyprland_required_cmds=(
     Hyprland
@@ -511,9 +709,27 @@ else
   echo "    Non-interactive shell detected; skipping Codex CLI prompt."
 fi
 
+if [ -s "$BOOTSTRAP_FALLBACK_LOG" ]; then
+  while IFS= read -r warning; do
+    [ -n "$warning" ] || continue
+    FALLBACK_WARNINGS+=("$warning")
+  done < "$BOOTSTRAP_FALLBACK_LOG"
+fi
+
+if [ "${#FALLBACK_WARNINGS[@]}" -gt 0 ]; then
+  echo
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
+  echo "!! Bootstrap completed with version/tooling fallbacks" >&2
+  for warning in "${FALLBACK_WARNINGS[@]}"; do
+    echo "!! - $warning" >&2
+  done
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
+  echo
+fi
+
 echo "[+] Remember to:"
 echo "  - stow you dotfiles"
 echo "  - Install JetBrains Toolbox manually (browser/wget) and set up IntelliJ."
-echo "  - Install SDKMAN:  curl -s \"https://get.sdkman.io\" | bash"
+echo "  - SDKMAN/Kotlin are installed automatically when you accept VS Code full dev stack."
 echo "  - Run:   files-to-prompt --markdown ~/.zshrc ~/.config/sway/config  | wl-copy"
 echo "    when you want to paste configs into ChatGPT."

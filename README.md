@@ -71,6 +71,9 @@ Run the dev bootstrap script:
 
 What it does:
 
+- **Central tool targets**:
+  - Reads `config/dev-versions.sh` for preferred Node, npm, Python, Java, Go, Kotlin, VS Code package targets, fallback candidates, and VS Code extension IDs.
+  - If a preferred tool target is unavailable, bootstrap prints a prominent fallback warning immediately and repeats all fallbacks near the end.
 - **System packages** via `dnf`:
   - Core CLI tools:  
     `git`, `zsh`, `fzf`, `ripgrep`, `fd-find`, `bat`, `tmux`, `htop`, `wl-clipboard`, `jq`, `unzip`, etc.
@@ -102,6 +105,10 @@ What it does:
   - Prompts to install the Flathub Flatpak: `md.obsidian.Obsidian`.
   - Adds the Flathub remote if needed.
   - Vault contents are not stored in this repo; keep notes in a separate vault/sync location.
+- **VS Code full dev stack (optional)**:
+  - Prompts to install stable VS Code from Microsoft's official Fedora yum repository.
+  - Installs configured VS Code extensions for JS/TS, Python, Go, Java, Kotlin, containers, YAML, TOML, and GitLens.
+  - Installs supporting dev tooling from `config/dev-versions.sh`, including Node/npm, Go, Python dev packages, ShellCheck, and Kotlin through SDKMAN.
 - **Development workspace**:
   - Creates `~/code` if it does not already exist.
 - **Fonts**:
@@ -306,6 +313,7 @@ What each package is expected to do:
   - `~/.config/waybar-niri/config` and `style.css`
   - `run-niri-swayidle` for conservative Stage 1 idle locking via `swayidle` + `swaylock`
   - `niri-handle-lid.sh` for suspend-on-lid-close when no external monitor is connected
+  - `theme-toggle` sets the desktop light/dark preference for portal-aware apps and web content.
   - Super/Win as Niri `Mod`, with Alt reserved as the nested-session modifier.
   - Niri-specific session glue while preserving the existing Sway and Hyprland packages.
   - See `NIRI-CHEATSHEET.md` for Niri desktop shortcuts.
@@ -313,7 +321,6 @@ What each package is expected to do:
 Obsidian note vaults are intentionally not a stow package. Keep vaults in a normal data/sync location, for example `~/Documents/Obsidian`, and use dotfiles only for launch/install glue.
 
 If `stow` complains about conflicts, move the existing file into the appropriate place under `~/dotfiles/...` and re-run `stow`.
-  - `theme-toggle` sets the desktop light/dark preference for portal-aware apps and web content.
 
 ---
 
@@ -509,19 +516,19 @@ Then paste directly into ChatGPT when debugging.
   - Ghostty is configured to inherit working directories for new windows, tabs, and splits when shell integration supports it.
 - Clipboard model:
   - Ghostty is configured as the default terminal, with tmux feature flags for truecolor and clipboard integration.
+  - `Alt+C` copies the current Ghostty selection when one exists; `Alt+V` pastes from the clipboard.
+  - Mouse selection in plain Ghostty copies to the regular clipboard.
   - tmux `set-clipboard` is auto-selected (`external` on tmux >= 2.6, `on` on older tmux).
+  - tmux mouse mode is enabled; mouse selection and vi copy-mode copy pipe to `wl-copy`.
   - This supports local Wayland clipboard copy and remote SSH copy via OSC52-capable terminals.
+  - `Caps+C` / `Caps+V` are intentionally left as `Ctrl+C` / `Ctrl+V` because `Caps` maps to `Ctrl`; this preserves shell interrupt/literal-insert behavior and future Neovim visual-block mode.
 
 ### 10.1 fzf-powered tmux navigation
 
 Dependencies:
 - Required: `fzf` (includes `fzf-tmux` on Fedora package builds).
-  - `Alt+C` copies the current Ghostty selection when one exists; `Alt+V` pastes from the clipboard.
-  - Mouse selection in plain Ghostty copies to the regular clipboard.
 - Optional but useful for project picking: `fd`/`fd-find`, `ripgrep`.
-  - tmux mouse mode is enabled; mouse selection and vi copy-mode copy pipe to `wl-copy`.
 
-  - `Caps+C` / `Caps+V` are intentionally left as `Ctrl+C` / `Ctrl+V` because `Caps` maps to `Ctrl`; this preserves shell interrupt/literal-insert behavior and future Neovim visual-block mode.
 Bindings (tmux prefix + key):
 - `s` — Session switcher (`fzf-tmux` popup).
 - `w` — Window switcher in current session (`fzf-tmux` popup).
