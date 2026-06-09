@@ -28,6 +28,7 @@ PYTHON_DEV_PACKAGES=(
   python3-virtualenv
   python3-pytest
   python3-ruff
+  uv
 )
 
 SHELL_DEV_PACKAGES=(

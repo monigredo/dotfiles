@@ -108,7 +108,7 @@ What it does:
 - **VS Code full dev stack (optional)**:
   - Prompts to install stable VS Code from Microsoft's official Fedora yum repository.
   - Installs configured VS Code extensions for JS/TS, Python, Go, Java, Kotlin, containers, YAML, TOML, and GitLens.
-  - Installs supporting dev tooling from `config/dev-versions.sh`, including Node/npm, Go, Python dev packages, ShellCheck, and Kotlin through SDKMAN.
+  - Installs supporting dev tooling from `config/dev-versions.sh`, including Node/npm, Go, Python dev packages (`pip`, `virtualenv`, `pytest`, `ruff`, `uv`), ShellCheck, and Kotlin through SDKMAN.
 - **Development workspace**:
   - Creates `~/code` if it does not already exist.
 - **Fonts**:
