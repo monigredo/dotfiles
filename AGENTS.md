@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 - Root scripts: `bootstrap-fedora-dev.sh` (Fedora + Sway/Hyprland/Niri bootstrap) and `stow-clean-restow.sh` (remove conflicts then restow).
 - Stow packages: `shell/`, `sway/`, `waybar/`, `ghostty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
-- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`dev-terminal`, `run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `obsidian-launch`, `theme-toggle`).
+- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`dev-terminal`, `run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `obsidian-launch`, `theme-toggle`, `graphify-estimate-cost`).
 - Preferred Node, npm, Python, Java, Go, Kotlin, VS Code package targets, fallback candidates, and VS Code extension IDs live in `config/dev-versions.sh`.
 - Docs: `README.md` (full), `README-quickstart.md` (concise), `NIRI-CHEATSHEET.md`, `TMUX-CHEATSHEET.md`, `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 
@@ -49,6 +49,6 @@
 ## Agent Notes
 - Keep `AGENTS.md` current when workflows, scripts, or package lists change (especially bootstrap/stow logic, Hyprland/Sway/Niri package lists, or helper script locations).
 - Keep `config/dev-versions.sh` as the single update point for preferred dev tool targets, fallback candidates, SDKMAN candidates, and VS Code extension IDs.
-- Document new helper scripts under `shell/.local/bin/` (e.g., `sway-move-workspace-next-output` for moving the current workspace to the next active output) and ensure bootstrap/stow steps reflect them.***
+- Document new helper scripts under `shell/.local/bin/` (e.g., `sway-move-workspace-next-output` for moving the current workspace to the next active output, `graphify-estimate-cost` for preflight graphify token/cost estimates) and ensure bootstrap/stow steps reflect them.***
 - `run-swayidle` locks after its timeout and powers displays off 30s later; update docs if timings or behavior change.
 - Codex CLI binary install is optional via bootstrap prompt calling `scripts/install-codex-binary.sh` (downloads latest GitHub release to `~/.local/bin/codex`).***

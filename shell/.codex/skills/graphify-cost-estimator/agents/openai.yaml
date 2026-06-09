@@ -1,0 +1,4 @@
+interface:
+  display_name: "Graphify Cost Estimator"
+  short_description: "Estimate graphify token and dollar cost"
+  default_prompt: "Use $graphify-cost-estimator to estimate the token and dollar cost of graphifying this repo."

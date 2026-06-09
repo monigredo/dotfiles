@@ -100,6 +100,7 @@ This picks up:
 - Ghostty config
 - Shell config
 - Helper scripts in \`~/.local/bin\`
+- `graphify-estimate-cost` for graphify token/cost preflight estimates
 - `Super+O` launches Obsidian through `obsidian-launch` when installed
 
 ---

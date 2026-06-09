@@ -1,0 +1,413 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any
+
+
+DEFAULT_TOKEN_BUDGET = 60_000
+DEFAULT_OUTPUT_RATIOS = (0.10, 0.25, 0.50)
+COMMON_BACKENDS = ("gemini", "kimi", "claude", "openai", "deepseek")
+FILE_CHAR_CAP = 20_000
+PER_FILE_OVERHEAD_CHARS = 80
+CHARS_PER_TOKEN = 4
+IMAGE_TOKEN_ESTIMATE = 1_600
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".webp"}
+
+
+def graphify_python_candidates() -> list[str]:
+    candidates: list[str] = []
+    env_python = os.environ.get("GRAPHIFY_PYTHON", "").strip()
+    if env_python:
+        candidates.append(env_python)
+
+    graphify_bin = shutil.which("graphify")
+    if graphify_bin:
+        try:
+            first = Path(graphify_bin).read_text(encoding="utf-8", errors="ignore").splitlines()[0]
+            if first.startswith("#!"):
+                shebang = first[2:].strip()
+                if shebang and all(ch.isalnum() or ch in "/_.-" for ch in shebang):
+                    candidates.append(shebang)
+        except (OSError, IndexError):
+            pass
+
+    uv_bin = shutil.which("uv")
+    if uv_bin:
+        try:
+            uv_python = subprocess.check_output(
+                [uv_bin, "tool", "run", "graphifyy", "python", "-c", "import sys; print(sys.executable)"],
+                text=True,
+                stderr=subprocess.DEVNULL,
+                timeout=15,
+            ).strip()
+            if uv_python:
+                candidates.append(uv_python)
+        except (OSError, subprocess.SubprocessError):
+            pass
+
+    return candidates
+
+
+def maybe_add_graphify_site_path() -> bool:
+    if os.environ.get("GRAPHIFY_ESTIMATE_SITE_ADDED") == "1":
+        return False
+
+    for candidate in graphify_python_candidates():
+        if not candidate:
+            continue
+        try:
+            site_path = subprocess.check_output(
+                [
+                    candidate,
+                    "-c",
+                    "from pathlib import Path; import graphify; print(Path(graphify.__file__).parent.parent)",
+                ],
+                text=True,
+                stderr=subprocess.DEVNULL,
+                timeout=15,
+            ).strip()
+        except (OSError, subprocess.SubprocessError):
+            continue
+        if site_path and site_path not in sys.path:
+            sys.path.insert(0, site_path)
+            os.environ["GRAPHIFY_ESTIMATE_SITE_ADDED"] = "1"
+            return True
+    return False
+
+
+def parse_ratios(raw: str) -> list[float]:
+    ratios: list[float] = []
+    for part in raw.split(","):
+        value = part.strip()
+        if not value:
+            continue
+        try:
+            ratio = float(value)
+        except ValueError as exc:
+            raise argparse.ArgumentTypeError(f"invalid ratio {value!r}") from exc
+        if ratio <= 0:
+            raise argparse.ArgumentTypeError("output ratios must be positive")
+        ratios.append(ratio)
+    if not ratios:
+        raise argparse.ArgumentTypeError("at least one output ratio is required")
+    return ratios
+
+
+def import_graphify() -> dict[str, Any]:
+    try:
+        from graphify.detect import detect
+        from graphify.llm import BACKENDS, detect_backend, estimate_cost
+    except ImportError as exc:
+        if maybe_add_graphify_site_path():
+            try:
+                from graphify.detect import detect
+                from graphify.llm import BACKENDS, detect_backend, estimate_cost
+            except ImportError:
+                pass
+            else:
+                helpers: dict[str, Any] = {
+                    "detect": detect,
+                    "BACKENDS": BACKENDS,
+                    "detect_backend": detect_backend,
+                    "estimate_cost": estimate_cost,
+                }
+                try:
+                    from graphify.llm import _estimate_file_tokens, _extraction_system, _pack_chunks_by_tokens
+
+                    helpers["_estimate_file_tokens"] = _estimate_file_tokens
+                    helpers["_pack_chunks_by_tokens"] = _pack_chunks_by_tokens
+                    helpers["_extraction_system"] = _extraction_system
+                except Exception:
+                    pass
+                return helpers
+        print(
+            "error: graphifyy is required. Install it with `uv tool install graphifyy` "
+            f"or `python3 -m pip install graphifyy`. Import failed: {exc}",
+            file=sys.stderr,
+        )
+        raise SystemExit(1) from exc
+
+    helpers: dict[str, Any] = {
+        "detect": detect,
+        "BACKENDS": BACKENDS,
+        "detect_backend": detect_backend,
+        "estimate_cost": estimate_cost,
+    }
+    try:
+        from graphify.llm import _estimate_file_tokens, _extraction_system, _pack_chunks_by_tokens
+
+        helpers["_estimate_file_tokens"] = _estimate_file_tokens
+        helpers["_pack_chunks_by_tokens"] = _pack_chunks_by_tokens
+        helpers["_extraction_system"] = _extraction_system
+    except Exception:
+        pass
+    return helpers
+
+
+def fallback_file_tokens(path: Path) -> int:
+    if path.suffix.lower() in IMAGE_EXTENSIONS:
+        return IMAGE_TOKEN_ESTIMATE
+    try:
+        content = path.read_text(encoding="utf-8", errors="replace")[:FILE_CHAR_CAP]
+    except OSError:
+        try:
+            size = path.stat().st_size
+        except OSError:
+            return 0
+        return (min(size, FILE_CHAR_CAP) + PER_FILE_OVERHEAD_CHARS) // CHARS_PER_TOKEN
+    return (len(content) + PER_FILE_OVERHEAD_CHARS) // CHARS_PER_TOKEN
+
+
+def fallback_pack_chunks(files: list[Path], token_budget: int, token_by_file: dict[str, int]) -> list[list[Path]]:
+    by_dir: dict[Path, list[Path]] = {}
+    for path in files:
+        by_dir.setdefault(path.parent, []).append(path)
+
+    chunks: list[list[Path]] = []
+    current: list[Path] = []
+    current_tokens = 0
+    current_images = 0
+    for directory in sorted(by_dir):
+        for path in sorted(by_dir[directory]):
+            cost = token_by_file[str(path)]
+            is_image = path.suffix.lower() in IMAGE_EXTENSIONS
+            if current and (current_tokens + cost > token_budget or (is_image and current_images >= 20)):
+                chunks.append(current)
+                current = []
+                current_tokens = 0
+                current_images = 0
+            current.append(path)
+            current_tokens += cost
+            current_images += 1 if is_image else 0
+    if current:
+        chunks.append(current)
+    return chunks
+
+
+def choose_backends(args: argparse.Namespace, backends: dict[str, Any], detect_backend: Any) -> list[str]:
+    if args.all_backends:
+        return [name for name in COMMON_BACKENDS if name in backends]
+    if args.backend:
+        if args.backend not in backends:
+            print(f"error: unknown backend {args.backend!r}. Available: {', '.join(sorted(backends))}", file=sys.stderr)
+            raise SystemExit(2)
+        return [args.backend]
+    detected = detect_backend()
+    if detected:
+        return [detected]
+    return [name for name in COMMON_BACKENDS if name in backends]
+
+
+def backend_cost(
+    backend: str,
+    input_tokens: int,
+    output_tokens: int,
+    helpers: dict[str, Any],
+    args: argparse.Namespace,
+) -> float:
+    if args.price_input_usd_per_m is not None or args.price_output_usd_per_m is not None:
+        if args.price_input_usd_per_m is None or args.price_output_usd_per_m is None:
+            print(
+                "error: pass both --price-input-usd-per-m and --price-output-usd-per-m for pricing overrides",
+                file=sys.stderr,
+            )
+            raise SystemExit(2)
+        return (
+            input_tokens * args.price_input_usd_per_m
+            + output_tokens * args.price_output_usd_per_m
+        ) / 1_000_000
+    return float(helpers["estimate_cost"](backend, input_tokens, output_tokens))
+
+
+def relpath(path: Path, root: Path) -> str:
+    try:
+        return path.relative_to(root).as_posix()
+    except ValueError:
+        return path.as_posix()
+
+
+def build_estimate(args: argparse.Namespace) -> dict[str, Any]:
+    helpers = import_graphify()
+    root = Path(args.path).expanduser().resolve()
+    if not root.exists():
+        print(f"error: path not found: {root}", file=sys.stderr)
+        raise SystemExit(1)
+
+    detection = helpers["detect"](root)
+    files = detection.get("files", {})
+    semantic_files = [
+        Path(path)
+        for bucket in ("document", "paper", "image")
+        for path in files.get(bucket, [])
+    ]
+    code_files = [Path(path) for path in files.get("code", [])]
+    video_files = [Path(path) for path in files.get("video", [])]
+
+    estimate_file_tokens = helpers.get("_estimate_file_tokens") or fallback_file_tokens
+    token_by_file = {str(path): int(estimate_file_tokens(path)) for path in semantic_files}
+
+    if semantic_files:
+        pack_chunks = helpers.get("_pack_chunks_by_tokens")
+        if pack_chunks is not None:
+            try:
+                chunks = pack_chunks(semantic_files, token_budget=args.token_budget)
+            except Exception:
+                chunks = fallback_pack_chunks(semantic_files, args.token_budget, token_by_file)
+        else:
+            chunks = fallback_pack_chunks(semantic_files, args.token_budget, token_by_file)
+    else:
+        chunks = []
+
+    extraction_system = helpers.get("_extraction_system")
+    if extraction_system is not None:
+        try:
+            prompt_overhead_tokens = len(extraction_system(deep=args.deep)) // CHARS_PER_TOKEN
+        except TypeError:
+            prompt_overhead_tokens = len(extraction_system()) // CHARS_PER_TOKEN
+    else:
+        prompt_overhead_tokens = 450 if not args.deep else 520
+
+    semantic_input_tokens = sum(token_by_file.values()) + len(chunks) * prompt_overhead_tokens
+    backends = choose_backends(args, helpers["BACKENDS"], helpers["detect_backend"])
+    price_source = "override" if args.price_input_usd_per_m is not None else "graphify packaged pricing"
+
+    output_estimates = []
+    for ratio in args.output_ratios:
+        output_tokens = int(semantic_input_tokens * ratio)
+        costs = {
+            backend: backend_cost(backend, semantic_input_tokens, output_tokens, helpers, args)
+            for backend in backends
+        }
+        output_estimates.append(
+            {
+                "ratio": ratio,
+                "input_tokens": semantic_input_tokens,
+                "output_tokens": output_tokens,
+                "cost_usd": costs,
+            }
+        )
+
+    top_files = [
+        {"path": relpath(path, root), "tokens": tokens}
+        for path, tokens in sorted(
+            ((path, token_by_file[str(path)]) for path in semantic_files),
+            key=lambda item: item[1],
+            reverse=True,
+        )[: args.top_files]
+    ]
+
+    return {
+        "path": str(root),
+        "total_files": detection.get("total_files", 0),
+        "total_words": detection.get("total_words", 0),
+        "files": {
+            "code": len(code_files),
+            "document": len(files.get("document", [])),
+            "paper": len(files.get("paper", [])),
+            "image": len(files.get("image", [])),
+            "video": len(video_files),
+        },
+        "skipped_sensitive": len(detection.get("skipped_sensitive", []) or []),
+        "semantic_files": len(semantic_files),
+        "semantic_input_tokens": semantic_input_tokens,
+        "prompt_overhead_tokens_per_chunk": prompt_overhead_tokens,
+        "token_budget": args.token_budget,
+        "token_budget_chunks": len(chunks),
+        "codex_worker_chunks": math.ceil(len(semantic_files) / 22) if semantic_files else 0,
+        "backends": backends,
+        "price_source": price_source,
+        "output_estimates": output_estimates,
+        "top_files": top_files,
+        "warnings": build_warnings(detection, video_files),
+    }
+
+
+def build_warnings(detection: dict[str, Any], video_files: list[Path]) -> list[str]:
+    warnings: list[str] = []
+    if detection.get("total_files", 0) > 500 or detection.get("total_words", 0) > 2_000_000:
+        warnings.append("large corpus: consider estimating or graphifying a narrower subdirectory first")
+    if detection.get("skipped_sensitive"):
+        warnings.append(f"{len(detection.get('skipped_sensitive') or [])} sensitive file(s) skipped by graphify detection")
+    if video_files:
+        warnings.append("video/audio files are not included in the token estimate; transcribe first for a full estimate")
+    return warnings
+
+
+def print_text(estimate: dict[str, Any]) -> None:
+    print(f"Graphify cost estimate for {estimate['path']}")
+    print(f"Corpus: {estimate['total_files']} files · ~{estimate['total_words']} words")
+    for key, label in (
+        ("code", "code"),
+        ("document", "docs"),
+        ("paper", "papers"),
+        ("image", "images"),
+        ("video", "video/audio"),
+    ):
+        count = estimate["files"][key]
+        if count:
+            print(f"  {label}: {count}")
+    print()
+    print("Semantic extraction estimate:")
+    print(f"  semantic files: {estimate['semantic_files']}")
+    print(f"  input tokens: ~{estimate['semantic_input_tokens']:,}")
+    print(f"  token-budget chunks: {estimate['token_budget_chunks']} (@ {estimate['token_budget']:,} tokens)")
+    print(f"  Codex worker chunks: {estimate['codex_worker_chunks']} (@ ~22 files/chunk)")
+    print(f"  pricing: {estimate['price_source']}")
+    print()
+    print("Output/cost range:")
+    for item in estimate["output_estimates"]:
+        ratio = item["ratio"]
+        print(f"  output ratio {ratio:.0%}: {item['output_tokens']:,} output tokens")
+        for backend, cost in item["cost_usd"].items():
+            print(f"    {backend}: ${cost:.4f}")
+    if estimate["top_files"]:
+        print()
+        print("Largest semantic files:")
+        for item in estimate["top_files"]:
+            print(f"  {item['tokens']:>8,}  {item['path']}")
+    if estimate["warnings"]:
+        print()
+        print("Warnings:")
+        for warning in estimate["warnings"]:
+            print(f"  - {warning}")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Estimate graphify semantic extraction tokens and dollar cost without LLM calls.",
+    )
+    parser.add_argument("path", nargs="?", default=".", help="repo or folder to estimate, default: .")
+    parser.add_argument("--backend", help="price a single graphify backend")
+    parser.add_argument("--all-backends", action="store_true", help="show common packaged backends")
+    parser.add_argument("--token-budget", type=int, default=DEFAULT_TOKEN_BUDGET, help="semantic chunk token budget")
+    parser.add_argument("--output-ratios", type=parse_ratios, default=list(DEFAULT_OUTPUT_RATIOS), help="comma-separated output/input ratios")
+    parser.add_argument("--price-input-usd-per-m", type=float, help="manual input-token price per 1M tokens")
+    parser.add_argument("--price-output-usd-per-m", type=float, help="manual output-token price per 1M tokens")
+    parser.add_argument("--top-files", type=int, default=10, help="number of largest semantic files to show")
+    parser.add_argument("--deep", action="store_true", help="include deep-mode prompt overhead")
+    parser.add_argument("--json", action="store_true", help="write machine-readable JSON")
+    args = parser.parse_args(argv)
+
+    if args.token_budget <= 0:
+        parser.error("--token-budget must be positive")
+    if args.top_files < 0:
+        parser.error("--top-files must be non-negative")
+
+    estimate = build_estimate(args)
+    if args.json:
+        print(json.dumps(estimate, indent=2, ensure_ascii=False))
+    else:
+        print_text(estimate)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

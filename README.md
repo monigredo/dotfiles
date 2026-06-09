@@ -11,7 +11,8 @@ Goals:
   - idle locking,
   - lid handling,
   - Wi-Fi TUI,
-  - Bluetooth control via rofi.
+  - Bluetooth control via rofi,
+  - graphify token/cost preflight estimates.
 
 > Target OS: **Fedora Workstation (Wayland)** with **Sway**, **Hyprland**, **Niri**, and **NetworkManager**.
 
