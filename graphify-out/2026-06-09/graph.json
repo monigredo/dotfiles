@@ -1,0 +1,2522 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "fedora_wayland_bootstrap_flow",
+        "label": "Fedora Wayland Bootstrap Flow",
+        "nodes": [
+          "readme_fedora_wayland_dotfiles",
+          "readme_quickstart_new_user_bootstrap",
+          "bootstrap_fedora_dev_bootstrap",
+          "stow_clean_restow_restow",
+          "niri_test_checklist_niri_test_flow"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "README.md"
+      },
+      {
+        "id": "centralized_dev_tool_configuration",
+        "label": "Centralized Dev Tool Configuration",
+        "nodes": [
+          "agents_dev_versions_single_update_point",
+          "dev_versions_tool_targets",
+          "bootstrap_fedora_dev_dev_versions_file",
+          "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+          "scripts_install_node_node_install"
+        ],
+        "relation": "form",
+        "confidence": "INFERRED",
+        "confidence_score": 0.95,
+        "source_file": "AGENTS.md"
+      },
+      {
+        "id": "graphify_operational_modes",
+        "label": "Graphify Operational Modes",
+        "nodes": [
+          "graphify_skill_graphify_pipeline",
+          "references_query_query_path_explain",
+          "references_update_incremental_update",
+          "references_add_watch_add_url_watch_folder",
+          "references_exports_extra_exports",
+          "references_github_and_merge_github_merge",
+          "references_transcribe_video_audio_transcription"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": ".codex/skills/graphify/SKILL.md"
+      },
+      {
+        "id": "wayland_compositor_laptop_lid_and_output_helpers",
+        "label": "Wayland Compositor Laptop Lid And Output Helpers",
+        "nodes": [
+          "bin_hypr_handle_lid_script",
+          "bin_niri_handle_lid_script",
+          "bin_sway_handle_lid_script",
+          "bin_hypr_move_workspace_next_output_script",
+          "bin_sway_move_workspace_next_output_script"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "shell/.local/bin/hypr-handle-lid.sh"
+      },
+      {
+        "id": "tmux_fzf_navigation_helpers",
+        "label": "Tmux Fzf Navigation Helpers",
+        "nodes": [
+          "bin_tmux_fzf_pane_switch_script",
+          "bin_tmux_fzf_session_switch_script",
+          "bin_tmux_fzf_window_switch_script",
+          "bin_tmux_sessionizer_script"
+        ],
+        "relation": "form",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "shell/.local/bin/tmux-fzf-pane-switch"
+      },
+      {
+        "id": "waybar_status_helpers",
+        "label": "Waybar Status Helpers",
+        "nodes": [
+          "bin_hypr_kblayout_waybar_script",
+          "bin_sway_kblayout_waybar_script",
+          "bin_waybar_cpu_graph_script",
+          "bin_waybar_cpu_simple_script",
+          "bin_waybar_cpu_test_script"
+        ],
+        "relation": "form",
+        "confidence": "INFERRED",
+        "confidence_score": 0.75,
+        "source_file": "shell/.local/bin/hypr-kblayout-waybar"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "hooks.json",
+      "file_type": "code",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "codex_hooks",
+      "community": 9,
+      "norm_label": "hooks.json"
+    },
+    {
+      "label": "hooks",
+      "file_type": "code",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "codex_hooks_hooks",
+      "community": 9,
+      "norm_label": "hooks"
+    },
+    {
+      "label": "PreToolUse",
+      "file_type": "code",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "codex_hooks_hooks_pretooluse",
+      "community": 9,
+      "norm_label": "pretooluse"
+    },
+    {
+      "label": "bootstrap-fedora-dev.sh",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev",
+      "community": 0,
+      "norm_label": "bootstrap-fedora-dev.sh"
+    },
+    {
+      "label": "bootstrap-fedora-dev.sh script",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_bootstrap_fedora_dev_sh__entry",
+      "community": 0,
+      "norm_label": "bootstrap-fedora-dev.sh script"
+    },
+    {
+      "label": "cleanup_bootstrap()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L29",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_cleanup_bootstrap",
+      "community": 0,
+      "norm_label": "cleanup_bootstrap()"
+    },
+    {
+      "label": "record_fallback_warning()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L34",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_record_fallback_warning",
+      "community": 0,
+      "norm_label": "record_fallback_warning()"
+    },
+    {
+      "label": "package_available()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L117",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_package_available",
+      "community": 0,
+      "norm_label": "package_available()"
+    },
+    {
+      "label": "resolve_first_available_package()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L122",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_resolve_first_available_package",
+      "community": 0,
+      "norm_label": "resolve_first_available_package()"
+    },
+    {
+      "label": "install_available_packages()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L145",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_install_available_packages",
+      "community": 0,
+      "norm_label": "install_available_packages()"
+    },
+    {
+      "label": "install_vscode_package()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L368",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_install_vscode_package",
+      "community": 0,
+      "norm_label": "install_vscode_package()"
+    },
+    {
+      "label": "install_sdkman_kotlin()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L391",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_install_sdkman_kotlin",
+      "community": 0,
+      "norm_label": "install_sdkman_kotlin()"
+    },
+    {
+      "label": "install_vscode_extensions()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L417",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_install_vscode_extensions",
+      "community": 0,
+      "norm_label": "install_vscode_extensions()"
+    },
+    {
+      "label": "install_full_vscode_dev_stack()",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L438",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "community": 0,
+      "norm_label": "install_full_vscode_dev_stack()"
+    },
+    {
+      "label": "dev-versions.sh",
+      "file_type": "code",
+      "source_file": "config/dev-versions.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "config_dev_versions",
+      "community": 13,
+      "norm_label": "dev-versions.sh"
+    },
+    {
+      "label": "dev-versions.sh script",
+      "file_type": "code",
+      "source_file": "config/dev-versions.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_config_dev_versions_sh__entry",
+      "community": 13,
+      "norm_label": "dev-versions.sh script"
+    },
+    {
+      "label": "install-codex-binary.sh",
+      "file_type": "code",
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "scripts_install_codex_binary",
+      "community": 2,
+      "norm_label": "install-codex-binary.sh"
+    },
+    {
+      "label": "install-codex-binary.sh script",
+      "file_type": "code",
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_scripts_install_codex_binary_sh__entry",
+      "community": 2,
+      "norm_label": "install-codex-binary.sh script"
+    },
+    {
+      "label": "cleanup()",
+      "file_type": "code",
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": "L23",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_install_codex_binary_cleanup",
+      "community": 2,
+      "norm_label": "cleanup()"
+    },
+    {
+      "label": "install-node.sh",
+      "file_type": "code",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "scripts_install_node",
+      "community": 4,
+      "norm_label": "install-node.sh"
+    },
+    {
+      "label": "install-node.sh script",
+      "file_type": "code",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_scripts_install_node_sh__entry",
+      "community": 4,
+      "norm_label": "install-node.sh script"
+    },
+    {
+      "label": "package_available()",
+      "file_type": "code",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L18",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_install_node_package_available",
+      "community": 4,
+      "norm_label": "package_available()"
+    },
+    {
+      "label": "record_node_warning()",
+      "file_type": "code",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L23",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_install_node_record_node_warning",
+      "community": 4,
+      "norm_label": "record_node_warning()"
+    },
+    {
+      "label": "resolve_first_available_package()",
+      "file_type": "code",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L36",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_install_node_resolve_first_available_package",
+      "community": 4,
+      "norm_label": "resolve_first_available_package()"
+    },
+    {
+      "label": "ensure_path_line()",
+      "file_type": "code",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L75",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "scripts_install_node_ensure_path_line",
+      "community": 4,
+      "norm_label": "ensure_path_line()"
+    },
+    {
+      "label": "hypr-handle-lid.sh",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/hypr-handle-lid.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "bin_hypr_handle_lid",
+      "community": 7,
+      "norm_label": "hypr-handle-lid.sh"
+    },
+    {
+      "label": "hypr-handle-lid.sh script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/hypr-handle-lid.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_shell_local_bin_hypr_handle_lid_sh__entry",
+      "community": 7,
+      "norm_label": "hypr-handle-lid.sh script"
+    },
+    {
+      "label": "niri-handle-lid.sh",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/niri-handle-lid.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "bin_niri_handle_lid",
+      "community": 7,
+      "norm_label": "niri-handle-lid.sh"
+    },
+    {
+      "label": "niri-handle-lid.sh script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/niri-handle-lid.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_shell_local_bin_niri_handle_lid_sh__entry",
+      "community": 7,
+      "norm_label": "niri-handle-lid.sh script"
+    },
+    {
+      "label": "sway-handle-lid.sh",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/sway-handle-lid.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "bin_sway_handle_lid",
+      "community": 7,
+      "norm_label": "sway-handle-lid.sh"
+    },
+    {
+      "label": "sway-handle-lid.sh script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/sway-handle-lid.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_shell_local_bin_sway_handle_lid_sh__entry",
+      "community": 7,
+      "norm_label": "sway-handle-lid.sh script"
+    },
+    {
+      "label": "stow-clean-restow.sh",
+      "file_type": "code",
+      "source_file": "stow-clean-restow.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "stow_clean_restow",
+      "community": 2,
+      "norm_label": "stow-clean-restow.sh"
+    },
+    {
+      "label": "stow-clean-restow.sh script",
+      "file_type": "code",
+      "source_file": "stow-clean-restow.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "home_monig_code_graphing_gotfiles_stow_clean_restow_sh__entry",
+      "community": 2,
+      "norm_label": "stow-clean-restow.sh script"
+    },
+    {
+      "label": "find_symlink_ancestor()",
+      "file_type": "code",
+      "source_file": "stow-clean-restow.sh",
+      "source_location": "L25",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "stow_clean_restow_find_symlink_ancestor",
+      "community": 2,
+      "norm_label": "find_symlink_ancestor()"
+    },
+    {
+      "label": "Repository Guidelines",
+      "file_type": "document",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "agents_repository_guidelines",
+      "community": 2,
+      "norm_label": "repository guidelines"
+    },
+    {
+      "label": "Helper Scripts",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "agents_helper_scripts",
+      "community": 2,
+      "norm_label": "helper scripts"
+    },
+    {
+      "label": "Dev Versions Single Update Point",
+      "file_type": "rationale",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "agents_dev_versions_single_update_point",
+      "community": 5,
+      "norm_label": "dev versions single update point"
+    },
+    {
+      "label": "Graphify Workflow",
+      "file_type": "concept",
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "agents_graphify_workflow",
+      "community": 1,
+      "norm_label": "graphify workflow"
+    },
+    {
+      "label": "Fedora Wayland Dotfiles",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_fedora_wayland_dotfiles",
+      "community": 2,
+      "norm_label": "fedora wayland dotfiles"
+    },
+    {
+      "label": "Bootstrap Script",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_bootstrap_script",
+      "community": 5,
+      "norm_label": "bootstrap script"
+    },
+    {
+      "label": "GNU Stow",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_gnu_stow",
+      "community": 2,
+      "norm_label": "gnu stow"
+    },
+    {
+      "label": "rofi-bluetooth",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_rofi_bluetooth",
+      "community": 5,
+      "norm_label": "rofi-bluetooth"
+    },
+    {
+      "label": "VS Code Dev Stack",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_vscode_dev_stack",
+      "community": 0,
+      "norm_label": "vs code dev stack"
+    },
+    {
+      "label": "New User Bootstrap Quickstart",
+      "file_type": "document",
+      "source_file": "README-quickstart.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_quickstart_new_user_bootstrap",
+      "community": 0,
+      "norm_label": "new user bootstrap quickstart"
+    },
+    {
+      "label": "Niri Shortcuts",
+      "file_type": "document",
+      "source_file": "NIRI-CHEATSHEET.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "niri_cheatsheet_niri_shortcuts",
+      "community": 0,
+      "norm_label": "niri shortcuts"
+    },
+    {
+      "label": "Niri Test Flow",
+      "file_type": "document",
+      "source_file": "NIRI-TEST-CHECKLIST.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "niri_test_checklist_niri_test_flow",
+      "community": 0,
+      "norm_label": "niri test flow"
+    },
+    {
+      "label": "tmux Bindings",
+      "file_type": "document",
+      "source_file": "TMUX-CHEATSHEET.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tmux_cheatsheet_tmux_bindings",
+      "community": 2,
+      "norm_label": "tmux bindings"
+    },
+    {
+      "label": "DEV_VERSIONS_FILE",
+      "file_type": "code",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bootstrap_fedora_dev_dev_versions_file",
+      "community": 5,
+      "norm_label": "dev_versions_file"
+    },
+    {
+      "label": "Preferred Development Tool Targets",
+      "file_type": "code",
+      "source_file": "config/dev-versions.sh",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "dev_versions_tool_targets",
+      "community": 5,
+      "norm_label": "preferred development tool targets"
+    },
+    {
+      "label": "VS Code Extensions",
+      "file_type": "code",
+      "source_file": "config/dev-versions.sh",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "dev_versions_vscode_extensions",
+      "community": 0,
+      "norm_label": "vs code extensions"
+    },
+    {
+      "label": "Codex Binary Install",
+      "file_type": "code",
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "scripts_install_codex_binary_codex_binary_install",
+      "community": 2,
+      "norm_label": "codex binary install"
+    },
+    {
+      "label": "Node Install",
+      "file_type": "code",
+      "source_file": "scripts/install-node.sh",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "scripts_install_node_node_install",
+      "community": 4,
+      "norm_label": "node install"
+    },
+    {
+      "label": "PreToolUse graphify hook-check",
+      "file_type": "code",
+      "source_file": ".codex/hooks.json",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "_codex_hooks_pretooluse_graphify_hook_check",
+      "community": 1,
+      "norm_label": "pretooluse graphify hook-check"
+    },
+    {
+      "label": "Graphify Pipeline",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "graphify_skill_graphify_pipeline",
+      "community": 1,
+      "norm_label": "graphify pipeline"
+    },
+    {
+      "label": "Fast Path Existing Graph",
+      "file_type": "concept",
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "graphify_skill_fast_path_existing_graph",
+      "community": 1,
+      "norm_label": "fast path existing graph"
+    },
+    {
+      "label": "Semantic Extraction Subagents",
+      "file_type": "concept",
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "graphify_skill_semantic_extraction_subagents",
+      "community": 1,
+      "norm_label": "semantic extraction subagents"
+    },
+    {
+      "label": "Extraction Subagent Schema",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/extraction-spec.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_extraction_spec_extraction_subagent_schema",
+      "community": 1,
+      "norm_label": "extraction subagent schema"
+    },
+    {
+      "label": "Query Path Explain",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/query.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_query_query_path_explain",
+      "community": 1,
+      "norm_label": "query path explain"
+    },
+    {
+      "label": "Incremental Update",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/update.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_update_incremental_update",
+      "community": 1,
+      "norm_label": "incremental update"
+    },
+    {
+      "label": "Commit Hook",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/hooks.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_hooks_commit_hook",
+      "community": 1,
+      "norm_label": "commit hook"
+    },
+    {
+      "label": "Add URL and Watch Folder",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/add-watch.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_add_watch_add_url_watch_folder",
+      "community": 1,
+      "norm_label": "add url and watch folder"
+    },
+    {
+      "label": "Extra Exports",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/exports.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_exports_extra_exports",
+      "community": 1,
+      "norm_label": "extra exports"
+    },
+    {
+      "label": "GitHub Clone and Cross Repo Merge",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/github-and-merge.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_github_and_merge_github_merge",
+      "community": 1,
+      "norm_label": "github clone and cross repo merge"
+    },
+    {
+      "label": "Video Audio Transcription",
+      "file_type": "document",
+      "source_file": ".codex/skills/graphify/references/transcribe.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "references_transcribe_video_audio_transcription",
+      "community": 1,
+      "norm_label": "video audio transcription"
+    },
+    {
+      "label": "AI Bootstrap Context",
+      "file_type": "document",
+      "source_file": "dotfiles-helper-bootstrap-prompt.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "dotfiles_helper_bootstrap_prompt_ai_bootstrap_context",
+      "community": 5,
+      "norm_label": "ai bootstrap context"
+    },
+    {
+      "label": "dev-terminal script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/dev-terminal",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_dev_terminal_script",
+      "community": 6,
+      "norm_label": "dev-terminal script"
+    },
+    {
+      "label": "hypr-kblayout-waybar script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/hypr-kblayout-waybar",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_hypr_kblayout_waybar_script",
+      "community": 10,
+      "norm_label": "hypr-kblayout-waybar script"
+    },
+    {
+      "label": "hypr-move-workspace-next-output script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/hypr-move-workspace-next-output",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_hypr_move_workspace_next_output_script",
+      "community": 11,
+      "norm_label": "hypr-move-workspace-next-output script"
+    },
+    {
+      "label": "obsidian-launch script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/obsidian-launch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_obsidian_launch_script",
+      "community": 14,
+      "norm_label": "obsidian-launch script"
+    },
+    {
+      "label": "run-niri-swayidle script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/run-niri-swayidle",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_run_niri_swayidle_script",
+      "community": 12,
+      "norm_label": "run-niri-swayidle script"
+    },
+    {
+      "label": "run-swayidle script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/run-swayidle",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_run_swayidle_script",
+      "community": 12,
+      "norm_label": "run-swayidle script"
+    },
+    {
+      "label": "sway-kblayout-waybar script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/sway-kblayout-waybar",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_sway_kblayout_waybar_script",
+      "community": 10,
+      "norm_label": "sway-kblayout-waybar script"
+    },
+    {
+      "label": "sway-move-workspace-next-output script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/sway-move-workspace-next-output",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_sway_move_workspace_next_output_script",
+      "community": 11,
+      "norm_label": "sway-move-workspace-next-output script"
+    },
+    {
+      "label": "theme-toggle script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/theme-toggle",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_theme_toggle_script",
+      "community": 8,
+      "norm_label": "theme-toggle script"
+    },
+    {
+      "label": "usage",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/theme-toggle",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_theme_toggle_usage",
+      "community": 8,
+      "norm_label": "usage"
+    },
+    {
+      "label": "set_scheme",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/theme-toggle",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_theme_toggle_set_scheme",
+      "community": 8,
+      "norm_label": "set_scheme"
+    },
+    {
+      "label": "tmux-fzf-pane-switch script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/tmux-fzf-pane-switch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_tmux_fzf_pane_switch_script",
+      "community": 6,
+      "norm_label": "tmux-fzf-pane-switch script"
+    },
+    {
+      "label": "tmux-fzf-session-switch script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/tmux-fzf-session-switch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_tmux_fzf_session_switch_script",
+      "community": 6,
+      "norm_label": "tmux-fzf-session-switch script"
+    },
+    {
+      "label": "tmux-fzf-window-switch script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/tmux-fzf-window-switch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_tmux_fzf_window_switch_script",
+      "community": 6,
+      "norm_label": "tmux-fzf-window-switch script"
+    },
+    {
+      "label": "tmux-sessionizer script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/tmux-sessionizer",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_tmux_sessionizer_script",
+      "community": 6,
+      "norm_label": "tmux-sessionizer script"
+    },
+    {
+      "label": "waybar-cpu-graph script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_graph_script",
+      "community": 3,
+      "norm_label": "waybar-cpu-graph script"
+    },
+    {
+      "label": "get_usage",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_graph_get_usage",
+      "community": 3,
+      "norm_label": "get_usage"
+    },
+    {
+      "label": "trim_history",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_graph_trim_history",
+      "community": 3,
+      "norm_label": "trim_history"
+    },
+    {
+      "label": "append_history",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_graph_append_history",
+      "community": 3,
+      "norm_label": "append_history"
+    },
+    {
+      "label": "render_graph",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_graph_render_graph",
+      "community": 3,
+      "norm_label": "render_graph"
+    },
+    {
+      "label": "main",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_graph_main",
+      "community": 3,
+      "norm_label": "main"
+    },
+    {
+      "label": "waybar-cpu-simple script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-simple",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_simple_script",
+      "community": 3,
+      "norm_label": "waybar-cpu-simple script"
+    },
+    {
+      "label": "waybar-cpu-test script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/waybar-cpu-test",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_waybar_cpu_test_script",
+      "community": 3,
+      "norm_label": "waybar-cpu-test script"
+    },
+    {
+      "label": "wifi-menu script",
+      "file_type": "code",
+      "source_file": "shell/.local/bin/wifi-menu",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "bin_wifi_menu_script",
+      "community": 6,
+      "norm_label": "wifi-menu script"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "codex_hooks",
+      "target": "codex_hooks_hooks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".codex/hooks.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "codex_hooks_hooks",
+      "target": "codex_hooks_hooks_pretooluse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "agents_repository_guidelines",
+      "target": "bootstrap_fedora_dev"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_cleanup_bootstrap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_install_available_packages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L438",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L391",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_install_sdkman_kotlin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L417",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_install_vscode_extensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L368",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_install_vscode_package",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_package_available",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_record_fallback_warning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L122",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_resolve_first_available_package",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "home_monig_code_graphing_gotfiles_bootstrap_fedora_dev_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "bootstrap_fedora_dev_dev_versions_file"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev",
+      "target": "scripts_install_codex_binary_codex_binary_install"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "NIRI-CHEATSHEET.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "niri_cheatsheet_niri_shortcuts",
+      "target": "bootstrap_fedora_dev"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "NIRI-TEST-CHECKLIST.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "niri_test_checklist_niri_test_flow",
+      "target": "bootstrap_fedora_dev"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_bootstrap_script",
+      "target": "bootstrap_fedora_dev"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_quickstart_new_user_bootstrap",
+      "target": "bootstrap_fedora_dev"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L566",
+      "weight": 1.0,
+      "context": "call",
+      "source": "home_monig_code_graphing_gotfiles_bootstrap_fedora_dev_sh__entry",
+      "target": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L565",
+      "weight": 1.0,
+      "context": "call",
+      "source": "home_monig_code_graphing_gotfiles_bootstrap_fedora_dev_sh__entry",
+      "target": "bootstrap_fedora_dev_install_vscode_package",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L171",
+      "weight": 1.0,
+      "context": "call",
+      "source": "home_monig_code_graphing_gotfiles_bootstrap_fedora_dev_sh__entry",
+      "target": "bootstrap_fedora_dev_package_available",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L175",
+      "weight": 1.0,
+      "context": "call",
+      "source": "home_monig_code_graphing_gotfiles_bootstrap_fedora_dev_sh__entry",
+      "target": "bootstrap_fedora_dev_record_fallback_warning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_install_available_packages",
+      "target": "bootstrap_fedora_dev_record_fallback_warning"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": "L400",
+      "weight": 1.0,
+      "context": "call",
+      "source": "bootstrap_fedora_dev_install_sdkman_kotlin",
+      "target": "bootstrap_fedora_dev_record_fallback_warning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_install_vscode_extensions",
+      "target": "bootstrap_fedora_dev_record_fallback_warning"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_resolve_first_available_package",
+      "target": "bootstrap_fedora_dev_record_fallback_warning"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_install_available_packages",
+      "target": "bootstrap_fedora_dev_package_available"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_resolve_first_available_package",
+      "target": "bootstrap_fedora_dev_package_available"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "target": "bootstrap_fedora_dev_resolve_first_available_package"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "target": "bootstrap_fedora_dev_install_available_packages"
+    },
+    {
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev_install_vscode_package",
+      "target": "readme_vscode_dev_stack"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "target": "bootstrap_fedora_dev_install_sdkman_kotlin"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "target": "bootstrap_fedora_dev_install_vscode_extensions"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev_install_vscode_extensions",
+      "target": "dev_versions_vscode_extensions"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+      "target": "scripts_install_node_node_install"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "config/dev-versions.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "config_dev_versions",
+      "target": "home_monig_code_graphing_gotfiles_config_dev_versions_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scripts_install_codex_binary",
+      "target": "home_monig_code_graphing_gotfiles_scripts_install_codex_binary_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "scripts_install_codex_binary",
+      "target": "scripts_install_codex_binary_cleanup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "scripts_install_codex_binary_codex_binary_install",
+      "target": "scripts_install_codex_binary_cleanup"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scripts_install_node",
+      "target": "home_monig_code_graphing_gotfiles_scripts_install_node_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "scripts_install_node",
+      "target": "scripts_install_node_ensure_path_line",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "scripts_install_node",
+      "target": "scripts_install_node_package_available",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "scripts_install_node",
+      "target": "scripts_install_node_record_node_warning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "scripts_install_node",
+      "target": "scripts_install_node_resolve_first_available_package",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": "L89",
+      "weight": 1.0,
+      "context": "call",
+      "source": "home_monig_code_graphing_gotfiles_scripts_install_node_sh__entry",
+      "target": "scripts_install_node_ensure_path_line",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "scripts_install_node_resolve_first_available_package",
+      "target": "scripts_install_node_package_available"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/install-node.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "context": "call",
+      "confidence_score": 1.0,
+      "source": "scripts_install_node_resolve_first_available_package",
+      "target": "scripts_install_node_record_node_warning"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/install-node.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "scripts_install_node_node_install",
+      "target": "scripts_install_node_resolve_first_available_package"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/install-node.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "scripts_install_node_node_install",
+      "target": "scripts_install_node_ensure_path_line"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "shell/.local/bin/hypr-handle-lid.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "bin_hypr_handle_lid",
+      "target": "home_monig_code_graphing_gotfiles_shell_local_bin_hypr_handle_lid_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "shell/.local/bin/hypr-handle-lid.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "home_monig_code_graphing_gotfiles_shell_local_bin_hypr_handle_lid_sh__entry",
+      "target": "home_monig_code_graphing_gotfiles_shell_local_bin_niri_handle_lid_sh__entry"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "shell/.local/bin/hypr-handle-lid.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "home_monig_code_graphing_gotfiles_shell_local_bin_hypr_handle_lid_sh__entry",
+      "target": "home_monig_code_graphing_gotfiles_shell_local_bin_sway_handle_lid_sh__entry"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "shell/.local/bin/niri-handle-lid.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "bin_niri_handle_lid",
+      "target": "home_monig_code_graphing_gotfiles_shell_local_bin_niri_handle_lid_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "shell/.local/bin/niri-handle-lid.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "home_monig_code_graphing_gotfiles_shell_local_bin_niri_handle_lid_sh__entry",
+      "target": "home_monig_code_graphing_gotfiles_shell_local_bin_sway_handle_lid_sh__entry"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "shell/.local/bin/sway-handle-lid.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "bin_sway_handle_lid",
+      "target": "home_monig_code_graphing_gotfiles_shell_local_bin_sway_handle_lid_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "agents_helper_scripts",
+      "target": "stow_clean_restow"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "agents_repository_guidelines",
+      "target": "stow_clean_restow"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "NIRI-CHEATSHEET.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "niri_cheatsheet_niri_shortcuts",
+      "target": "stow_clean_restow"
+    },
+    {
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "stow-clean-restow.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "stow_clean_restow",
+      "target": "readme_gnu_stow"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "README-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_quickstart_new_user_bootstrap",
+      "target": "stow_clean_restow"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "stow-clean-restow.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "stow_clean_restow",
+      "target": "home_monig_code_graphing_gotfiles_stow_clean_restow_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "stow-clean-restow.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "stow_clean_restow",
+      "target": "stow_clean_restow_find_symlink_ancestor"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "agents_repository_guidelines",
+      "target": "dev_versions_tool_targets"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "agents_repository_guidelines",
+      "target": "readme_fedora_wayland_dotfiles"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/install-codex-binary.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "scripts_install_codex_binary_codex_binary_install",
+      "target": "agents_repository_guidelines"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "agents_dev_versions_single_update_point",
+      "target": "dev_versions_tool_targets"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "agents_graphify_workflow",
+      "target": "graphify_skill_graphify_pipeline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_fedora_wayland_dotfiles",
+      "target": "readme_bootstrap_script"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_fedora_wayland_dotfiles",
+      "target": "readme_gnu_stow"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "TMUX-CHEATSHEET.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "tmux_cheatsheet_tmux_bindings",
+      "target": "readme_fedora_wayland_dotfiles"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "dotfiles-helper-bootstrap-prompt.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "dotfiles_helper_bootstrap_prompt_ai_bootstrap_context",
+      "target": "readme_bootstrap_script"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_bootstrap_script",
+      "target": "dev_versions_tool_targets"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_bootstrap_script",
+      "target": "readme_rofi_bluetooth"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_bootstrap_script",
+      "target": "readme_vscode_dev_stack"
+    },
+    {
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "scripts/install-node.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "scripts_install_node_node_install",
+      "target": "readme_vscode_dev_stack"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_quickstart_new_user_bootstrap",
+      "target": "niri_test_checklist_niri_test_flow"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "NIRI-CHEATSHEET.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "niri_cheatsheet_niri_shortcuts",
+      "target": "niri_test_checklist_niri_test_flow"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "bootstrap-fedora-dev.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bootstrap_fedora_dev_dev_versions_file",
+      "target": "dev_versions_tool_targets"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/install-node.sh",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "scripts_install_node_node_install",
+      "target": "dev_versions_tool_targets"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".codex/hooks.json",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "_codex_hooks_pretooluse_graphify_hook_check",
+      "target": "graphify_skill_graphify_pipeline"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".codex/hooks.json",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "_codex_hooks_pretooluse_graphify_hook_check",
+      "target": "references_hooks_commit_hook"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "graphify_skill_graphify_pipeline",
+      "target": "graphify_skill_fast_path_existing_graph"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "graphify_skill_graphify_pipeline",
+      "target": "graphify_skill_semantic_extraction_subagents"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "graphify_skill_graphify_pipeline",
+      "target": "references_transcribe_video_audio_transcription"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "graphify_skill_graphify_pipeline",
+      "target": "references_update_incremental_update"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".codex/skills/graphify/references/exports.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "references_exports_extra_exports",
+      "target": "graphify_skill_graphify_pipeline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/references/github-and-merge.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "references_github_and_merge_github_merge",
+      "target": "graphify_skill_graphify_pipeline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "graphify_skill_fast_path_existing_graph",
+      "target": "references_query_query_path_explain"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "graphify_skill_semantic_extraction_subagents",
+      "target": "references_extraction_spec_extraction_subagent_schema"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".codex/skills/graphify/references/transcribe.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "references_transcribe_video_audio_transcription",
+      "target": "graphify_skill_semantic_extraction_subagents"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": ".codex/skills/graphify/references/update.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "references_update_incremental_update",
+      "target": "references_query_query_path_explain"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/references/add-watch.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "references_add_watch_add_url_watch_folder",
+      "target": "references_update_incremental_update"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": ".codex/skills/graphify/references/hooks.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "references_hooks_commit_hook",
+      "target": "references_update_incremental_update"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "shell/.local/bin/dev-terminal",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_dev_terminal_script",
+      "target": "bin_tmux_sessionizer_script"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "shell/.local/bin/wifi-menu",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_wifi_menu_script",
+      "target": "bin_dev_terminal_script"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "shell/.local/bin/hypr-kblayout-waybar",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_hypr_kblayout_waybar_script",
+      "target": "bin_sway_kblayout_waybar_script"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "shell/.local/bin/hypr-move-workspace-next-output",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_hypr_move_workspace_next_output_script",
+      "target": "bin_sway_move_workspace_next_output_script"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "shell/.local/bin/run-niri-swayidle",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_run_niri_swayidle_script",
+      "target": "bin_run_swayidle_script"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/theme-toggle",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_theme_toggle_script",
+      "target": "bin_theme_toggle_set_scheme"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/theme-toggle",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_theme_toggle_script",
+      "target": "bin_theme_toggle_usage"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/theme-toggle",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_theme_toggle_set_scheme",
+      "target": "bin_theme_toggle_usage"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "shell/.local/bin/tmux-fzf-pane-switch",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_tmux_fzf_pane_switch_script",
+      "target": "bin_tmux_fzf_session_switch_script"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "shell/.local/bin/tmux-fzf-pane-switch",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_tmux_fzf_pane_switch_script",
+      "target": "bin_tmux_fzf_window_switch_script"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "shell/.local/bin/tmux-fzf-session-switch",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_tmux_fzf_session_switch_script",
+      "target": "bin_tmux_fzf_window_switch_script"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "shell/.local/bin/tmux-sessionizer",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_tmux_sessionizer_script",
+      "target": "bin_tmux_fzf_session_switch_script"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_waybar_cpu_graph_script",
+      "target": "bin_waybar_cpu_graph_main"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "shell/.local/bin/waybar-cpu-simple",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_waybar_cpu_simple_script",
+      "target": "bin_waybar_cpu_graph_script"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "shell/.local/bin/waybar-cpu-test",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_waybar_cpu_test_script",
+      "target": "bin_waybar_cpu_graph_script"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_waybar_cpu_graph_main",
+      "target": "bin_waybar_cpu_graph_get_usage"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_waybar_cpu_graph_append_history",
+      "target": "bin_waybar_cpu_graph_trim_history"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_waybar_cpu_graph_main",
+      "target": "bin_waybar_cpu_graph_append_history"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "shell/.local/bin/waybar-cpu-graph",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "bin_waybar_cpu_graph_main",
+      "target": "bin_waybar_cpu_graph_render_graph"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "fedora_wayland_bootstrap_flow",
+      "label": "Fedora Wayland Bootstrap Flow",
+      "nodes": [
+        "readme_fedora_wayland_dotfiles",
+        "readme_quickstart_new_user_bootstrap",
+        "bootstrap_fedora_dev_bootstrap",
+        "stow_clean_restow_restow",
+        "niri_test_checklist_niri_test_flow"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README.md"
+    },
+    {
+      "id": "centralized_dev_tool_configuration",
+      "label": "Centralized Dev Tool Configuration",
+      "nodes": [
+        "agents_dev_versions_single_update_point",
+        "dev_versions_tool_targets",
+        "bootstrap_fedora_dev_dev_versions_file",
+        "bootstrap_fedora_dev_install_full_vscode_dev_stack",
+        "scripts_install_node_node_install"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "AGENTS.md"
+    },
+    {
+      "id": "graphify_operational_modes",
+      "label": "Graphify Operational Modes",
+      "nodes": [
+        "graphify_skill_graphify_pipeline",
+        "references_query_query_path_explain",
+        "references_update_incremental_update",
+        "references_add_watch_add_url_watch_folder",
+        "references_exports_extra_exports",
+        "references_github_and_merge_github_merge",
+        "references_transcribe_video_audio_transcription"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".codex/skills/graphify/SKILL.md"
+    },
+    {
+      "id": "wayland_compositor_laptop_lid_and_output_helpers",
+      "label": "Wayland Compositor Laptop Lid And Output Helpers",
+      "nodes": [
+        "bin_hypr_handle_lid_script",
+        "bin_niri_handle_lid_script",
+        "bin_sway_handle_lid_script",
+        "bin_hypr_move_workspace_next_output_script",
+        "bin_sway_move_workspace_next_output_script"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "shell/.local/bin/hypr-handle-lid.sh"
+    },
+    {
+      "id": "tmux_fzf_navigation_helpers",
+      "label": "Tmux Fzf Navigation Helpers",
+      "nodes": [
+        "bin_tmux_fzf_pane_switch_script",
+        "bin_tmux_fzf_session_switch_script",
+        "bin_tmux_fzf_window_switch_script",
+        "bin_tmux_sessionizer_script"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "shell/.local/bin/tmux-fzf-pane-switch"
+    },
+    {
+      "id": "waybar_status_helpers",
+      "label": "Waybar Status Helpers",
+      "nodes": [
+        "bin_hypr_kblayout_waybar_script",
+        "bin_sway_kblayout_waybar_script",
+        "bin_waybar_cpu_graph_script",
+        "bin_waybar_cpu_simple_script",
+        "bin_waybar_cpu_test_script"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "shell/.local/bin/hypr-kblayout-waybar"
+    }
+  ],
+  "built_at_commit": "40f40cf41c928e5298cb277b6eab82100fee091d"
+}

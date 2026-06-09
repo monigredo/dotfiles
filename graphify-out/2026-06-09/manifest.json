@@ -1,0 +1,212 @@
+{
+  "/home/monig/code/graphing/gotfiles/.codex/hooks.json": {
+    "mtime": 1781038421.6696086,
+    "ast_hash": "326d604a11ddfb6be1a967a78897077a",
+    "semantic_hash": "326d604a11ddfb6be1a967a78897077a"
+  },
+  "/home/monig/code/graphing/gotfiles/bootstrap-fedora-dev.sh": {
+    "mtime": 1781036451.2216709,
+    "ast_hash": "5c03e3218b0d4b45f966d0ed4cb97785",
+    "semantic_hash": "5c03e3218b0d4b45f966d0ed4cb97785"
+  },
+  "/home/monig/code/graphing/gotfiles/config/dev-versions.sh": {
+    "mtime": 1781036451.2216709,
+    "ast_hash": "05a0eb1f873cdcbab00168088ce03d15",
+    "semantic_hash": "05a0eb1f873cdcbab00168088ce03d15"
+  },
+  "/home/monig/code/graphing/gotfiles/scripts/install-codex-binary.sh": {
+    "mtime": 1781036451.2225516,
+    "ast_hash": "98477bc3cd9d4451c7086700bd6d8f9a",
+    "semantic_hash": "98477bc3cd9d4451c7086700bd6d8f9a"
+  },
+  "/home/monig/code/graphing/gotfiles/scripts/install-node.sh": {
+    "mtime": 1781036451.2226202,
+    "ast_hash": "6869a6bccb464f9fab78c33bfa63d0d4",
+    "semantic_hash": "6869a6bccb464f9fab78c33bfa63d0d4"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/dev-terminal": {
+    "mtime": 1781036451.222846,
+    "ast_hash": "1817f0b763112018ee46265cb27139d2",
+    "semantic_hash": "1817f0b763112018ee46265cb27139d2"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/hypr-handle-lid.sh": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "d6cae6e6b358acdb4fb7159cfa8787d6",
+    "semantic_hash": "d6cae6e6b358acdb4fb7159cfa8787d6"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/hypr-kblayout-waybar": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "f884312fe5bcb0d827f16180f51b0b20",
+    "semantic_hash": "f884312fe5bcb0d827f16180f51b0b20"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/hypr-move-workspace-next-output": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "7d65dd2e990a1bfaa80de0dcd8de6101",
+    "semantic_hash": "7d65dd2e990a1bfaa80de0dcd8de6101"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/niri-handle-lid.sh": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "aedfb90b8779799fa4738518532fe425",
+    "semantic_hash": "aedfb90b8779799fa4738518532fe425"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/obsidian-launch": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "c908b4bdd1ea5774e372fed8a0c77ce2",
+    "semantic_hash": "c908b4bdd1ea5774e372fed8a0c77ce2"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/run-niri-swayidle": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "8ee98ab6cfad5d8fbb5281439e169e19",
+    "semantic_hash": "8ee98ab6cfad5d8fbb5281439e169e19"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/run-swayidle": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "9aec360e4c34418a5e46408b170087f6",
+    "semantic_hash": "9aec360e4c34418a5e46408b170087f6"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/sway-handle-lid.sh": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "082b643663febdaf3968062c33ea4014",
+    "semantic_hash": "082b643663febdaf3968062c33ea4014"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/sway-kblayout-waybar": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "398ca0ca3a0ae1067bd3368cafb90f0e",
+    "semantic_hash": "398ca0ca3a0ae1067bd3368cafb90f0e"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/sway-move-workspace-next-output": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "1928c0a1ed6e2e96acbb5ad786c3553f",
+    "semantic_hash": "1928c0a1ed6e2e96acbb5ad786c3553f"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/theme-toggle": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "7c21838d97b4f1b667253c0928258c47",
+    "semantic_hash": "7c21838d97b4f1b667253c0928258c47"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/tmux-fzf-pane-switch": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "6d5cd5d76a1064e5e5c9e9c564d73faa",
+    "semantic_hash": "6d5cd5d76a1064e5e5c9e9c564d73faa"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/tmux-fzf-session-switch": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "d589b69cf56e34c0889f51f85ce847de",
+    "semantic_hash": "d589b69cf56e34c0889f51f85ce847de"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/tmux-fzf-window-switch": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "8e45cc7fbfa4b555531543ee441e2c20",
+    "semantic_hash": "8e45cc7fbfa4b555531543ee441e2c20"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/tmux-sessionizer": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "f944e025cd6d06651715933167889276",
+    "semantic_hash": "f944e025cd6d06651715933167889276"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/waybar-cpu-graph": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "c16bfdf1abd446251175ae2d7c26e8e5",
+    "semantic_hash": "c16bfdf1abd446251175ae2d7c26e8e5"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/waybar-cpu-simple": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "608d74056943748dfed33ae4f6c3e760",
+    "semantic_hash": "608d74056943748dfed33ae4f6c3e760"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/waybar-cpu-test": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "8142117072767523ebc8d4058a02f9ef",
+    "semantic_hash": "8142117072767523ebc8d4058a02f9ef"
+  },
+  "/home/monig/code/graphing/gotfiles/shell/.local/bin/wifi-menu": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "e7e3c7ab272ebc9eaea753c637b93e8f",
+    "semantic_hash": "e7e3c7ab272ebc9eaea753c637b93e8f"
+  },
+  "/home/monig/code/graphing/gotfiles/stow-clean-restow.sh": {
+    "mtime": 1781036451.2228758,
+    "ast_hash": "c3e856d8cefdf9a2f1217d88928cd899",
+    "semantic_hash": "c3e856d8cefdf9a2f1217d88928cd899"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/SKILL.md": {
+    "mtime": 1781038421.6688657,
+    "ast_hash": "387caca7fe66d3151e67c512bc93dd25",
+    "semantic_hash": "387caca7fe66d3151e67c512bc93dd25"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/add-watch.md": {
+    "mtime": 1781038184.3890753,
+    "ast_hash": "0df0589623217ca38a12bdcabfb42f4c",
+    "semantic_hash": "0df0589623217ca38a12bdcabfb42f4c"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/exports.md": {
+    "mtime": 1781038184.3890753,
+    "ast_hash": "7fb1a81aca17a462db70684a324fcfb0",
+    "semantic_hash": "7fb1a81aca17a462db70684a324fcfb0"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/extraction-spec.md": {
+    "mtime": 1781038184.3890753,
+    "ast_hash": "a86a7321597b23cc2b22e011b3dc6e1d",
+    "semantic_hash": "a86a7321597b23cc2b22e011b3dc6e1d"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/github-and-merge.md": {
+    "mtime": 1781038184.3890753,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/hooks.md": {
+    "mtime": 1781038184.3890753,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/query.md": {
+    "mtime": 1781038184.3900754,
+    "ast_hash": "c2a8e798674a81b02aa9975f43023819",
+    "semantic_hash": "c2a8e798674a81b02aa9975f43023819"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/transcribe.md": {
+    "mtime": 1781038184.3900754,
+    "ast_hash": "70f6aa30d6211f3a2c7e9fc45479f50c",
+    "semantic_hash": "70f6aa30d6211f3a2c7e9fc45479f50c"
+  },
+  "/home/monig/code/graphing/gotfiles/.codex/skills/graphify/references/update.md": {
+    "mtime": 1781038184.3900754,
+    "ast_hash": "0dad167a95bdb389f02fecffb60b1bc8",
+    "semantic_hash": "0dad167a95bdb389f02fecffb60b1bc8"
+  },
+  "/home/monig/code/graphing/gotfiles/AGENTS.md": {
+    "mtime": 1781038421.669155,
+    "ast_hash": "889f845bf52441358ee67c23f9202e7b",
+    "semantic_hash": "889f845bf52441358ee67c23f9202e7b"
+  },
+  "/home/monig/code/graphing/gotfiles/NIRI-CHEATSHEET.md": {
+    "mtime": 1781036451.2212617,
+    "ast_hash": "ae1e9e53dcd8604303533da73bd55d38",
+    "semantic_hash": "ae1e9e53dcd8604303533da73bd55d38"
+  },
+  "/home/monig/code/graphing/gotfiles/NIRI-TEST-CHECKLIST.md": {
+    "mtime": 1781036451.2212617,
+    "ast_hash": "576617602d3794e22e723504051c2858",
+    "semantic_hash": "576617602d3794e22e723504051c2858"
+  },
+  "/home/monig/code/graphing/gotfiles/README-quickstart.md": {
+    "mtime": 1781036451.2212617,
+    "ast_hash": "ce267ea355c45e73b52f3e9445bcf96d",
+    "semantic_hash": "ce267ea355c45e73b52f3e9445bcf96d"
+  },
+  "/home/monig/code/graphing/gotfiles/README.md": {
+    "mtime": 1781036451.2212617,
+    "ast_hash": "fb4efb6aa6d7908f8f6f864528f4c7ae",
+    "semantic_hash": "fb4efb6aa6d7908f8f6f864528f4c7ae"
+  },
+  "/home/monig/code/graphing/gotfiles/TMUX-CHEATSHEET.md": {
+    "mtime": 1781036451.2212617,
+    "ast_hash": "3438bab65840049c76fec214aeee3fea",
+    "semantic_hash": "3438bab65840049c76fec214aeee3fea"
+  },
+  "/home/monig/code/graphing/gotfiles/dotfiles-helper-bootstrap-prompt.md": {
+    "mtime": 1781036451.2216709,
+    "ast_hash": "51bb32701b2a05946796376ca19485c4",
+    "semantic_hash": "51bb32701b2a05946796376ca19485c4"
+  }
+}
