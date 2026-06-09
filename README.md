@@ -313,6 +313,7 @@ What each package is expected to do:
 Obsidian note vaults are intentionally not a stow package. Keep vaults in a normal data/sync location, for example `~/Documents/Obsidian`, and use dotfiles only for launch/install glue.
 
 If `stow` complains about conflicts, move the existing file into the appropriate place under `~/dotfiles/...` and re-run `stow`.
+  - `theme-toggle` sets the desktop light/dark preference for portal-aware apps and web content.
 
 ---
 
@@ -515,8 +516,12 @@ Then paste directly into ChatGPT when debugging.
 
 Dependencies:
 - Required: `fzf` (includes `fzf-tmux` on Fedora package builds).
+  - `Alt+C` copies the current Ghostty selection when one exists; `Alt+V` pastes from the clipboard.
+  - Mouse selection in plain Ghostty copies to the regular clipboard.
 - Optional but useful for project picking: `fd`/`fd-find`, `ripgrep`.
+  - tmux mouse mode is enabled; mouse selection and vi copy-mode copy pipe to `wl-copy`.
 
+  - `Caps+C` / `Caps+V` are intentionally left as `Ctrl+C` / `Ctrl+V` because `Caps` maps to `Ctrl`; this preserves shell interrupt/literal-insert behavior and future Neovim visual-block mode.
 Bindings (tmux prefix + key):
 - `s` — Session switcher (`fzf-tmux` popup).
 - `w` — Window switcher in current session (`fzf-tmux` popup).

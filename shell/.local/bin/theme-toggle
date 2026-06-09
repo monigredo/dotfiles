@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  echo "Usage: theme-toggle [dark|light|toggle]" >&2
+}
+
+set_scheme() {
+  local mode="$1"
+  local scheme
+  local label
+
+  case "$mode" in
+    dark)
+      scheme="prefer-dark"
+      label="Dark"
+      ;;
+    light)
+      scheme="prefer-light"
+      label="Light"
+      ;;
+    *)
+      usage
+      exit 2
+      ;;
+  esac
+
+  gsettings set org.gnome.desktop.interface color-scheme "$scheme"
+
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send "Theme" "$label mode" >/dev/null 2>&1 || true
+  fi
+}
+
+mode="${1:-toggle}"
+
+case "$mode" in
+  dark|light)
+    set_scheme "$mode"
+    ;;
+  toggle)
+    current="$(gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null || true)"
+    case "$current" in
+      "'prefer-dark'")
+        set_scheme light
+        ;;
+      *)
+        set_scheme dark
+        ;;
+    esac
+    ;;
+  -h|--help)
+    usage
+    ;;
+  *)
+    usage
+    exit 2
+    ;;
+esac

@@ -68,6 +68,7 @@ Note: `Ctrl+B p` is configured as the fzf pane switcher, so use the status bar, 
 | `Ctrl+B Space` | Cycle pane layouts |
 
 Mouse mode is enabled, so pane focus, resizing, and scrollback can also be controlled with the mouse.
+Mouse selections and vi copy-mode copies are sent to the Wayland clipboard with `wl-copy`.
 
 ## Copy Mode And Buffers
 
@@ -76,8 +77,10 @@ Mouse mode is enabled, so pane focus, resizing, and scrollback can also be contr
 | `Ctrl+B [` | Enter copy mode |
 | `Ctrl+B ]` | Paste latest buffer |
 | `Ctrl+B b` | Pick and paste a buffer with fzf |
+| `Alt+C` | Copy selected text in Ghostty |
+| `Alt+V` | Paste clipboard text in Ghostty |
 
-Copy mode uses vi keys.
+Copy mode uses vi keys. In copy mode, `y`, `Enter`, and mouse drag completion copy to the Wayland clipboard.
 
 ## Commands And Help
 

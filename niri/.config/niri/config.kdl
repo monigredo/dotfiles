@@ -72,6 +72,7 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 spawn-at-startup "mako"
 spawn-at-startup "/usr/libexec/lxqt-policykit-agent"
+spawn-sh-at-startup "~/.local/bin/theme-toggle dark"
 spawn-sh-at-startup "pkill waybar 2>/dev/null; exec waybar -c \"$HOME/.config/waybar-niri/config\" -s \"$HOME/.config/waybar-niri/style.css\""
 spawn-sh-at-startup "~/.local/bin/run-niri-swayidle 3000"
 
@@ -84,6 +85,7 @@ binds {
     Super+Shift+Return { spawn-sh "~/.local/bin/dev-terminal"; }
     Super+Space { spawn "rofi" "-show" "drun"; }
     Super+O { spawn-sh "~/.local/bin/obsidian-launch"; }
+    Super+Shift+T { spawn-sh "~/.local/bin/theme-toggle toggle"; }
     Super+Q repeat=false { close-window; }
 
     Ctrl+Space { switch-layout "next"; }
@@ -101,6 +103,8 @@ binds {
 
     Super+Shift+Left { focus-monitor-left; }
     Super+Shift+Right { focus-monitor-right; }
+    Super+Alt+Shift+Left { move-window-to-monitor-left; }
+    Super+Alt+Shift+Right { move-window-to-monitor-right; }
     Super+Ctrl+Shift+Left { move-workspace-to-monitor-left; }
     Super+Ctrl+Shift+Right { move-workspace-to-monitor-right; }
 

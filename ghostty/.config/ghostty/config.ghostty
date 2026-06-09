@@ -9,6 +9,9 @@ window-inherit-working-directory = true
 tab-inherit-working-directory = true
 split-inherit-working-directory = true
 confirm-close-surface = true
+copy-on-select = clipboard
+keybind = performable:alt+c=copy_to_clipboard:mixed
+keybind = alt+v=paste_from_clipboard
 
 background = #1e1e2e
 foreground = #cdd6f4
