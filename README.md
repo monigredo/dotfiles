@@ -497,6 +497,30 @@ ftpmd ~/.zshrc ~/.config/sway/config ~/.config/waybar/config
 
 Then paste directly into ChatGPT when debugging.
 
+## 9.1 Command-to-clipboard helper
+
+Add this to `~/.config/zsh/40-functions.zsh` (or `shell/.config/zsh/40-functions.zsh` in dotfiles):
+
+```bash
+c() {
+  if [ "$#" -eq 0 ]; then
+    echo "Usage: c command [args...]" >&2
+    return 1
+  fi
+
+  "$@" 2>&1 | tee >(wl-copy)
+  return ${pipestatus[1]}
+}
+```
+
+Example usage:
+
+```bash
+c ls -la
+```
+
+The command output is shown in the terminal and copied to the Wayland clipboard.
+
 ---
 
 ## 10. Terminal: Ghostty + tmux

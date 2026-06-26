@@ -7,6 +7,16 @@ ftpmd() {
   echo "Copied files-to-prompt output for: $*" >&2
 }
 
+c() {
+  if [ "$#" -eq 0 ]; then
+    echo "Usage: c command [args...]" >&2
+    return 1
+  fi
+
+  "$@" 2>&1 | tee >(wl-copy)
+  return ${pipestatus[1]}
+}
+
 t() {
   local session="${1:-main}"
 
