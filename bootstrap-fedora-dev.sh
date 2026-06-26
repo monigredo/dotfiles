@@ -4,6 +4,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 DEV_VERSIONS_FILE="$DOTFILES_DIR/config/dev-versions.sh"
 LEGACY_GITCONFIG_PATH="$HOME/.gitconfig"
+DEFAULT_GIT_EMAIL="8849111+monigredo@users.noreply.github.com"
 
 NODE_PACKAGE_CANDIDATES=(nodejs)
 NPM_PACKAGE_CANDIDATES=(npm)
@@ -498,16 +499,17 @@ echo "[+] Configuring git identity (user.name / user.email)..."
 if [ -t 0 ]; then
   current_name="$(git config --global user.name 2>/dev/null || true)"
   current_email="$(git config --global user.email 2>/dev/null || true)"
+  default_email="${current_email:-$DEFAULT_GIT_EMAIL}"
 
   echo "    Current git user.name : ${current_name:-<not set>}"
   echo "    Current git user.email: ${current_email:-<not set>}"
   echo
 
   read -r -p "    Enter git user.name  [${current_name:-skip}]: " git_name
-  read -r -p "    Enter git user.email [${current_email:-skip}]: " git_email
+  read -r -p "    Enter git user.email [$default_email]: " git_email
 
   git_name="${git_name:-$current_name}"
-  git_email="${git_email:-$current_email}"
+  git_email="${git_email:-$default_email}"
 
   if [ -n "$git_name" ]; then
     git config --global user.name "$git_name"

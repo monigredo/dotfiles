@@ -128,8 +128,8 @@ What it does:
   - If running in a TTY, shows current `user.name` / `user.email` (if any).
   - Prompts:
     - `git user.name`
-    - `git user.email`
-  - Empty input keeps current values.
+    - `git user.email` (defaults to `8849111+monigredo@users.noreply.github.com` when no global email is set).
+  - Empty input keeps current values, or accepts the default GitHub noreply email when no email is configured.
   - For a **client-specific user**, enter the client persona identity here.
 
 If run non-interactively, it skips identity prompts and prints manual `git config` commands.
