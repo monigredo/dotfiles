@@ -17,6 +17,12 @@ case ":$PATH:" in
   *) PATH="$npm_global_bin:$PATH" ;;
 esac
 
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) PATH="$PNPM_HOME:$PATH" ;;
+esac
+
 export PATH
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:

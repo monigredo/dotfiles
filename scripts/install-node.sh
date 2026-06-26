@@ -82,10 +82,31 @@ fi
 NPM_GLOBAL_PREFIX="$HOME/.local/npm-global"
 NPM_GLOBAL_BIN="$NPM_GLOBAL_PREFIX/bin"
 NPM_GLOBAL_BIN_ZSH='$HOME/.local/npm-global/bin'
+PNPM_HOME="$HOME/.local/share/pnpm"
 
 echo "[+] Configuring npm user-global prefix..."
 mkdir -p "$NPM_GLOBAL_PREFIX"
 npm config set prefix "$NPM_GLOBAL_PREFIX"
+export PATH="$NPM_GLOBAL_BIN:$PATH"
+
+echo "[+] Configuring pnpm user-global home..."
+mkdir -p "$PNPM_HOME"
+export PNPM_HOME
+export PATH="$PNPM_HOME:$PATH"
+
+if command -v pnpm >/dev/null 2>&1; then
+  echo "    pnpm already installed."
+else
+  echo "    Installing pnpm via npm user-global prefix..."
+  npm install --global pnpm
+  hash -r
+fi
+
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm config set global-bin-dir "$PNPM_HOME"
+else
+  record_node_warning "pnpm is still unavailable after npm global install."
+fi
 
 ensure_path_line() {
   local rc_file="$1"

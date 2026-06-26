@@ -61,7 +61,7 @@ During bootstrap:
 - Hyprland may prompt for an extra COPR-backed install path on Fedora 43 if it is not available in the enabled standard repos.
 - Niri installs by default when it is available in the enabled standard Fedora repos.
 - Obsidian is optional; bootstrap can install the Flathub Flatpak and the dotfiles provide `obsidian-launch`.
-- VS Code is optional; bootstrap can install stable VS Code from Microsoft's Fedora yum repo, then install the full dev extension stack and supporting Node, Python (`pip`, `virtualenv`, `pytest`, `ruff`, `uv`), Go, Java/Kotlin, container, YAML, and TOML tooling.
+- VS Code is optional; bootstrap can install stable VS Code from Microsoft's Fedora yum repo, then install the full dev extension stack and supporting Node/npm/pnpm, Python (`pip`, `virtualenv`, `pytest`, `ruff`, `uv`), Go, Java/Kotlin, container, YAML, and TOML tooling.
 - If bootstrap falls back from a preferred tool target, it prints a visible warning immediately and repeats fallback warnings at the end.
 
 ---
