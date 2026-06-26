@@ -55,13 +55,28 @@ resolve_first_available_package() {
 }
 
 echo "[+] Ensuring Node.js and npm..."
-if command -v node >/dev/null 2>&1 && command -v npm >/dev/null 2>&1; then
-  echo "    Node.js and npm already installed."
+if command -v node >/dev/null 2>&1; then
+  echo "    Node.js already installed."
 else
   node_package="$(resolve_first_available_package "Node.js" "${NODE_PACKAGE_CANDIDATES[@]}")"
-  npm_package="$(resolve_first_available_package "npm" "${NPM_PACKAGE_CANDIDATES[@]}")"
-  echo "    Installing $node_package and $npm_package via dnf..."
-  sudo dnf install -y "$node_package" "$npm_package"
+  echo "    Installing $node_package via dnf..."
+  sudo dnf install -y "$node_package"
+  hash -r
+fi
+
+if command -v npm >/dev/null 2>&1; then
+  echo "    npm already installed."
+else
+  if npm_package="$(resolve_first_available_package "npm" "${NPM_PACKAGE_CANDIDATES[@]}")"; then
+    echo "    Installing $npm_package via dnf..."
+    sudo dnf install -y "$npm_package"
+    hash -r
+  fi
+fi
+
+if ! command -v npm >/dev/null 2>&1; then
+  record_node_warning "npm is still unavailable after Node.js package install; cannot configure npm prefix."
+  exit 1
 fi
 
 NPM_GLOBAL_PREFIX="$HOME/.local/npm-global"

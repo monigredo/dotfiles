@@ -410,7 +410,17 @@ install_sdkman_kotlin() {
     echo "    Kotlin already available."
   else
     echo "    Installing Kotlin via SDKMAN candidate '$KOTLIN_SDKMAN_CANDIDATE'..."
-    sdk install "$KOTLIN_SDKMAN_CANDIDATE" || record_fallback_warning "SDKMAN failed to install Kotlin candidate '$KOTLIN_SDKMAN_CANDIDATE'."
+    set +u
+    if sdk install "$KOTLIN_SDKMAN_CANDIDATE"; then
+      sdk_install_status=0
+    else
+      sdk_install_status=$?
+    fi
+    set -u
+
+    if [ "$sdk_install_status" -ne 0 ]; then
+      record_fallback_warning "SDKMAN failed to install Kotlin candidate '$KOTLIN_SDKMAN_CANDIDATE'."
+    fi
   fi
 }
 
