@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 - Root scripts: `bootstrap-fedora-dev.sh` (Fedora + Sway/Hyprland/Niri bootstrap) and `stow-clean-restow.sh` (remove conflicts then restow).
 - Stow packages: `shell/`, `sway/`, `waybar/`, `ghostty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
-- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`dev-terminal`, `run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `obsidian-launch`, `theme-toggle`).
+- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`battery-cycles`, `dev-terminal`, `run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `obsidian-launch`, `theme-toggle`).
 - Preferred Node, npm, Python, Java, Go, Kotlin, VS Code package targets, fallback candidates, and VS Code extension IDs live in `config/dev-versions.sh`.
 - Docs: `README.md` (full), `README-quickstart.md` (concise), `NIRI-CHEATSHEET.md`, `TMUX-CHEATSHEET.md`, `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 

@@ -8,6 +8,7 @@ Goals:
 - Reproducible setup via **GNU Stow**.
 - Good defaults for **development**: git, Java, containers, Ghostty, rofi.
 - Small helper scripts in `~/.local/bin` for:
+  - battery cycle checks,
   - idle locking,
   - lid handling,
   - Wi-Fi TUI,
@@ -275,6 +276,7 @@ What each package is expected to do:
     - `t [session]` zsh helper attaches to or creates a tmux session, defaulting to `main`.
   - `~/.local/bin/run-swayidle` (from above).
   - `~/.local/bin/run-niri-swayidle` and `~/.local/bin/niri-handle-lid.sh`
+  - `~/.local/bin/battery-cycles`, which prints battery cycle count and basic battery health telemetry from sysfs.
   - `~/.local/bin/obsidian-launch`, which opens native Obsidian when available or the Flatpak app otherwise.
   - `~/.local/bin/dev-terminal`, which opens Ghostty attached to a tmux session.
 - `sway/`
@@ -635,6 +637,7 @@ For a fresh user (personal or client-specific):
 7. **Ensure helper scripts exist** (either in dotfiles or recreate):
 
    - `~/.local/bin/wifi-menu`
+   - `~/.local/bin/battery-cycles`
    - `~/.local/bin/obsidian-launch`
    - `~/.local/bin/sway-handle-lid.sh`
    - `~/.local/bin/run-swayidle` (via `stow shell`)

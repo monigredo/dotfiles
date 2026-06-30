@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+power_root="${BATTERY_SYSFS_ROOT:-/sys/class/power_supply}"
+
+read_value() {
+  local battery="$1"
+  local key="$2"
+  local file_key="${key,,}"
+  local uevent="$battery/uevent"
+
+  if [ -f "$uevent" ]; then
+    awk -F= -v needle="POWER_SUPPLY_$key" '$1 == needle { print substr($0, index($0, "=") + 1); exit }' "$uevent"
+    return
+  fi
+
+  if [ -f "$battery/$file_key" ]; then
+    cat "$battery/$file_key"
+  fi
+}
+
+print_battery() {
+  local battery="$1"
+  local name cycles model manufacturer capacity status full design
+  local full_unit="uAh"
+  local design_unit="uAh"
+
+  name="$(read_value "$battery" NAME)"
+  cycles="$(read_value "$battery" CYCLE_COUNT)"
+  model="$(read_value "$battery" MODEL_NAME)"
+  manufacturer="$(read_value "$battery" MANUFACTURER)"
+  capacity="$(read_value "$battery" CAPACITY)"
+  status="$(read_value "$battery" STATUS)"
+  full="$(read_value "$battery" CHARGE_FULL)"
+  design="$(read_value "$battery" CHARGE_FULL_DESIGN)"
+
+  if [ -z "$full" ]; then
+    full="$(read_value "$battery" ENERGY_FULL)"
+    full_unit="uWh"
+  fi
+  if [ -z "$design" ]; then
+    design="$(read_value "$battery" ENERGY_FULL_DESIGN)"
+    design_unit="uWh"
+  fi
+
+  printf 'Battery: %s\n' "${name:-${battery##*/}}"
+  if [ -n "$cycles" ]; then
+    printf 'Cycles: %s\n' "$cycles"
+  else
+    printf 'Cycles: unavailable\n'
+  fi
+  [ -n "$model" ] && printf 'Model: %s\n' "$model"
+  [ -n "$manufacturer" ] && printf 'Manufacturer: %s\n' "$manufacturer"
+  [ -n "$capacity" ] && printf 'Capacity: %s%%\n' "$capacity"
+  [ -n "$status" ] && printf 'Status: %s\n' "$status"
+  [ -n "$full" ] && printf 'Full charge: %s %s\n' "$full" "$full_unit"
+  [ -n "$design" ] && printf 'Design full charge: %s %s\n' "$design" "$design_unit"
+
+  [ -n "$cycles" ]
+}
+
+if [ ! -d "$power_root" ]; then
+  printf 'battery-cycles: power supply path not found: %s\n' "$power_root" >&2
+  exit 1
+fi
+
+shopt -s nullglob
+batteries=("$power_root"/BAT*)
+
+if [ "${#batteries[@]}" -eq 0 ]; then
+  printf 'battery-cycles: no BAT* batteries found under %s\n' "$power_root" >&2
+  exit 1
+fi
+
+missing_cycles=0
+for i in "${!batteries[@]}"; do
+  if [ "$i" -gt 0 ]; then
+    printf '\n'
+  fi
+  if ! print_battery "${batteries[$i]}"; then
+    missing_cycles=1
+  fi
+done
+
+exit "$missing_cycles"
