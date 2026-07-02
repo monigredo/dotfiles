@@ -10,6 +10,7 @@ This repo uses `Super` / `Win` as the main Niri modifier. Niri uses `Alt` as the
 | `Super+Shift+Enter` | Open Ghostty attached to tmux session `main` |
 | `Super+Space` | Open rofi app launcher |
 | `Super+Shift+T` | Toggle light/dark desktop theme preference |
+| `Super+Shift+X` | Toggle Caffeinate mode for lid-close sleep override |
 | `Super+Q` | Close focused window |
 | `Ctrl+Space` | Switch keyboard layout |
 | `Ctrl+Super+Q` | Lock screen |
@@ -63,6 +64,17 @@ This repo uses `Super` / `Win` as the main Niri modifier. Niri uses `Alt` as the
 | `Super+Shift+B` | Open Bluetooth menu |
 | `Super+Shift+N` | Open Wi-Fi menu |
 | `Super+Ctrl+N` | Open NetworkManager connection editor |
+
+## Power And Security Modes
+
+| Control | Action |
+| --- | --- |
+| Waybar `H` / `T` security module | Toggle Home / Travel mode |
+| Waybar Caffeinate indicator | Disable Caffeinate mode |
+| Home mode | Lid close locks; on battery it also suspends; idle lock after 2 hours |
+| Travel mode | Lid close locks and suspends; idle lock after 5 minutes |
+| Caffeinate mode | Lid close locks but does not suspend |
+| External monitor connected | Lid close does not lock or suspend |
 
 ## Dotfiles Commands
 

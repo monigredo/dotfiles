@@ -3,7 +3,7 @@
 ## Project Structure & Module Organization
 - Root scripts: `bootstrap-fedora-dev.sh` (Fedora + Sway/Hyprland/Niri bootstrap) and `stow-clean-restow.sh` (remove conflicts then restow).
 - Stow packages: `shell/`, `sway/`, `waybar/`, `ghostty/`, `tmux/`, `env/`, `hyprland/`, `niri/` → mapped to `$HOME`.
-- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`battery-cycles`, `dev-terminal`, `run-swayidle`, `run-niri-swayidle`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `obsidian-launch`, `theme-toggle`).
+- Helper scripts reside in `shell/.local/bin/` and are symlinked to `~/.local/bin` (`battery-cycles`, `dev-terminal`, `run-swayidle`, `run-niri-swayidle`, `niri-power-mode`, `sway-handle-lid.sh`, `niri-handle-lid.sh`, `sway-move-workspace-next-output`, `hypr-handle-lid.sh`, `hypr-kblayout-waybar`, `hypr-move-workspace-next-output`, `wifi-menu`, `obsidian-launch`, `theme-toggle`).
 - Preferred Node, npm, Python, Java, Go, Kotlin, VS Code package targets, fallback candidates, and VS Code extension IDs live in `config/dev-versions.sh`.
 - Docs: `README.md` (full), `README-quickstart.md` (concise), `NIRI-CHEATSHEET.md`, `TMUX-CHEATSHEET.md`, `dotfiles-helper-bootstrap-prompt.md` (AI task context), `AGENTS.md` (this doc).
 
@@ -32,9 +32,10 @@
 - Keep configs ASCII; minimal comments unless clarity is needed.
 
 ## Testing Guidelines
-- No automated test suite. Validate manually:
+- Focused shell tests live under `tests/`; run the relevant script directly, for example `bash tests/test-niri-handle-lid.sh`.
+- Also validate manually:
   - Run bootstrap on a fresh-ish environment.
-  - Confirm helper symlinks exist: `ls -l ~/.local/bin/run-swayidle ~/.local/bin/run-niri-swayidle ~/.local/bin/sway-handle-lid.sh ~/.local/bin/niri-handle-lid.sh`.
+  - Confirm helper symlinks exist: `ls -l ~/.local/bin/run-swayidle ~/.local/bin/run-niri-swayidle ~/.local/bin/niri-power-mode ~/.local/bin/sway-handle-lid.sh ~/.local/bin/niri-handle-lid.sh`.
   - For Sway or Waybar changes, reload in a session and sanity-check keybindings/exec paths.
   - For Niri changes, validate on a real `Niri` GDM login and confirm `~/.config/niri/config.kdl` plus `~/.config/waybar-niri/` are active in-session.
 
@@ -51,4 +52,5 @@
 - Keep `config/dev-versions.sh` as the single update point for preferred dev tool targets, fallback candidates, SDKMAN candidates, and VS Code extension IDs.
 - Document new helper scripts under `shell/.local/bin/` (e.g., `sway-move-workspace-next-output` for moving the current workspace to the next active output) and ensure bootstrap/stow steps reflect them.***
 - `run-swayidle` locks after its timeout and powers displays off 30s later; update docs if timings or behavior change.
+- `niri-power-mode` owns Niri Home/Travel/Caffeinate state, Niri lid-close behavior, and Niri idle timeout selection; keep Waybar, Niri config, and tests aligned when changing it.
 - Codex CLI binary install is optional via bootstrap prompt calling `scripts/install-codex-binary.sh` (downloads latest GitHub release to `~/.local/bin/codex`).***

@@ -627,7 +627,7 @@ if [ -n "${ROFI_BT_DIR:-}" ] && [ -f "$ROFI_BT_DIR/rofi-bluetooth" ]; then
 fi
 
 echo "[+] Verifying helper scripts..."
-for bin in battery-cycles run-swayidle run-niri-swayidle sway-handle-lid.sh niri-handle-lid.sh hypr-handle-lid.sh hypr-kblayout-waybar hypr-move-workspace-next-output wifi-menu obsidian-launch theme-toggle rofi-bluetooth; do
+for bin in battery-cycles run-swayidle run-niri-swayidle niri-power-mode sway-handle-lid.sh niri-handle-lid.sh hypr-handle-lid.sh hypr-kblayout-waybar hypr-move-workspace-next-output wifi-menu obsidian-launch theme-toggle rofi-bluetooth; do
   if [ ! -x "$HOME/.local/bin/$bin" ]; then
     echo "    WARNING: $HOME/.local/bin/$bin is missing or not executable" >&2
   fi

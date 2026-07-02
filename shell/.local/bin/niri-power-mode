@@ -1,0 +1,230 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR="${NIRI_POWER_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles/niri-power}"
+POWER_SUPPLY_SYSFS_ROOT="${POWER_SUPPLY_SYSFS_ROOT:-/sys/class/power_supply}"
+DEFAULT_MODE="home"
+DEFAULT_CAFFEINATE="0"
+HOME_IDLE_TIMEOUT=7200
+TRAVEL_IDLE_TIMEOUT=300
+
+mkdir -p "$STATE_DIR"
+
+read_state() {
+  local name="$1"
+  local default="$2"
+  local value
+
+  if [ -f "$STATE_DIR/$name" ]; then
+    IFS= read -r value <"$STATE_DIR/$name" || value=""
+  else
+    value=""
+  fi
+
+  if [ -z "$value" ]; then
+    value="$default"
+  fi
+
+  printf '%s\n' "$value"
+}
+
+write_state() {
+  local name="$1"
+  local value="$2"
+
+  printf '%s\n' "$value" >"$STATE_DIR/$name"
+}
+
+mode() {
+  local value
+
+  value="$(read_state mode "$DEFAULT_MODE")"
+  case "$value" in
+    home|travel) printf '%s\n' "$value" ;;
+    *) printf '%s\n' "$DEFAULT_MODE" ;;
+  esac
+}
+
+caffeinate() {
+  local value
+
+  value="$(read_state caffeinate "$DEFAULT_CAFFEINATE")"
+  case "$value" in
+    1) printf '1\n' ;;
+    *) printf '0\n' ;;
+  esac
+}
+
+idle_timeout() {
+  case "$(mode)" in
+    travel) printf '%s\n' "$TRAVEL_IDLE_TIMEOUT" ;;
+    *) printf '%s\n' "$HOME_IDLE_TIMEOUT" ;;
+  esac
+}
+
+refresh_waybar() {
+  if [ "${NIRI_POWER_SKIP_WAYBAR_REFRESH:-0}" = "1" ]; then
+    return 0
+  fi
+
+  pkill -RTMIN+11 waybar 2>/dev/null || true
+  pkill -RTMIN+12 waybar 2>/dev/null || true
+  pkill -RTMIN+13 waybar 2>/dev/null || true
+}
+
+apply_idle() {
+  local timeout
+
+  timeout="$(idle_timeout)"
+  if [ -n "${NIRI_POWER_IDLE_RUNNER:-}" ]; then
+    sh -c "$NIRI_POWER_IDLE_RUNNER \"\$1\"" sh "$timeout"
+  else
+    setsid -f "$HOME/.local/bin/run-niri-swayidle" "$timeout" >/dev/null 2>&1
+  fi
+}
+
+toggle_mode() {
+  case "$(mode)" in
+    travel) write_state mode home ;;
+    *) write_state mode travel ;;
+  esac
+
+  apply_idle
+  refresh_waybar
+}
+
+toggle_caffeinate() {
+  case "$(caffeinate)" in
+    1) write_state caffeinate 0 ;;
+    *) write_state caffeinate 1 ;;
+  esac
+
+  refresh_waybar
+}
+
+power_connected() {
+  local supply online
+
+  for supply in "$POWER_SUPPLY_SYSFS_ROOT"/*; do
+    [ -e "$supply/online" ] || continue
+
+    IFS= read -r online <"$supply/online" || continue
+    if [ "$online" = "1" ]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+external_display_connected() {
+  if [ -n "${NIRI_POWER_EXTERNAL_DISPLAY_CMD:-}" ]; then
+    sh -c "$NIRI_POWER_EXTERNAL_DISPLAY_CMD"
+    return
+  fi
+
+  if ! command -v niri >/dev/null 2>&1 || ! command -v jq >/dev/null 2>&1; then
+    return 1
+  fi
+
+  niri msg --json outputs 2>/dev/null \
+    | jq -e '[.[] | select(.name != "eDP-1")] | length > 0' >/dev/null
+}
+
+lock_screen() {
+  local lock_cmd="${NIRI_POWER_LOCK_CMD:-swaylock -f -c 000000 -k}"
+
+  if [ -n "$lock_cmd" ]; then
+    sh -c "$lock_cmd" >/dev/null 2>&1 &
+    sleep 0.2
+  fi
+}
+
+suspend_system() {
+  local suspend_cmd="${NIRI_POWER_SUSPEND_CMD:-systemctl suspend}"
+
+  if [ -n "$suspend_cmd" ]; then
+    sh -c "$suspend_cmd"
+  fi
+}
+
+lid_close() {
+  if external_display_connected; then
+    return 0
+  fi
+
+  if [ "$(caffeinate)" = "1" ]; then
+    lock_screen
+    return 0
+  fi
+
+  if [ "$(mode)" = "travel" ]; then
+    lock_screen
+    suspend_system
+    return 0
+  fi
+
+  lock_screen
+  if ! power_connected; then
+    suspend_system
+  fi
+}
+
+waybar_mode() {
+  case "$(mode)" in
+    travel)
+      printf '{"text":"󰈇 T","tooltip":"Travel mode\\nLid close locks and suspends\\nIdle lock after 5 minutes","class":"travel"}\n'
+      ;;
+    *)
+      printf '{"text":" H","tooltip":"Home mode\\nLid close locks; on battery it also suspends\\nExternal monitor lid close stays unlocked\\nIdle lock after 2 hours","class":"home"}\n'
+      ;;
+  esac
+}
+
+waybar_caffeinate() {
+  if [ "$(caffeinate)" = "1" ]; then
+    printf '{"text":"󰅶","tooltip":"Caffeinate on\\nLid close locks but does not suspend","class":"caffeinate"}\n'
+  fi
+}
+
+waybar_monitor() {
+  if external_display_connected; then
+    printf '{"text":"󰍹","tooltip":"External monitor connected\\nLid close stays awake and unlocked","class":"external-monitor"}\n'
+  fi
+}
+
+usage() {
+  cat <<'EOF'
+Usage: niri-power-mode COMMAND
+
+Commands:
+  mode                 Print current mode: home or travel
+  toggle-mode          Toggle home/travel and restart Niri idle timer
+  caffeinate           Print caffeine state: 0 or 1
+  toggle-caffeinate    Toggle caffeine override
+  idle-timeout         Print active idle lock timeout in seconds
+  apply-idle           Restart Niri idle timer for the current mode
+  lid-close            Apply current lid-close policy
+  waybar-mode          Print Waybar JSON for the mode module
+  waybar-caffeinate    Print Waybar JSON for the caffeine indicator
+  waybar-monitor       Print Waybar JSON for the external monitor indicator
+EOF
+}
+
+case "${1:-}" in
+  mode) mode ;;
+  toggle-mode) toggle_mode ;;
+  caffeinate) caffeinate ;;
+  toggle-caffeinate) toggle_caffeinate ;;
+  idle-timeout) idle_timeout ;;
+  apply-idle) apply_idle ;;
+  lid-close) lid_close ;;
+  waybar-mode) waybar_mode ;;
+  waybar-caffeinate) waybar_caffeinate ;;
+  waybar-monitor) waybar_monitor ;;
+  -h|--help|help) usage ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac

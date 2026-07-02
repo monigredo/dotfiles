@@ -68,6 +68,9 @@ window#waybar > box {
 #pulseaudio,
 #temperature,
 #battery,
+#custom-niri-monitor,
+#custom-niri-caffeinate,
+#custom-niri-security,
 #clock,
 #custom-cpugraph {
   margin-left: 8px;
@@ -137,8 +140,55 @@ window#waybar > box {
 #language,
 #network,
 #pulseaudio,
+#custom-niri-monitor,
+#custom-niri-caffeinate,
+#custom-niri-security,
 #clock {
   color: #eceff4;
+}
+
+#custom-niri-monitor {
+  margin-left: 14px;
+  margin-right: -2px;
+  padding: 0 12px;
+  color: #a3be8c;
+  background: linear-gradient(180deg, rgba(83, 116, 92, 0.94), rgba(58, 86, 73, 0.96));
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#custom-niri-caffeinate {
+  margin-left: 14px;
+  margin-right: -2px;
+  padding: 0 12px;
+  color: #ffb86c;
+  background: linear-gradient(180deg, rgba(149, 91, 48, 0.94), rgba(111, 68, 48, 0.96));
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#custom-niri-security {
+  margin-left: 14px;
+  margin-right: -2px;
+  padding: 0 14px;
+  background: linear-gradient(180deg, rgba(78, 120, 100, 0.9), rgba(55, 88, 78, 0.96));
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#custom-niri-security.travel {
+  background: linear-gradient(180deg, rgba(128, 76, 82, 0.94), rgba(94, 63, 76, 0.98));
+}
+
+#custom-niri-caffeinate + #custom-niri-security {
+  margin-left: 0;
+  border-radius: 0;
+}
+
+#custom-niri-monitor + #custom-niri-caffeinate,
+#custom-niri-monitor + #custom-niri-security {
+  margin-left: 0;
+  border-radius: 0;
 }
 
 #bluetooth {

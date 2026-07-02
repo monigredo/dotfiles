@@ -4,7 +4,7 @@
   "height": 34,
   "modules-left": ["niri/workspaces"],
   "modules-center": ["niri/window"],
-  "modules-right": ["custom/cpugraph", "memory", "temperature", "battery", "bluetooth", "niri/language", "network", "pulseaudio", "clock"],
+  "modules-right": ["custom/cpugraph", "memory", "temperature", "battery", "custom/niri-monitor", "custom/niri-caffeinate", "custom/niri-security", "bluetooth", "niri/language", "network", "pulseaudio", "clock"],
   "niri/workspaces": {
     "all-outputs": true,
     "format": "{value}"
@@ -47,6 +47,32 @@
     "exec": "$HOME/.local/bin/waybar-cpu-graph",
     "format": "{}",
     "tooltip": false
+  },
+  "custom/niri-security": {
+    "exec": "$HOME/.local/bin/niri-power-mode waybar-mode",
+    "return-type": "json",
+    "format": "{text}",
+    "signal": 11,
+    "on-click": "$HOME/.local/bin/niri-power-mode toggle-mode",
+    "tooltip": true
+  },
+  "custom/niri-monitor": {
+    "exec": "$HOME/.local/bin/niri-power-mode waybar-monitor",
+    "return-type": "json",
+    "format": "{text}",
+    "interval": 5,
+    "signal": 13,
+    "hide-empty-text": true,
+    "tooltip": true
+  },
+  "custom/niri-caffeinate": {
+    "exec": "$HOME/.local/bin/niri-power-mode waybar-caffeinate",
+    "return-type": "json",
+    "format": "{text}",
+    "signal": 12,
+    "hide-empty-text": true,
+    "on-click": "$HOME/.local/bin/niri-power-mode toggle-caffeinate",
+    "tooltip": true
   },
   "temperature": {
     "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",

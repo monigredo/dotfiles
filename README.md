@@ -314,8 +314,9 @@ What each package is expected to do:
 - `niri/`
   - `~/.config/niri/config.kdl`
   - `~/.config/waybar-niri/config` and `style.css`
-  - `run-niri-swayidle` for conservative Stage 1 idle locking via `swayidle` + `swaylock`
-  - `niri-handle-lid.sh` for suspend-on-lid-close when no external monitor is connected
+  - `run-niri-swayidle` for Niri idle locking via `swayidle` + `swaylock`
+  - `niri-power-mode` for Home/Travel/Caffeinate state, Waybar output, Niri idle timeout selection, and lid-close policy.
+  - `niri-handle-lid.sh` delegates lid-close events to `niri-power-mode`.
   - `theme-toggle` sets the desktop light/dark preference for portal-aware apps and web content.
   - Super/Win as Niri `Mod`, with Alt reserved as the nested-session modifier.
   - Niri-specific session glue while preserving the existing Sway and Hyprland packages.
@@ -639,6 +640,7 @@ For a fresh user (personal or client-specific):
    - `~/.local/bin/wifi-menu`
    - `~/.local/bin/battery-cycles`
    - `~/.local/bin/obsidian-launch`
+   - `~/.local/bin/niri-power-mode`
    - `~/.local/bin/sway-handle-lid.sh`
    - `~/.local/bin/run-swayidle` (via `stow shell`)
    - `~/.local/bin/tmux-sessionizer` (via `stow shell`, optional)
@@ -677,8 +679,13 @@ For a fresh user (personal or client-specific):
    - `Super+Return` opens terminal + tmux.
    - `Super+Space` opens rofi.
    - `Ctrl+Super+Q` locks with `swaylock`.
+   - The Waybar Home/Travel module toggles mode and restarts the idle timer.
+   - `Super+Shift+X` toggles Caffeinate; the Waybar Caffeinate indicator appears only while active.
    - An X11 client still launches, for example `xeyes` or another known X11 app if installed.
-   - Lid-close behavior is acceptable on laptop hardware.
+   - In Home mode, lid close locks; on battery it also suspends; idle lock happens after 2 hours.
+   - In Travel mode, lid close locks and suspends, and idle lock happens after 5 minutes.
+   - With Caffeinate active, lid close locks but does not suspend.
+   - With an external monitor connected, lid close does not lock or suspend.
 
 After that, the new user has:
 

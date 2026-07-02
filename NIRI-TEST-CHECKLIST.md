@@ -88,9 +88,14 @@ rofi-bluetooth
 - `Super+Shift+Return` opens plain Ghostty.
 - `Super+Space` opens rofi.
 - `Ctrl+Super+Q` locks the screen.
+- `Super+Shift+X` toggles Caffeinate mode and shows/hides its Waybar indicator.
+- The Waybar Home/Travel module toggles between Home and Travel mode.
 - `Super+Shift+4` screenshot flow works.
 - An X11 app launches if available.
-- Lid-close behavior is acceptable on the laptop.
+- Home mode on AC power locks but does not suspend on lid close.
+- Travel mode locks and suspends on lid close.
+- Caffeinate mode locks but does not suspend on lid close.
+- External monitor lid close does not lock or suspend.
 
 ## 9. If something fails
 

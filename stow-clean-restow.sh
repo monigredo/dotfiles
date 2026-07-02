@@ -72,7 +72,7 @@ fi
 (cd "$REPO_DIR" && stow --target="$TARGET" --restow "${PACKAGES[@]}")
 
 # Verify expected helper scripts are in place
-for bin in battery-cycles run-swayidle run-niri-swayidle sway-handle-lid.sh niri-handle-lid.sh hypr-handle-lid.sh hypr-kblayout-waybar hypr-move-workspace-next-output wifi-menu obsidian-launch theme-toggle rofi-bluetooth; do
+for bin in battery-cycles run-swayidle run-niri-swayidle niri-power-mode sway-handle-lid.sh niri-handle-lid.sh hypr-handle-lid.sh hypr-kblayout-waybar hypr-move-workspace-next-output wifi-menu obsidian-launch theme-toggle rofi-bluetooth; do
   if [ ! -x "$TARGET/.local/bin/$bin" ]; then
     echo "[stow-clean] WARNING: $TARGET/.local/bin/$bin is missing or not executable" >&2
   fi

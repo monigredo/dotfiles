@@ -74,7 +74,7 @@ spawn-at-startup "mako"
 spawn-at-startup "/usr/libexec/lxqt-policykit-agent"
 spawn-sh-at-startup "~/.local/bin/theme-toggle dark"
 spawn-sh-at-startup "pkill waybar 2>/dev/null; exec waybar -c \"$HOME/.config/waybar-niri/config\" -s \"$HOME/.config/waybar-niri/style.css\""
-spawn-sh-at-startup "~/.local/bin/run-niri-swayidle 3000"
+spawn-sh-at-startup "~/.local/bin/niri-power-mode apply-idle"
 
 switch-events {
     lid-close { spawn "bash" "-lc" "~/.local/bin/niri-handle-lid.sh"; }
@@ -86,6 +86,7 @@ binds {
     Super+Space { spawn "rofi" "-show" "drun"; }
     Super+O { spawn-sh "~/.local/bin/obsidian-launch"; }
     Super+Shift+T { spawn-sh "~/.local/bin/theme-toggle toggle"; }
+    Super+Shift+X { spawn-sh "~/.local/bin/niri-power-mode toggle-caffeinate"; }
     Super+Q repeat=false { close-window; }
 
     Ctrl+Space { switch-layout "next"; }
