@@ -566,6 +566,26 @@ else
   echo "    Non-interactive shell detected; skipping Obsidian prompt."
 fi
 
+echo "[+] Optional: Telegram setup..."
+if [ -t 0 ]; then
+  read -r -p "    Install Telegram Desktop via Flatpak from Flathub? [y/N]: " install_telegram
+  case "$install_telegram" in
+    [yY]|[yY][eE][sS])
+      if command -v flatpak >/dev/null 2>&1; then
+        sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        sudo flatpak install -y flathub org.telegram.desktop
+      else
+        echo "    WARNING: flatpak is not available; cannot install Telegram." >&2
+      fi
+      ;;
+    *)
+      echo "    Skipping Telegram install."
+      ;;
+  esac
+else
+  echo "    Non-interactive shell detected; skipping Telegram prompt."
+fi
+
 vscode_install_mode="skip"
 
 echo "[+] Optional: VS Code setup..."

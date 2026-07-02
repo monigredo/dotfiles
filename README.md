@@ -106,6 +106,10 @@ What it does:
   - Prompts to install the Flathub Flatpak: `md.obsidian.Obsidian`.
   - Adds the Flathub remote if needed.
   - Vault contents are not stored in this repo; keep notes in a separate vault/sync location.
+- **Telegram Desktop (optional)**:
+  - Prompts to install the Flathub Flatpak: `org.telegram.desktop`.
+  - Adds the Flathub remote if needed.
+  - Useful for calls where you want screen sharing on a Wayland desktop.
 - **VS Code full dev stack (optional)**:
   - Prompts to install stable VS Code from Microsoft's official Fedora yum repository.
   - Installs configured VS Code extensions for JS/TS, Python, Go, Java, Kotlin, containers, YAML, TOML, and GitLens.
